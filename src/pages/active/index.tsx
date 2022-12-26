@@ -2,15 +2,17 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Loader from '../../components/Loader';
+import { useAuth } from '../../hooks/useAuth';
 import AuthService from '../../services/AuthService';
 
 import { Container } from './style';
 
 export default function Active() {
+  const { ChangeHopingActivatingAccount, hopingActivatingAccount } = useAuth();
+
   const [success, setSuccess] = useState<boolean>(false);
   const [hasError, setHasError] = useState<boolean>(false);
-  const [err1, setError1] = useState<string>('');
-  const [err2, setError2] = useState<string>('');
+  const [err, setError] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const navigate = useNavigate();
@@ -28,14 +30,15 @@ export default function Active() {
 
           setSuccess(true);
 
-          toast.success('Faça seu login!');
+          toast.success('Conta ativada!');
+
+          if (hopingActivatingAccount) ChangeHopingActivatingAccount();
 
           navigate('/login');
         }
       } catch (error: any) {
         setHasError(true);
-        setError1(error.body.message);
-        setError2(error.body.message);
+        setError(error.body.message);
         navigate('/register');
       } finally {
         setIsLoading(false);
@@ -58,8 +61,7 @@ export default function Active() {
       {
         hasError && (
         <>
-          <h1>{err1}</h1>
-          <h1>{err2}</h1>
+          <h1>{err}</h1>
           <h2>Você já será redirecionado(a)!</h2>
         </>
         )

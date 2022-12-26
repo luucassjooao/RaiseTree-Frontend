@@ -1,6 +1,7 @@
 import { FormEvent, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { useAuth } from '../../../hooks/useAuth';
 import { useErrors } from '../../../hooks/useHooks';
 
 import AuthService from '../../../services/AuthService';
@@ -17,6 +18,9 @@ import Loader from '../../Loader';
 import { Container, NameClassroom } from './styles';
 
 export function Student() {
+  const { ChangeHopingActivatingAccount } = useAuth();
+  const navigate = useNavigate();
+
   const [name, setName] = useState<string>('');
   const [cpf, setCPF] = useState<string>('');
   const [email, setEmail] = useState<string>('');
@@ -93,7 +97,8 @@ export function Student() {
         code: cpf,
       });
 
-      toast.success('Enviamos a confirmação no seu email!');
+      ChangeHopingActivatingAccount();
+      navigate('/ve');
     } catch (error: any) {
       toast.error(error.body.message);
     } finally {

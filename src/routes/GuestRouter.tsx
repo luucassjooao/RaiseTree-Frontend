@@ -7,6 +7,7 @@ import FormCreateOrganization from '../pages/formCreateOrganization';
 import LP from '../pages/landingPageCreateOrganization';
 import Login from '../pages/login';
 import Register from '../pages/register';
+import VerifyEmai from '../pages/verifyEmail';
 
 type GuestRouteType = {
   children: ReactNode;
@@ -47,6 +48,10 @@ export const guestRouter = [
   {
     path: '/corganization',
     element: <FormCreateOrganization />,
+  },
+  {
+    path: '/ve',
+    element: <VerifyEmai />,
   },
   {
     path: '/*',

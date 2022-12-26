@@ -33,6 +33,8 @@ export type IContext = {
   user: User | null;
   signIn: (email: string, password: string) => Promise<void>;
   handleLogout: () => void;
+  hopingActivatingAccount: boolean;
+  ChangeHopingActivatingAccount(): void;
 }
 
 export type TAuthProvider = {

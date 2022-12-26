@@ -11,6 +11,7 @@ export const AuthContext = createContext({} as IContext);
 
 export function AuthProvider({ children }: TAuthProvider) {
   const [user, setUser] = useState<User | null>(null);
+  const [hopingActivatingAccount, setHopingActivatingAccount] = useState<boolean>(false);
 
   const signIn = useCallback(async (email: string, password: string): Promise<void> => {
     const { token, findUser } = await AuthService.Login(email, password);
@@ -36,6 +37,10 @@ export function AuthProvider({ children }: TAuthProvider) {
       <Navigate to="/" />;
   }
 
+  function ChangeHopingActivatingAccount() {
+    setHopingActivatingAccount((prevState) => (prevState !== true));
+  }
+
   useEffect(() => {
     const token = localStorage.getItem('@Login:Token');
 
@@ -53,7 +58,7 @@ export function AuthProvider({ children }: TAuthProvider) {
   }, []);
 
   const ValuesAuthContextProvider = useMemo(() => ({
-    user, signIn, handleLogout,
+    user, signIn, handleLogout, hopingActivatingAccount, ChangeHopingActivatingAccount,
   }), [user, signIn, handleLogout]);
 
   return (

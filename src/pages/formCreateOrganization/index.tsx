@@ -1,5 +1,5 @@
 import { FormEvent, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Button from '../../components/Button';
 import FormGroup from '../../components/FormGroup';
@@ -12,8 +12,12 @@ import RegisterService from '../../services/RegisterService';
 import isEmailValid from '../../utils/isEmailValid';
 import { InputChange } from '../../utils/types';
 import { Container, ContainerWrapper } from './styles';
+import { useAuth } from '../../hooks/useAuth';
 
 export default function FormCreateOrganization() {
+  const { ChangeHopingActivatingAccount } = useAuth();
+  const navigate = useNavigate();
+
   const [organizatioName, setOrganizationName] = useState<string>('');
   const [organizationClassrooms, setOrganizationClassrooms] = useState<string[]>([]);
   const [personName, setPersonName] = useState<string>('');
@@ -123,7 +127,8 @@ export default function FormCreateOrganization() {
         subjectId,
       );
 
-      toast.success('Verifique seu email!');
+      ChangeHopingActivatingAccount();
+      navigate('/ve');
     } catch (error: any) {
       toast.error(error.body.message);
     } finally {
