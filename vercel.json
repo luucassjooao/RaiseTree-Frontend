@@ -1,0 +1,18 @@
+{
+  "routes": [
+    { "src": "/[^.]+", "dest": "/", "status": 200 },
+    { "src": "/login", "dest": "/login" },
+    { "src": "/register", "dest": "/register" },
+    { "src": "/active", "dest": "/active" },
+    { "src": "/hp", "dest": "/hp" },
+    { "src": "/corganization", "dest": "/corganization" },
+    { "src": "/ve", "dest": "/ve" },
+    { "src": "/home", "dest": "/home" },
+    { "src": "/createDraft", "dest": "/createDraft" },
+    { "src": "/listDraft", "dest": "/listDraft" },
+    { "src": "/createActivityDraft", "dest": "/createActivityDraft" },
+    { "src": "/createActivity", "dest": "/createActivity" },
+    { "src": "/activity", "dest": "/activity" },
+    { "src": "/rsu", "dest": "/rsu" }
+  ]
+}

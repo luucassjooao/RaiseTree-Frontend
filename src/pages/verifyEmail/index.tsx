@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { Container } from './styled';
 
-export default function VerifyEmai() {
+export default function VerifyEmail() {
   const { hopingActivatingAccount } = useAuth();
   const navigate = useNavigate();
 

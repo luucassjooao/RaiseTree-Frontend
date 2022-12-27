@@ -30,9 +30,10 @@ export default function Active() {
 
           setSuccess(true);
 
-          toast.success('Conta ativada!');
-
           if (hopingActivatingAccount) ChangeHopingActivatingAccount();
+
+          setTimeout(() => {}, 3000);
+          toast.success('Conta ativada!');
 
           navigate('/login');
         }
