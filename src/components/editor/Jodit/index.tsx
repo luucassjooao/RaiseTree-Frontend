@@ -10,7 +10,7 @@ export default function Jodit({ body, setBody }: Props) {
   return (
     <JoditEditor
       value={body}
-      onBlur={setBody}
+      onBlur={(event) => setBody(event)}
       config={{
         language: 'pt_br',
         textIcons: true,

@@ -1,5 +1,5 @@
 import {
-  FormEvent, forwardRef, useEffect, useImperativeHandle, useRef, useState,
+  forwardRef, useEffect, useImperativeHandle, useRef, useState,
 } from 'react';
 import { MultiSelect } from 'react-multi-select-component';
 import { useNavigate } from 'react-router-dom';
@@ -16,6 +16,7 @@ import { useAuth } from '../../hooks/useAuth';
 import Button from '../Button';
 import Select from '../Select';
 import JoditEditor from '../editor/Jodit';
+import Modal from '../Modal';
 
 type TOnSubmit = {
   // eslint-disable-next-line no-unused-vars
@@ -58,6 +59,11 @@ const ActivityForm = forwardRef<TOnSubmit, TActivityForm>(
     const [text, setText] = useState('');
 
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+
+    const [
+      modalVisibleConfirmActivityOrDraft,
+      setModalVisibleConfirmActivityOrDraft,
+    ] = useState<boolean>(false);
 
     const navigate = useNavigate();
 
@@ -127,9 +133,7 @@ const ActivityForm = forwardRef<TOnSubmit, TActivityForm>(
       }
     }
 
-    function handleSubmit(event: FormEvent) {
-      event.preventDefault();
-
+    function handleSubmit() {
       const arrayClassroom = classrooms.map((salas) => salas.value);
 
       setIsSubmitting(true);
@@ -156,140 +160,167 @@ const ActivityForm = forwardRef<TOnSubmit, TActivityForm>(
 
     const isFormDraftValid = (title && description && activity && errors.length === 0);
 
+    function OpenModal() {
+      setModalVisibleConfirmActivityOrDraft(true);
+    }
+
+    function CloseModal() {
+      setModalVisibleConfirmActivityOrDraft(false);
+    }
+
     return (
-      <Form onSubmit={handleSubmit} noValidate>
-        {type === 'createActivity' ? <h1>Crie uma atividade</h1> : <h1>Crie um rascunho</h1>}
+      <>
+        <Form noValidate>
+          {type === 'createActivity' ? <h1>Crie uma atividade</h1> : <h1>Crie um rascunho</h1>}
 
-        <ContainerForm>
-          <div>
-            <Title>Qual será o título? **</Title>
-            <FormGroup error={getErrorMessageByFieldName({ fieldName: 'title' })}>
-              <Input
-                type="text"
-                size={500}
-                value={title}
-                onChange={handleChangeTitle}
-                error={getErrorMessageByFieldName({ fieldName: 'title' })}
-                maxLength={50}
-                minLength={30}
-              />
-              <small>
-                {title.length}
-                /50
-              </small>
-            </FormGroup>
-
-            <TitleDescription>Qual será a descrição? **</TitleDescription>
-            <FormGroup error={getErrorMessageByFieldName({ fieldName: 'description' })}>
-              <Input
-                type="text"
-                size={500}
-                value={description}
-                onChange={handleChangeDescription}
-                error={getErrorMessageByFieldName({ fieldName: 'description' })}
-                maxLength={100}
-                minLength={50}
-              />
-              <small>
-                {description.length}
-                /100
-              </small>
-            </FormGroup>
-
-            {type === 'createActivity' && (
-            <>
-              <Title>Quais salas irão fazer está atividade? **</Title>
-              <FormGroup error={getErrorMessageByFieldName({ fieldName: 'classroom' })}>
-                <MultiSelect
-                  options={optionsClassroom}
-                  value={classrooms}
-                  onChange={setClassroom}
-                  labelledBy="Selecione as salas que irao fazer esta atividade"
-                />
-              </FormGroup>
-
-              <TitleDescription>
-                Qual a data máxima para entregar está atividade? **
-              </TitleDescription>
-              <FormGroup error={getErrorMessageByFieldName({ fieldName: 'dateExpiration' })}>
+          <ContainerForm>
+            <div>
+              <Title>Qual será o título? **</Title>
+              <FormGroup error={getErrorMessageByFieldName({ fieldName: 'title' })}>
                 <Input
-                  type="datetime-local"
-                  value={dateTask}
-                  onChange={handleChangeDateExpiration}
-                  error={getErrorMessageByFieldName({ fieldName: 'dateExpiration' })}
+                  type="text"
+                  size={500}
+                  value={title}
+                  onChange={handleChangeTitle}
+                  error={getErrorMessageByFieldName({ fieldName: 'title' })}
+                  maxLength={50}
+                  minLength={30}
+                />
+                <small>
+                  {title.length}
+                  /50
+                </small>
+              </FormGroup>
+
+              <TitleDescription>Qual será a descrição? **</TitleDescription>
+              <FormGroup error={getErrorMessageByFieldName({ fieldName: 'description' })}>
+                <Input
+                  type="text"
+                  size={500}
+                  value={description}
+                  onChange={handleChangeDescription}
+                  error={getErrorMessageByFieldName({ fieldName: 'description' })}
+                  maxLength={100}
+                  minLength={50}
+                />
+                <small>
+                  {description.length}
+                  /100
+                </small>
+              </FormGroup>
+
+              {type === 'createActivity' && (
+              <>
+                <Title>Quais salas irão fazer está atividade? **</Title>
+                <FormGroup error={getErrorMessageByFieldName({ fieldName: 'classroom' })}>
+                  <MultiSelect
+                    options={optionsClassroom}
+                    value={classrooms}
+                    onChange={setClassroom}
+                    labelledBy="Selecione as salas que irao fazer esta atividade"
+                  />
+                </FormGroup>
+
+                <TitleDescription>
+                  Qual a data máxima para entregar está atividade? **
+                </TitleDescription>
+                <FormGroup error={getErrorMessageByFieldName({ fieldName: 'dateExpiration' })}>
+                  <Input
+                    type="datetime-local"
+                    value={dateTask}
+                    onChange={handleChangeDateExpiration}
+                    error={getErrorMessageByFieldName({ fieldName: 'dateExpiration' })}
+                  />
+                </FormGroup>
+
+                <TitleDescription>Qual a categoria desta atividade? **</TitleDescription>
+                <FormGroup>
+                  <Select
+                    is500
+                    value={typeActivity}
+                    onChange={((event) => setTypeActivity(event.target.value))}
+                  >
+                    <option value="">Selecione...</option>
+                    <option value="Atividade">Atividade</option>
+                    <option value="Tarefa">Tarefa</option>
+                    <option value="Trabalho">Trabalho</option>
+                  </Select>
+                </FormGroup>
+
+              </>
+              )}
+
+            </div>
+            {type === 'createActivity' && (
+            <DivCardHome>
+              <CardHome
+                title={title}
+                description={description}
+                teacher={user?.name}
+                dateExpiration={!dateTask ? new Date() : dateCard}
+                typeActivity={typeActivity}
+              />
+
+              <TitlePoints>
+                Quantos Pontos o aluno vai receber
+              </TitlePoints>
+              <TitlePoints>
+                por apenas responder está atividade?
+              </TitlePoints>
+              <FormGroup>
+                <Input
+                  type="number"
+                  size={120}
+                  value={previousPoints}
+                  onChange={((event) => setPreviousPoints(event.target.value))}
+                  min={0}
                 />
               </FormGroup>
-
-              <TitleDescription>Qual a categoria desta atividade? **</TitleDescription>
-              <FormGroup>
-                <Select
-                  is500
-                  value={typeActivity}
-                  onChange={((event) => setTypeActivity(event.target.value))}
-                >
-                  <option value="">Selecione...</option>
-                  <option value="Atividade">Atividade</option>
-                  <option value="Tarefa">Tarefa</option>
-                  <option value="Trabalho">Trabalho</option>
-                </Select>
-              </FormGroup>
-
-            </>
+            </DivCardHome>
             )}
+          </ContainerForm>
 
+          {type === 'createActivity'
+            ? <Title style={{ textAlign: 'center' }}>Como será a atividade? 🧑‍💻</Title>
+            : <Title style={{ textAlign: 'center' }}>Como será o Rascunho? 🤔</Title>}
+
+          <div style={{ width: '80%', margin: '0px auto', marginTop: '20px' }}>
+            <JoditEditor setBody={setText} body={text} />
           </div>
-          {type === 'createActivity' && (
-          <DivCardHome>
-            <CardHome
-              title={title}
-              description={description}
-              teacher={user?.name}
-              dateExpiration={!dateTask ? new Date() : dateCard}
-              typeActivity={typeActivity}
-            />
 
-            <TitlePoints>
-              Quantos Pontos o aluno vai receber
-            </TitlePoints>
-            <TitlePoints>
-              por apenas responder está atividade?
-            </TitlePoints>
-            <FormGroup>
-              <Input
-                type="number"
-                size={120}
-                value={previousPoints}
-                onChange={((event) => setPreviousPoints(event.target.value))}
-                min={0}
-              />
-            </FormGroup>
-          </DivCardHome>
-          )}
-        </ContainerForm>
+          <div
+            ref={divRef}
+          // eslint-disable-next-line react/no-danger
+            dangerouslySetInnerHTML={{
+              __html: text,
+            }}
+            style={{ display: 'none' }}
+          />
 
-        {type === 'createActivity'
-          ? <Title style={{ textAlign: 'center' }}>Como será a atividade? 🧑‍💻</Title>
-          : <Title style={{ textAlign: 'center' }}>Como será o Rascunho? 🤔</Title>}
-
-        <div style={{ width: '80%', margin: '0px auto', marginTop: '20px' }}>
-          <JoditEditor setBody={setText} body={text} />
-        </div>
-
-        <div
-          ref={divRef}
-        // eslint-disable-next-line react/no-danger
-          dangerouslySetInnerHTML={{
-            __html: text,
-          }}
-          style={{ display: 'none' }}
-        />
-
-        <ButtonContainer>
-          <Button type="submit" disabled={type === 'createActivity' ? !isFormActivityValid : !isFormDraftValid} isLoading={isSubmitting} size={150}>
-            {buttonLabel}
-          </Button>
-        </ButtonContainer>
-      </Form>
+          <ButtonContainer>
+            <Button type="button" onClick={OpenModal} disabled={type === 'createActivity' ? !isFormActivityValid : !isFormDraftValid} isLoading={false} size={150}>
+              {buttonLabel}
+            </Button>
+          </ButtonContainer>
+        </Form>
+        <Modal
+          danger={false}
+          visible={modalVisibleConfirmActivityOrDraft}
+          isLoading={isSubmitting}
+          title={`Você realmente quer registrar essa ${type === 'createActivity' ? 'atividade' : 'rascunho'}?`}
+          confirmLabel="Confirmar"
+          cancelLabel="Cancelar"
+          onCancel={CloseModal}
+          onConfirm={handleSubmit}
+        >
+          <h2>Título</h2>
+          <p>{title}</p>
+          <h2>Descrição</h2>
+          <p>{description}</p>
+          <h2>{type === 'createActivity' ? 'Atividade' : 'Rascunho'}</h2>
+          <p>{`${activity.slice(0, 300)}...`}</p>
+        </Modal>
+      </>
     );
   },
 );

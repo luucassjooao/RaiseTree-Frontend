@@ -24,6 +24,7 @@ export default function InputAnswer({ callback, isLoading }: IProps) {
   return (
     <div>
       <JoditEditor body={answer} setBody={setAnswer} />
+      <br />
 
       <div
         ref={divRef}
