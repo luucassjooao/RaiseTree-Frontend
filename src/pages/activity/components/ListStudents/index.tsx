@@ -1,11 +1,11 @@
 /* eslint-disable no-unused-vars */
 import { StyledButton } from '../../../../components/Button/styled';
-import ContainerReplyTeacher from '../../../../components/ContainerReplysTeacher';
-import TableStudents from '../../../../components/TableStudents';
+import ContainerReplyTeacher from './components/ContainerReplysTeacher';
+import TableStudents from './components/TableStudents';
 import {
   IAnswerTeacherTableStudents,
-  TAnswerTeacher,
   TTActivityScreen,
+  IObjectAnswer,
 } from '../../../../utils/types';
 import { DivButtons } from '../../style';
 import { ContainerTable } from './styles';
@@ -57,7 +57,7 @@ export default function ListStudents({
         </StyledButton>
       </DivButtons>
 
-      {answerList && activity?.answered_activities.map((answeredActivities: TAnswerTeacher) => (
+      {answerList && activity?.answered_activities.map((answeredActivities: IObjectAnswer) => (
         <ContainerReplyTeacher
           key={answeredActivities.id}
           id={answeredActivities.id}
@@ -66,6 +66,7 @@ export default function ListStudents({
           createdAt={answeredActivities.createdAt}
           callback={handleAnswerNote}
           isLoading={isLoading}
+          fullActivity={activity}
         />
       ))}
       {!answerList && (

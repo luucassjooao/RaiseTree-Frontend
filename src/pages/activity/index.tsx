@@ -1,6 +1,7 @@
+import { Fragment } from 'react';
 import InputAnswerStudent from '../../components/Answer/InputStudentAnswerActivity';
 import {
-  Container, ContainerHeaderActivity,
+  Container, ContainerAnswer, ContainerHeaderActivity,
 } from './style';
 import useActivity from './useActivity';
 import SideBarListStudents from './components/SideBarListStudents';
@@ -19,6 +20,7 @@ export default function Activity() {
     handleModalOpen,
     handleModalCancel,
     handleAnswer,
+    studentAnswerThisActivity,
   } = useActivity();
 
   return (
@@ -57,10 +59,40 @@ export default function Activity() {
           />
         )}
         {user?.type === 'student' && (
-        <div style={{ width: '90%', margin: '24px auto 0px auto' }}>
-          <h2>Responda a está atividade! 😄</h2>
-          <InputAnswerStudent callback={handleAnswer} isLoading={isLoading} />
-        </div>
+          <div style={{ width: '90%', margin: '24px auto 0px auto' }}>
+            {studentAnswerThisActivity
+              ? (
+                <>
+                  <h1>Voce já respondeu está atividade 🤓</h1>
+                  <br />
+                  <h2>Sua resposta!</h2>
+                  <ContainerAnswer
+                    // eslint-disable-next-line react/no-danger
+                    dangerouslySetInnerHTML={{
+                      __html: studentAnswerThisActivity.answer,
+                    }}
+                  />
+
+                  {studentAnswerThisActivity.note_of_teacher !== '' && (
+                    <>
+                      <h2>Nota do seu Professor(a)</h2>
+                      <ContainerAnswer
+                        // eslint-disable-next-line react/no-danger
+                        dangerouslySetInnerHTML={{
+                          __html: studentAnswerThisActivity.note_of_teacher as string,
+                        }}
+                      />
+                    </>
+                  )}
+                </>
+              )
+              : (
+                <>
+                  <h2>Responda a está atividade! 😄</h2>
+                  <InputAnswerStudent callback={handleAnswer} isLoading={isLoading} />
+                </>
+              )}
+          </div>
         )}
       </Container>
     </>

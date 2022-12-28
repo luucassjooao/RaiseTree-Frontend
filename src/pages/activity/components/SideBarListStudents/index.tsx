@@ -35,7 +35,7 @@ export default function SideBarListStudents({
           </h2>
           <h2>
             Sala:&nbsp;
-            {Student?.classroom}
+            {Student?.classroom.split(' | ')[1]}
           </h2>
           <h2>
             Atividade entregue em:&nbsp;

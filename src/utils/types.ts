@@ -52,45 +52,54 @@ export type TTActivityScreen = {
     id: string;
     answer: string;
     createdAt: Date;
+    note_of_teacher: string;
     Student: {
       id: string;
       current_points: number;
       classroom: string;
       user: {
         name: string;
+        id: string;
       }
     }
   }
 }
 
-export type TAnswerTeacher = {
-  id: string;
-  answer: string;
-  createdAt: Date;
+export type TFindAnswerStudent = {
   Student: {
     id: string;
     current_points: number;
     classroom: string;
     user: {
       name: string;
+      id: string
     }
   }
 }
 
-export interface IAnswerTeacherContainerReply extends TAnswerTeacher {
+export interface IObjectAnswer extends TFindAnswerStudent {
+  [x: string]: any;
+  id: string;
+  answer: string;
+  createdAt: Date;
+  note_of_teacher?: string;
+}
+
+export interface IAnswerTeacherContainerReply extends IObjectAnswer {
   // eslint-disable-next-line no-unused-vars
   callback: (note: string, point: number, idAnswer: string, idStudent: string) => void;
   isLoading: boolean;
+  fullActivity: TTActivityScreen;
 }
 
-export interface IAnswerTeacherModal extends TAnswerTeacher {
+export interface IAnswerTeacherModal extends IObjectAnswer {
   // eslint-disable-next-line no-unused-vars
   callback: (note: string, point: number, idAnswer: string, idStudent: string) => void;
   onCancel: () => void;
   isVisible: boolean;
 }
 
-export interface IAnswerTeacherTableStudents extends TAnswerTeacher {
+export interface IAnswerTeacherTableStudents extends IObjectAnswer {
     // eslint-disable-next-line no-unused-vars
     modalOpen: (isTrue: boolean, studentInfos: IAnswerTeacherTableStudents) => void;
 }

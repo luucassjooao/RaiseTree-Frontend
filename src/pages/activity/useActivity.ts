@@ -3,7 +3,9 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useAuth } from '../../hooks/useAuth';
 import ActivityService from '../../services/ActivityService';
-import { IAnswerTeacherTableStudents, TTActivityScreen } from '../../utils/types';
+import {
+  IAnswerTeacherTableStudents, IObjectAnswer, TFindAnswerStudent, TTActivityScreen,
+} from '../../utils/types';
 
 export default function useActivity() {
   const { user } = useAuth();
@@ -16,6 +18,8 @@ export default function useActivity() {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
 
   const [studentInfos, setStudentInfos] = useState<IAnswerTeacherTableStudents | null>(null);
+
+  const [studentAnswerThisActivity, setStudentAnswerThisActivity] = useState<IObjectAnswer>();
 
   const navigate = useNavigate();
 
@@ -32,6 +36,15 @@ export default function useActivity() {
 
         if (findClassroomStudentInActivity === -1) {
           navigate('/home');
+        }
+
+        const findAnswerActivityOfStudent = getActivity.answered_activities
+          .findIndex((idUser: TFindAnswerStudent) => idUser.Student.user.id === user?.id);
+
+        if (findAnswerActivityOfStudent !== -1) {
+          setStudentAnswerThisActivity(
+            getActivity.answered_activities[findAnswerActivityOfStudent],
+          );
         }
       }
     } catch (error: any) {
@@ -119,5 +132,6 @@ export default function useActivity() {
     handleModalOpen,
     handleModalCancel,
     handleAnswer,
+    studentAnswerThisActivity,
   };
 }

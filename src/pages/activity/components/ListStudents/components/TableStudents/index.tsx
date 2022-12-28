@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { IAnswerTeacherTableStudents } from '../../utils/types';
+import { IAnswerTeacherTableStudents } from '../../../../../../utils/types';
 
 export default function TableStudents({
   modalOpen, id, Student, answer, createdAt,
@@ -24,7 +24,7 @@ export default function TableStudents({
   return (
     <tr>
       <td>{Student.user.name}</td>
-      <td>{Student.classroom}</td>
+      <td>{Student.classroom.split(' | ')[1]}</td>
       <td>{new Date(createdAt).toLocaleString('pt-br')}</td>
       <td className="tdAnswer" role="gridcell" onClick={handleModalVisible}>
         VER RESPOSTA DO ALUNO(A)
