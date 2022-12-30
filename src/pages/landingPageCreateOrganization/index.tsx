@@ -51,7 +51,6 @@ export default function LP() {
     && password
     && code
     && confirmPassword
-    && ((typeUserRegister === 'teacher') && subjectId)
     && errors.length === 0;
 
   return (

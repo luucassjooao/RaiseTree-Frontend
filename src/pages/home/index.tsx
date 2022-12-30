@@ -1,4 +1,6 @@
-import { useCallback, useEffect, useState } from 'react';
+import {
+  Fragment, useCallback, useEffect, useState,
+} from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import CardHome from '../../components/cards/CardsHome';
@@ -97,7 +99,7 @@ export default function Home() {
         ? <TitleMatter>Verifique as respostas nas atividades!</TitleMatter>
         : (user?.type === 'teacher' && <TitleMatter>Crie alguma atividade!</TitleMatter>)}
       {activities.map((task) => (
-        <div key={Math.random()}>
+        <Fragment key={Math.random()}>
           {user?.type === 'student' && <TitleMatter key={Math.random()}>{task.nameSubject}</TitleMatter>}
           {task.activitys.map((cardActivity: ObjActivity) => (
             <CardsActivities key={cardActivity.id}>
@@ -114,7 +116,7 @@ export default function Home() {
               </Link>
             </CardsActivities>
           ))}
-        </div>
+        </Fragment>
       ))}
     </Container>
   );
