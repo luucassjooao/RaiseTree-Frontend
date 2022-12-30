@@ -2,6 +2,7 @@ import {
   createContext, useCallback, useEffect, useMemo, useState,
 } from 'react';
 import { Navigate } from 'react-router-dom';
+import Loader from '../../components/Loader';
 import AuthService from '../../services/AuthService';
 import {
   TAuthProvider, IContext, User,
@@ -12,6 +13,7 @@ export const AuthContext = createContext({} as IContext);
 export function AuthProvider({ children }: TAuthProvider) {
   const [user, setUser] = useState<User | null>(null);
   const [hopingActivatingAccount, setHopingActivatingAccount] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const signIn = useCallback(async (email: string, password: string): Promise<void> => {
     const { token, findUser } = await AuthService.Login(email, password);
@@ -46,7 +48,9 @@ export function AuthProvider({ children }: TAuthProvider) {
 
     if (token) {
       try {
+        setLoading(true);
         loadUserInfos();
+        setLoading(false);
       } catch {
         handleLogout();
       }
@@ -62,8 +66,11 @@ export function AuthProvider({ children }: TAuthProvider) {
   }), [user, signIn, handleLogout]);
 
   return (
-    <AuthContext.Provider value={ValuesAuthContextProvider}>
-      {children}
-    </AuthContext.Provider>
+    <>
+      <Loader isLoading={loading} />
+      <AuthContext.Provider value={ValuesAuthContextProvider}>
+        {children}
+      </AuthContext.Provider>
+    </>
   );
 }

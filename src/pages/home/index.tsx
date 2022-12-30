@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import CardHome from '../../components/cards/CardsHome';
 import CardPeople from '../../components/cards/CardsPeoples';
+import Loader from '../../components/Loader';
 import { useAuth } from '../../hooks/useAuth';
 import ActivityService from '../../services/ActivityService';
 import StaticUserService from '../../services/StaticUserService';
@@ -51,15 +52,19 @@ export default function Home() {
 
   const [activities, setActivities] = useState<ArrayActivity[]>([]);
   const [peoples, setPeoples] = useState<TPeoples[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const loadInfos = useCallback(async () => {
     if (user?.type === 'student' || user?.type === 'teacher') {
+      setLoading(true);
       try {
         const activitiesList = await ActivityService.getHomeActivities();
 
         setActivities(activitiesList);
       } catch {
         toast.error('Houve um error ao buscar as atividades. Fique tranquilo, já iremos consertar este problema!');
+      } finally {
+        setLoading(false);
       }
     } if (user?.type === 'admin') {
       try {
@@ -69,6 +74,8 @@ export default function Home() {
         setPeoples(findPeoples);
       } catch {
         toast.error('Houve um error ao buscar as as pessoas. Fique tranquilo, já iremos consertar este problema!');
+      } finally {
+        setLoading(false);
       }
     }
   }, []);
@@ -78,8 +85,10 @@ export default function Home() {
   }, [loadInfos]);
 
   return (
-    <Container>
-      {user?.type === 'admin' && (
+    <>
+      <Loader isLoading={loading} />
+      <Container>
+        {user?.type === 'admin' && (
         <>
           {peoples.map((pessoas) => (
             <CardsActivities key={pessoas.id}>
@@ -93,31 +102,32 @@ export default function Home() {
             </CardsActivities>
           ))}
         </>
-      )}
-      {user?.type === 'teacher'
+        )}
+        {user?.type === 'teacher'
         && activities.length >= 1
-        ? <TitleMatter>Verifique as respostas nas atividades!</TitleMatter>
-        : (user?.type === 'teacher' && <TitleMatter>Crie alguma atividade!</TitleMatter>)}
-      {activities.map((task) => (
-        <Fragment key={Math.random()}>
-          {user?.type === 'student' && <TitleMatter key={Math.random()}>{task.nameSubject}</TitleMatter>}
-          {task.activitys.map((cardActivity: ObjActivity) => (
-            <CardsActivities key={cardActivity.id}>
-              <Link to={`/activity/${cardActivity.id}`} style={{ textDecoration: 'none' }} key={Math.random()}>
-                <CardHome
-                  key={cardActivity.title}
-                  teacher={cardActivity.Teacher.user.name}
-                  title={cardActivity.title}
-                  description={cardActivity.description}
-                  dateExpiration={cardActivity.dateExpiration}
-                  typeActivity={cardActivity.type}
-                  isDraft={false}
-                />
-              </Link>
-            </CardsActivities>
-          ))}
-        </Fragment>
-      ))}
-    </Container>
+          ? <TitleMatter>Verifique as respostas nas atividades!</TitleMatter>
+          : (user?.type === 'teacher' && <TitleMatter>Crie alguma atividade!</TitleMatter>)}
+        {activities.map((task) => (
+          <Fragment key={Math.random()}>
+            {user?.type === 'student' && <TitleMatter key={Math.random()}>{task.nameSubject}</TitleMatter>}
+            {task.activitys.map((cardActivity: ObjActivity) => (
+              <CardsActivities key={cardActivity.id}>
+                <Link to={`/activity/${cardActivity.id}`} style={{ textDecoration: 'none' }} key={Math.random()}>
+                  <CardHome
+                    key={cardActivity.title}
+                    teacher={cardActivity.Teacher.user.name}
+                    title={cardActivity.title}
+                    description={cardActivity.description}
+                    dateExpiration={cardActivity.dateExpiration}
+                    typeActivity={cardActivity.type}
+                    isDraft={false}
+                  />
+                </Link>
+              </CardsActivities>
+            ))}
+          </Fragment>
+        ))}
+      </Container>
+    </>
   );
 }

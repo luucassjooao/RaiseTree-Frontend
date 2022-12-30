@@ -68,7 +68,7 @@ export default function AdminRegisterStaticUser() {
   return (
     <Container>
       <Modal
-        danger
+        danger={false}
         visible={isVisibleModalCreatePeoples}
         isLoading={isSubmitting}
         title="Você tem certeza que deseja adicionar todas essas pessoas?"
