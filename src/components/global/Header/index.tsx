@@ -24,6 +24,7 @@ export default function Header() {
 
   const teacherLinks = [
     { label: 'Criar Rascunho', path: '/createDraft' },
+    { label: 'Estudantes', path: '/students' },
   ];
   const studentsLinks = [
     { label: 'Ver Atividades', path: '/home' },

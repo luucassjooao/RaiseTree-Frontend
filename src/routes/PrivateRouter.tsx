@@ -8,6 +8,7 @@ import CreateActivityDraft from '../pages/createActivityWithDraft';
 import Draft from '../pages/draft';
 import Home from '../pages/home';
 import ListDraft from '../pages/listDraft';
+import Students from '../pages/students';
 
 type PrivateRouterType = {
   children: JSX.Element;
@@ -56,6 +57,10 @@ export const privateRouter = [
   {
     path: '/rsu',
     element: <AdminRegisterStaticUser />,
+  },
+  {
+    path: '/students',
+    element: <Students />,
   },
   {
     path: '/*',

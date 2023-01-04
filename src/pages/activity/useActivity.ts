@@ -1,5 +1,7 @@
-import { useCallback, useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import {
+  useCallback, useEffect, useState,
+} from 'react';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useAuth } from '../../hooks/useAuth';
 import ActivityService from '../../services/ActivityService';
@@ -11,6 +13,8 @@ export default function useActivity() {
   const { user } = useAuth();
 
   const { id } = useParams();
+  const [searchParams] = useSearchParams();
+  const idAnswerStudent = searchParams.get('ai');
 
   const [activity, setActivity] = useState<TTActivityScreen>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -47,6 +51,15 @@ export default function useActivity() {
           );
         }
       }
+
+      if (idAnswerStudent !== null && user?.type === 'teacher') {
+        const searchIdAnswerStudent = getActivity?.answered_activities
+          .findIndex((answerId: IObjectAnswer) => answerId.id === idAnswerStudent);
+
+        if (searchIdAnswerStudent !== -1) {
+          setStudentAnswerThisActivity(getActivity.answered_activities[searchIdAnswerStudent]);
+        }
+      }
     } catch (error: any) {
       toast.error(error.body.message);
     }
@@ -59,6 +72,10 @@ export default function useActivity() {
       setActivity(undefined);
     };
   }, [loadActivity]);
+
+  function handleBackAllActivity() {
+    setStudentAnswerThisActivity(undefined);
+  }
 
   function handleAnswerList() {
     setAnswerList((prevState) => (prevState !== true));
@@ -133,5 +150,7 @@ export default function useActivity() {
     handleModalCancel,
     handleAnswer,
     studentAnswerThisActivity,
+    idAnswerStudent,
+    handleBackAllActivity,
   };
 }

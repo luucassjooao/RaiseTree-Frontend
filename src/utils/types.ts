@@ -85,11 +85,12 @@ export interface IObjectAnswer extends TFindAnswerStudent {
   note_of_teacher?: string;
 }
 
-export interface IAnswerTeacherContainerReply extends IObjectAnswer {
+export interface IAnswerTeacherContainerReply<T> extends IObjectAnswer {
   // eslint-disable-next-line no-unused-vars
   callback: (note: string, point: number, idAnswer: string, idStudent: string) => void;
   isLoading: boolean;
-  fullActivity: TTActivityScreen;
+  fullActivity: T;
+  handleBackAllActivity?(): void;
 }
 
 export interface IAnswerTeacherModal extends IObjectAnswer {

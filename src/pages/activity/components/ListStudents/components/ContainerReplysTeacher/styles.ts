@@ -13,3 +13,19 @@ export const ContainerAnswer = styled.div`
   margin-top: 8px;
   margin-bottom: 15px;
 `;
+
+export const ButtonBackAllActivity = styled.button`
+  width: 220px;
+  padding: 12px;
+  font-size: 14px;
+  background: ${({ theme }) => theme.colors.danger.main};
+  transition: 0.2s all;
+  border-radius: ${({ theme }) => theme.borderRadius};
+  border: none;
+  color: ${({ theme }) => theme.colors.textColorWhite};
+  margin-bottom: 10px;
+
+  &:hover {
+    background: ${({ theme }) => theme.colors.oranges.main};
+  }
+`;

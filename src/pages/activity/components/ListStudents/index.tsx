@@ -22,6 +22,8 @@ type TListStudents = {
   ): void;
   isLoading: boolean;
   handleModalOpen(student: IAnswerTeacherTableStudents): void;
+  studentAnswerThisActivity: IObjectAnswer | undefined;
+  handleBackAllActivity(): void;
 }
 
 export default function ListStudents({
@@ -31,9 +33,25 @@ export default function ListStudents({
   handleAnswerNote,
   isLoading,
   handleModalOpen,
+  studentAnswerThisActivity,
+  handleBackAllActivity,
 }: TListStudents) {
   return (
     <>
+      {studentAnswerThisActivity && (
+      <ContainerReplyTeacher
+        id={studentAnswerThisActivity.id}
+        Student={studentAnswerThisActivity.Student}
+        answer={studentAnswerThisActivity.answer}
+        createdAt={studentAnswerThisActivity.createdAt}
+        callback={handleAnswerNote}
+        isLoading={isLoading}
+        fullActivity={studentAnswerThisActivity}
+        handleBackAllActivity={handleBackAllActivity}
+      />
+      )}
+
+      {!studentAnswerThisActivity && (
       <DivButtons>
         <StyledButton
           size={130}
@@ -57,7 +75,11 @@ export default function ListStudents({
         </StyledButton>
       </DivButtons>
 
-      {answerList && activity?.answered_activities.map((answeredActivities: IObjectAnswer) => (
+      )}
+
+      {!studentAnswerThisActivity
+      && answerList
+      && activity?.answered_activities.map((answeredActivities: IObjectAnswer) => (
         <ContainerReplyTeacher
           key={answeredActivities.id}
           id={answeredActivities.id}

@@ -1,4 +1,3 @@
-import { Fragment } from 'react';
 import InputAnswerStudent from '../../components/Answer/InputStudentAnswerActivity';
 import {
   Container, ContainerAnswer, ContainerHeaderActivity,
@@ -21,6 +20,7 @@ export default function Activity() {
     handleModalCancel,
     handleAnswer,
     studentAnswerThisActivity,
+    handleBackAllActivity,
   } = useActivity();
 
   return (
@@ -56,6 +56,8 @@ export default function Activity() {
             handleAnswerNote={handleAnswerNote}
             isLoading={isLoading}
             handleModalOpen={handleModalOpen}
+            studentAnswerThisActivity={studentAnswerThisActivity}
+            handleBackAllActivity={handleBackAllActivity}
           />
         )}
         {user?.type === 'student' && (

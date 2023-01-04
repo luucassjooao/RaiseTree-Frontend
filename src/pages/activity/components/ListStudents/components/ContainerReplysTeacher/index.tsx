@@ -2,31 +2,49 @@
 
 import { useEffect, useState } from 'react';
 import Button from '../../../../../../components/Button';
-import { ContainerAnswer, ContainerFooterActivity } from './styles';
+import { ButtonBackAllActivity, ContainerAnswer, ContainerFooterActivity } from './styles';
 import InputAnswerTeacher from '../../../../../../components/Answer/InputTeacherAnswerReplyActiviyOfStudent';
-import { IAnswerTeacherContainerReply, IObjectAnswer } from '../../../../../../utils/types';
+import { IAnswerTeacherContainerReply, IObjectAnswer, TTActivityScreen } from '../../../../../../utils/types';
 
 export default function ContainerReplyTeacher({
-  id, Student, answer, createdAt, callback, isLoading, fullActivity,
-}: IAnswerTeacherContainerReply) {
+  id,
+  Student,
+  answer,
+  createdAt,
+  callback,
+  isLoading,
+  fullActivity,
+  handleBackAllActivity,
+}: IAnswerTeacherContainerReply<IObjectAnswer | TTActivityScreen>) {
   const [noteAnswer, setNoteAnswer] = useState<boolean>(false);
   const [replyThisAnswerOfStudent, setReplyThisAnswerOfStudent] = useState<IObjectAnswer>();
+  const [isOneActivity, setIsOneActivity] = useState<boolean>(false);
 
   function handleNoteStudent() {
     setNoteAnswer((prevState) => (prevState !== true));
   }
 
   useEffect(() => {
-    const findReplyOnThisStudent: IObjectAnswer = fullActivity.answered_activities
-      .find((idUser: IObjectAnswer) => idUser.Student.user.id === Student.user.id);
+    if (typeof fullActivity.answered_activities !== 'undefined') {
+      const findReplyOnThisStudent: IObjectAnswer = (fullActivity as TTActivityScreen)
+        .answered_activities
+        .find((idUser: IObjectAnswer) => idUser.Student.user.id === Student.user.id);
 
-    if (findReplyOnThisStudent.note_of_teacher !== '') {
-      setReplyThisAnswerOfStudent(findReplyOnThisStudent);
+      if (findReplyOnThisStudent.note_of_teacher !== '') {
+        setReplyThisAnswerOfStudent(findReplyOnThisStudent);
+      }
+    } else if ((fullActivity as IObjectAnswer).note_of_teacher !== '') {
+      setReplyThisAnswerOfStudent((fullActivity as IObjectAnswer));
+      setIsOneActivity(true);
     }
   }, []);
 
   return (
     <ContainerFooterActivity>
+      {isOneActivity && (
+        <ButtonBackAllActivity type="button" onClick={handleBackAllActivity}>Ver todas as atividades</ButtonBackAllActivity>
+      )}
+      <br />
       <span>
         Aluno:&nbsp;
         {Student.user.name}

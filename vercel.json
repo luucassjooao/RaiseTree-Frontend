@@ -13,6 +13,7 @@
     { "src": "/createActivityDraft", "dest": "/createActivityDraft" },
     { "src": "/createActivity", "dest": "/createActivity" },
     { "src": "/activity", "dest": "/activity" },
-    { "src": "/rsu", "dest": "/rsu" }
+    { "src": "/rsu", "dest": "/rsu" },
+    { "src": "/students", "dest": "/students" }
   ]
 }

@@ -70,6 +70,14 @@ class ActivityService {
       },
     });
   }
+
+  public async getAllAnswerActivityOfStudent(studentId: string) {
+    return this.httpClient.get(`/getAllAnswerAcitivityOfStudent/${studentId}`, {
+      headers: {
+        authorization: localStorage.getItem('@Login:Token') || '',
+      },
+    });
+  }
 }
 
 export default new ActivityService();

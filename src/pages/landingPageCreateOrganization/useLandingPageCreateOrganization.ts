@@ -57,7 +57,7 @@ export default function useLandingPageCreateOrganization() {
     return () => {
       setSubjects([]);
     };
-  }, []);
+  }, [selectOption.option === 'register']);
 
   function handleEmail(event: InputChange) {
     setEmail(event.target.value);
