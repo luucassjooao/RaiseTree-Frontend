@@ -1,4 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
+import {
+  useEffect, useRef, useState,
+} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Button from '../../components/Button';
@@ -6,6 +8,7 @@ import CardHome from '../../components/cards/CardsHome';
 import SideBar from '../../components/SideBar';
 import { useAuth } from '../../hooks/useAuth';
 import ActivityService from '../../services/ActivityService';
+import StudentsCacheRedisService from '../../services/Cache/StudentsCacheRedisService';
 import StudentService from '../../services/StudentService';
 import {
   Container, ContainerTable, DivSideBar, DivSideBarActivity, InputButton,
@@ -50,9 +53,18 @@ export default function Students() {
     setGetActivityOfStudentAnswer,
   ] = useState<TActivityAnswer[]>([]);
 
+  const selectedsClassroomsRef = useRef<string[]>([]);
+
   useEffect(() => {
     if (user?.type !== 'teacher') navigate('/home');
     setClassroomSelected(user?.type_model_teacher?.classrooms[0] as string);
+
+    return () => {
+      (async () => {
+        await StudentsCacheRedisService
+          .cleanUpStudentsByClassroom(selectedsClassroomsRef.current.join());
+      })();
+    };
   }, []);
 
   useEffect(() => {
@@ -65,6 +77,13 @@ export default function Students() {
         const getStudentsByClassroom: TStudents[] = await StudentService
           .getStudentsByClassroom(classroomSelected);
         setStudents(getStudentsByClassroom);
+
+        const searchClassroomSelected = selectedsClassroomsRef.current
+          .findIndex((classroom) => classroom === classroomSelected);
+
+        if (searchClassroomSelected === -1) {
+          selectedsClassroomsRef.current.push(classroomSelected);
+        }
       } catch {
         toast.error('Ouve algum erro ao buscar os alunos!');
       }
