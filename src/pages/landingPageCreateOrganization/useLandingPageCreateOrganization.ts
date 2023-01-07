@@ -4,7 +4,7 @@ import { useAuth } from '../../hooks/useAuth';
 import { useErrors } from '../../hooks/useHooks';
 import AuthService from '../../services/AuthService';
 import SubjectService from '../../services/SubjectService';
-import { InputChange } from '../../utils/types';
+import { InputChange } from '../../utils/types/globaTypes';
 
 type StateSelectOption = {
   visible: boolean;

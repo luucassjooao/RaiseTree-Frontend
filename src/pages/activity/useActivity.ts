@@ -7,9 +7,8 @@ import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useAuth } from '../../hooks/useAuth';
 import ActivityService from '../../services/ActivityService';
-import {
-  IAnswerTeacherTableStudents, IObjectAnswer, TFindAnswerStudent, TTActivityScreen,
-} from '../../utils/types';
+import { TTActivityScreen } from '../../utils/types/typesActivity';
+import { IAnswerTeacherTableStudents, TFindAnswerStudent, TObjectAnswer } from '../../utils/types/typesAnswerActivity';
 
 export default function useActivity() {
   const { user } = useAuth();
@@ -24,7 +23,7 @@ export default function useActivity() {
 
   const [studentInfos, setStudentInfos] = useState<IAnswerTeacherTableStudents | null>(null);
 
-  const [studentAnswerThisActivity, setStudentAnswerThisActivity] = useState<IObjectAnswer>();
+  const [studentAnswerThisActivity, setStudentAnswerThisActivity] = useState<TObjectAnswer>();
 
   const navigate = useNavigate();
 

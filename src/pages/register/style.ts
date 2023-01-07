@@ -15,7 +15,7 @@ export const Container = styled.div<IsStudent>`
   box-shadow: ${({ theme }) => theme.shadows.boxShadow};
 
   small {
-    color: #000;
+    color: ${({ theme }) => theme.colors.textColorBlack};
   }
 `;
 

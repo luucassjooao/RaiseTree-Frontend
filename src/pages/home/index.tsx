@@ -11,42 +11,8 @@ import { useAuth } from '../../hooks/useAuth';
 import ActivityService from '../../services/ActivityService';
 import StaticUserService from '../../services/StaticUserService';
 import { CardsActivities, Container, TitleMatter } from './style';
-
-type ObjActivity = {
-  id: string;
-  title: string;
-  description: string;
-  classrooms: string[];
-  type: string;
-  teacherId: string;
-  dateExpiration: Date;
-  Teacher: {
-    subject: {
-      name: string;
-    };
-    user: {
-      name: string;
-    }
-  }
-  subjectId: string;
-  subject: {
-    id: string;
-    name: string;
-  }
-}
-
-type ArrayActivity = {
-  nameSubject: string;
-  activitys: ObjActivity[]
-}
-
-type TPeoples = {
-  id: string;
-  name: string;
-  code: string;
-  classroom: string[];
-  type: string;
-}
+import { ArrayActivity, ObjActivity } from '../../utils/types/typesActivity';
+import { TPeoples } from '../../utils/types/typesPeoples';
 
 export default function Home() {
   const { user } = useAuth();
@@ -91,11 +57,11 @@ export default function Home() {
         </div>
         )}
         {verifyUserTeacher
-        && (responseOfBack as ArrayActivity[])?.length >= 1
+        && (responseOfBack as TPeoples[])?.length >= 1
           ? <TitleMatter>Verifique as respostas nas atividades!</TitleMatter>
           : (verifyUserTeacher && <TitleMatter>Crie alguma atividade!</TitleMatter>)}
         {verificationUserTypeStudentOrTeacher
-          && (responseOfBack as ArrayActivity[])?.map((task) => (
+          && (responseOfBack as unknown as ArrayActivity[])?.map((task) => (
             <Fragment key={Math.random()}>
               {verifyUserStudent
                 && <TitleMatter key={Math.random()}>{task.nameSubject}</TitleMatter>}
@@ -107,7 +73,7 @@ export default function Home() {
                       teacher={cardActivity.Teacher.user.name}
                       title={cardActivity.title}
                       description={cardActivity.description}
-                      dateExpiration={cardActivity.dateExpiration}
+                      dateExpiration={cardActivity.dateExpiration as Date}
                       typeActivity={cardActivity.type}
                       isDraft={false}
                     />

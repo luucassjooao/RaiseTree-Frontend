@@ -2,6 +2,7 @@ export default {
   colors: {
     purples: {
       background: '#240046',
+      gray: '#310663',
       details: '#560bad',
     },
     button: {
@@ -23,9 +24,13 @@ export default {
       300: '#A5A5A5',
       200: '#BCBCBC',
       100: '#E5E5E5',
+      50: '#eee',
     },
     oranges: {
       main: '#fb5607',
+    },
+    green: {
+      main: '#24a02f',
     },
   },
   borderRadius: '5px',

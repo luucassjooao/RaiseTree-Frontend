@@ -1,4 +1,4 @@
-import { UserInformationsForSendMail } from '../utils/types';
+import { UserInformationsForSendMail } from '../utils/types/typesUser';
 import HttpClient from './utils/HttpClient';
 
 class AuthService {

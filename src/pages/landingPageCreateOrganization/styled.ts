@@ -61,7 +61,7 @@ export const Header = styled.div`
   top: -1px;
   width: 100%;
   height: 50px;
-  background: #310663;
+  background: ${({ theme }) => theme.colors.purples.gray};
   margin-bottom: 20px;
   font-size: 18px;
   font-weight: 400;
@@ -73,7 +73,7 @@ export const Header = styled.div`
 
   .link {
     text-decoration: none;
-    color: #fff;
+    color: ${({ theme }) => theme.colors.textColorWhite};
     transition: all 0.2s;
     font-size: 20px;
     font-weight: bold;
@@ -105,7 +105,7 @@ export const Footer = styled.div`
   margin-top: 20px;
   width: 100%;
   height: 35px;
-  background: #310663;
+  background: ${({ theme }) => theme.colors.purples.gray};
   align-items: center;
   justify-content: space-evenly;
   display: flex;

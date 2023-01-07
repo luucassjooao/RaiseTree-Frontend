@@ -44,7 +44,7 @@ export const Overlay = styled.div<Omit<TModal, 'danger'>>`
 export const Container = styled.div<TModal>`
   width: 100%;
   max-width: 450px;
-  background: #fff;
+  background: ${({ theme }) => theme.colors.textColorWhite};
   border-radius: 4px;
   padding: 24px;
   box-shadow: 0px 4px 10px rgba(0,0,0,0.04);
@@ -59,7 +59,7 @@ export const Container = styled.div<TModal>`
   )}
   }
   .modal-body {
-    color: #000;
+    color: ${({ theme }) => theme.colors.textColorBlack};
     margin-top: 32px;
     max-height: 500px;
     overflow: auto;

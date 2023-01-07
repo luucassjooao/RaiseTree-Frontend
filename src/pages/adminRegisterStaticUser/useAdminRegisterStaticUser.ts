@@ -2,21 +2,10 @@ import { FormEvent, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
-import { InputChange } from '../../utils/types';
 import { useErrors } from '../../hooks/useHooks';
 import StaticUserService from '../../services/StaticUserService';
-
-type TTClassroom = {
-  label: string;
-  value: string;
-}
-
-type TPeoples = {
-  name: string;
-  type: string;
-  classroom: string[];
-  cpf?: string | null;
-}
+import { InputChange, TTClassroom } from '../../utils/types/globaTypes';
+import { TPeoplesNews } from '../../utils/types/typesPeoples';
 
 export default function useAdminRegisterStaticUser() {
   const { user } = useAuth();
@@ -27,7 +16,7 @@ export default function useAdminRegisterStaticUser() {
   const [spreadSheetUrl, setSpreadSheetUrl] = useState<string>('');
 
   const [multiPeopleChoosing, setMultiPeopleChoosing] = useState<boolean>(false);
-  const [peoplesCreated, setPeoplesCreated] = useState<TPeoples[]>([]);
+  const [peoplesCreated, setPeoplesCreated] = useState<TPeoplesNews[]>([]);
 
   const [onePersonChoosing, setOnePersonChoosing] = useState<boolean>(false);
 

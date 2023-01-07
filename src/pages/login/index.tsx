@@ -9,11 +9,11 @@ import { Container, DivInputs } from './styles';
 import Button from '../../components/Button';
 import { Input } from '../../components/Input';
 
-import { InputChange } from '../../utils/types';
 import isEmailValid from '../../utils/isEmailValid';
 
 import FormGroup from '../../components/FormGroup';
 import Loader from '../../components/Loader';
+import { InputChange } from '../../utils/types/globaTypes';
 
 export default function Login() {
   const { signIn } = useAuth();

@@ -10,33 +10,11 @@ import { useAuth } from '../../hooks/useAuth';
 import ActivityService from '../../services/ActivityService';
 import StudentsCacheRedisService from '../../services/Cache/StudentsCacheRedisService';
 import StudentService from '../../services/StudentService';
+import { TActivityAnswer } from '../../utils/types/typesAnswerActivity';
+import { TStudents } from '../../utils/types/typesStudent';
 import {
   Container, ContainerTable, DivSideBar, DivSideBarActivity, InputButton,
 } from './styled';
-
-type TStudents = {
-  id: string;
-  current_points: string;
-  user: {
-    name: string;
-  }
-}
-
-type TActivityAnswer = {
-  id: string;
-  Activity: {
-    title: string;
-    description: string;
-    dateExpiration: Date;
-    id: string;
-    type: string;
-    Teacher: {
-      user: {
-        name: string;
-      }
-    }
-  }
-}
 
 export default function Students() {
   const { user } = useAuth();
@@ -186,7 +164,7 @@ export default function Students() {
           {getActivityOfStudentAnswer.map((infos) => (
             <Link to={`/activity/${infos.Activity.id}?ai=${infos.id}`} key={infos.Activity.id} style={{ textDecoration: 'none' }}>
               <CardHome
-                dateExpiration={infos.Activity.dateExpiration}
+                dateExpiration={infos.Activity.dateExpiration as Date}
                 description={infos.Activity.description}
                 title={infos.Activity.title}
                 typeActivity={infos.Activity.type}

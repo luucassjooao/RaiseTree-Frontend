@@ -6,18 +6,9 @@ import { StyledButton } from '../../../../components/Button/styled';
 import FormGroup from '../../../../components/FormGroup';
 import { Input } from '../../../../components/Input';
 import Select from '../../../../components/Select';
-import { User } from '../../../../context/auth/type';
-import { InputChange } from '../../../../utils/types';
+import { InputChange, TMessageError, TTClassroom } from '../../../../utils/types/globaTypes';
+import { User } from '../../../../utils/types/typesUser';
 import { DivButtons } from '../../styles';
-
-type TMessageError = {
-  fieldName: string;
-}
-
-type TTClassroom = {
-  label: string;
-  value: string;
-}
 
 type TOnePersonChoosing = {
   setType(value: SetStateAction<string>): void;

@@ -65,7 +65,7 @@ export default function LP() {
           {selectOption.option === 'login'
             && (
             <LoginLP
-              handleLogin={handleLogin}
+              handleSubmit={handleLogin}
               backChoosing={backChoosing}
               getErrorMessageByFieldName={getErrorMessageByFieldName}
               email={email}
@@ -73,13 +73,13 @@ export default function LP() {
               password={password}
               handlePassword={handlePassword}
               isSubmitting={isSubmitting}
-              isFormValidLogin={isFormValidLogin}
+              isFormValid={isFormValidLogin}
             />
             )}
           {selectOption.option === 'register'
             && (
             <RegisterLP
-              handleRegister={handleRegister}
+              handleSubmit={handleRegister}
               backChoosing={backChoosing}
               getErrorMessageByFieldName={getErrorMessageByFieldName}
               email={email}
@@ -87,7 +87,7 @@ export default function LP() {
               password={password}
               handlePassword={handlePassword}
               isSubmitting={isSubmitting}
-              isFormValidRegister={isFormValidRegister}
+              isFormValid={isFormValidRegister}
               typeUserRegister={typeUserRegister}
               setTypeUserRegister={setTypeUserRegister}
               name={name}

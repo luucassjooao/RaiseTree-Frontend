@@ -5,6 +5,7 @@ declare module 'styled-components' {
     colors: {
       purples: {
         background: string;
+        gray: string;
         details: string;
       };
       button: {
@@ -26,8 +27,12 @@ declare module 'styled-components' {
         300: string;
         200: string;
         100: string;
+        50: string;
       };
       oranges: {
+        main: string;
+      };
+      green: {
         main: string;
       };
     };

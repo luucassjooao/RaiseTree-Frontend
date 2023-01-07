@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { SetStateAction } from 'react';
 import { StyledButton } from '../../../../components/Button/styled';
-import { User } from '../../../../context/auth/type';
+import { User } from '../../../../utils/types/typesUser';
 import { DivButtons } from '../../styles';
 
 type TSpreadSheetChoosing = {

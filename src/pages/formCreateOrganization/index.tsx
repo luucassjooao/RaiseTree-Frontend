@@ -10,9 +10,9 @@ import { useErrors } from '../../hooks/useHooks';
 import SubjectService from '../../services/SubjectService';
 import RegisterService from '../../services/RegisterService';
 import isEmailValid from '../../utils/isEmailValid';
-import { InputChange } from '../../utils/types';
 import { Container, ContainerWrapper } from './styles';
 import { useAuth } from '../../hooks/useAuth';
+import { InputChange } from '../../utils/types/globaTypes';
 
 export default function FormCreateOrganization() {
   const { ChangeHopingActivatingAccount } = useAuth();

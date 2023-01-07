@@ -8,7 +8,6 @@ import {
   Form, ContainerForm, Title, TitleDescription, ButtonContainer, DivCardHome, TitlePoints,
 } from './styles';
 
-import { TActivity, InputChange, TDraft } from '../../utils/types';
 import { useErrors } from '../../hooks/useHooks';
 import FormGroup from '../FormGroup';
 import CardHome from '../cards/CardsHome';
@@ -17,23 +16,15 @@ import Button from '../Button';
 import Select from '../Select';
 import JoditEditor from '../editor/Jodit';
 import Modal from '../Modal';
-
-type TOnSubmit = {
-  // eslint-disable-next-line no-unused-vars
-  setFieldsValues: (activity: TDraft) => void;
-  resetFields: () => void;
-}
+import { TActivity } from '../../utils/types/typesActivity';
+import { InputChange, TTClassroom } from '../../utils/types/globaTypes';
+import { TOnSubmit } from '../../utils/types/createActivityUseRef';
 
 type TActivityForm = {
   type: 'createActivity' | 'draft';
   buttonLabel: string;
   // eslint-disable-next-line no-unused-vars
   onSubmit: (activity: TActivity) => void;
-}
-
-type TTClassroom = {
-  label: string;
-  value: string;
 }
 
 const ActivityForm = forwardRef<TOnSubmit, TActivityForm>(

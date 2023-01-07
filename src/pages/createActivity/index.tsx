@@ -4,14 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import ActivityForm from '../../components/ActivityForm';
 import ActivityService from '../../services/ActivityService';
-import { TActivity, TDraft } from '../../utils/types';
+import { TOnSubmit } from '../../utils/types/createActivityUseRef';
+import { TActivity } from '../../utils/types/typesActivity';
 import { Container } from './styles';
-
-type TOnSubmit = {
-  // eslint-disable-next-line no-unused-vars
-  setFieldsValues: (activity: TDraft) => void;
-  resetFields: () => void;
-}
 
 export default function CreateActivity() {
   const activityFormRef = useRef<TOnSubmit>(null);

@@ -1,13 +1,9 @@
 /* eslint-disable no-nested-ternary */
 import styled from 'styled-components';
-
-type TSetErrors = {
-  field: string;
-  message: string;
-}
+import { TMessageError } from '../../utils/types/globaTypes';
 
 type TError = {
-  errors: TSetErrors[];
+  errors: TMessageError[];
 }
 
 export const Container = styled.form<TError>`
@@ -34,6 +30,9 @@ export const Container = styled.form<TError>`
   }
   h1 {
     padding-top: 20px;
+  }
+  small {
+    color: ${({ theme }) => theme.colors.textColorBlack};
   }
 `;
 

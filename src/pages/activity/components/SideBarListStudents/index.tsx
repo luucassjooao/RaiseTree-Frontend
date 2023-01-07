@@ -2,8 +2,8 @@ import { useState } from 'react';
 import Button from '../../../../components/Button';
 import SideBar from '../../../../components/SideBar';
 import InputAnswerTeacher from '../../../../components/Answer/InputTeacherAnswerReplyActiviyOfStudent';
-import { IAnswerTeacherModal } from '../../../../utils/types';
 import { Container } from './styles';
+import { IAnswerTeacherModal } from '../../../../utils/types/typesAnswerActivity';
 
 export default function SideBarListStudents({
   id,

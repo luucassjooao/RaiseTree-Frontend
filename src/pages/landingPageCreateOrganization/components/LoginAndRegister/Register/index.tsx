@@ -1,44 +1,15 @@
 /* eslint-disable no-unused-vars */
-import { FormEvent, SetStateAction } from 'react';
 import Button from '../../../../../components/Button';
 import { StyledButton } from '../../../../../components/Button/styled';
 import FormGroup from '../../../../../components/FormGroup';
 import { Input } from '../../../../../components/Input';
 import Select from '../../../../../components/Select';
-import { InputChange } from '../../../../../utils/types';
 import { ChoosingContainer } from '../styles';
+import { TRegister } from '../types';
 import { ContainerInputsRegisters, DivButtons } from './styles';
 
-type TMessageError = {
-  fieldName: string;
-}
-
-type TRegister = {
-  handleRegister(event: FormEvent): Promise<void>;
-  backChoosing(): void;
-  getErrorMessageByFieldName({ fieldName }: TMessageError): string | undefined;
-  email: string;
-  handleEmail(event: InputChange): void;
-  password: string;
-  handlePassword(event: InputChange): void;
-  isSubmitting: boolean;
-  isFormValidRegister: boolean | string;
-  typeUserRegister: string;
-  setTypeUserRegister(value: SetStateAction<string>): void;
-  name: string;
-  handleName(event: InputChange): void;
-  code: string;
-  handleCodingCpf(event: InputChange): void;
-  confirmPassword: string;
-  handleConfirmPassword(event: InputChange): void;
-  isLoadingSubject: boolean;
-  subjectId: string;
-  setSubjectId(value: SetStateAction<string>): void;
-  subjects: string[];
-}
-
 export default function RegisterLP({
-  handleRegister,
+  handleSubmit,
   backChoosing,
   getErrorMessageByFieldName,
   email,
@@ -46,7 +17,7 @@ export default function RegisterLP({
   password,
   handlePassword,
   isSubmitting,
-  isFormValidRegister,
+  isFormValid,
   typeUserRegister,
   setTypeUserRegister,
   name,
@@ -61,7 +32,7 @@ export default function RegisterLP({
   subjects,
 }: TRegister) {
   return (
-    <ChoosingContainer noValidate onSubmit={handleRegister}>
+    <ChoosingContainer noValidate onSubmit={handleSubmit}>
       <Button
         isLoading={false}
         size={65}
@@ -227,7 +198,7 @@ export default function RegisterLP({
         <Button
           isLoading={isSubmitting}
           size={350}
-          disabled={!isFormValidRegister}
+          disabled={!isFormValid}
           type="submit"
           yellowBackground
         >

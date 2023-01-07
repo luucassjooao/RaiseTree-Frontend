@@ -2,13 +2,10 @@
 import { StyledButton } from '../../../../components/Button/styled';
 import ContainerReplyTeacher from './components/ContainerReplysTeacher';
 import TableStudents from './components/TableStudents';
-import {
-  IAnswerTeacherTableStudents,
-  TTActivityScreen,
-  IObjectAnswer,
-} from '../../../../utils/types';
 import { DivButtons } from '../../style';
 import { ContainerTable, H1Headline } from './styles';
+import { TTActivityScreen } from '../../../../utils/types/typesActivity';
+import { IAnswerTeacherTableStudents, TObjectAnswer } from '../../../../utils/types/typesAnswerActivity';
 
 type TListStudents = {
   handleAnswerList(): void;
@@ -22,7 +19,7 @@ type TListStudents = {
   ): void;
   isLoading: boolean;
   handleModalOpen(student: IAnswerTeacherTableStudents): void;
-  studentAnswerThisActivity: IObjectAnswer | undefined;
+  studentAnswerThisActivity: TObjectAnswer | undefined;
   handleBackAllActivity(): void;
 }
 
@@ -85,7 +82,7 @@ export default function ListStudents({
 
       {!studentAnswerThisActivity
       && answerList
-      && activity?.answered_activities.map((answeredActivities: IObjectAnswer) => (
+      && activity?.answered_activities.map((answeredActivities: TObjectAnswer) => (
         <ContainerReplyTeacher
           key={answeredActivities.id}
           id={answeredActivities.id}

@@ -1,11 +1,5 @@
+import { TPeoples } from '../../../utils/types/typesPeoples';
 import { ContainerCards, Details } from './styles';
-
-type TPeoples = {
-  name: string;
-  code: string;
-  classroom: string[];
-  type: string;
-}
 
 export default function CardPeople({
   name, code, classroom, type,

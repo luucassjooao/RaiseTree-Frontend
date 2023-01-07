@@ -28,7 +28,7 @@ export const ButtonClassroom = styled.button`
 export const ContainerTable = styled.table`
   margin: 25px auto;
   border-collapse: collapse;
-  border: 1px solid #eee;
+  border: 1px solid ${({ theme }) => theme.colors.gray[50]};
   color: ${({ theme }) => theme.colors.textColorWhite};
   box-shadow: 0px 0px 20px rgba(0,0,0,0.10),
      0px 10px 20px rgba(0,0,0,0.05),
@@ -47,7 +47,7 @@ export const ContainerTable = styled.table`
 
   th, td {
     color: ${({ theme }) => theme.colors.textColorBlack};
-    border: 1px solid #eee;
+    border: 1px solid ${({ theme }) => theme.colors.gray[50]};
     padding: 12px 35px;
     border-collapse: collapse;
   }
@@ -65,8 +65,8 @@ export const ContainerTable = styled.table`
     transition: 0.2s all;
 
     &:hover {
-      background: #24a02f;
-      color: #fff;
+      background: ${({ theme }) => theme.colors.green.main};
+      color: ${({ theme }) => theme.colors.textColorWhite};
     }
   }
 
@@ -110,7 +110,7 @@ export const InputButton = styled.input<TInput>`
 
   transition: all 0.3s;
   &:hover {
-    background: ${({ isSelected, theme }) => (isSelected ? '#24a02f' : theme.colors.button.hover)};
+    background: ${({ isSelected, theme }) => (isSelected ? theme.colors.green.main : theme.colors.button.hover)};
     color: ${({ isSelected, theme }) => (isSelected && theme.colors.textColorWhite)};
   }
 `;

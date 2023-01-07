@@ -82,13 +82,13 @@ ${({ purpleBackground, isPropTrue }) => (purpleBackground === true
       }
       &:last-child {
         color: ${({ theme }) => theme.colors.textColorWhite};
-        background: #fb5607;
+        background: ${({ theme }) => theme.colors.oranges.main};
       }
   `
       : css`
       &:first-child {
         color: ${({ theme }) => theme.colors.textColorWhite};
-        background: #fb5607;
+        background: ${({ theme }) => theme.colors.oranges.main};
     }
     &:last-child {
       color: ${({ theme }) => theme.colors.textColorBlack};

@@ -1,11 +1,5 @@
+import { TPeoplesNews } from '../utils/types/typesPeoples';
 import HttpClient from './utils/HttpClient';
-
-type TPeoples = {
-  name: string;
-  type: string;
-  classroom: string[];
-  cpf?: string | null;
-}
 
 class StaticUser {
   public httpClient: HttpClient;
@@ -33,7 +27,7 @@ class StaticUser {
     });
   }
 
-  public async createManyPeoples(peoples: TPeoples[]) {
+  public async createManyPeoples(peoples: TPeoplesNews[]) {
     return this.httpClient.post('/createManyPeoples', {
       body: {
         peoples,
@@ -44,7 +38,7 @@ class StaticUser {
     });
   }
 
-  public async findAllPeoplesStaticInOrganization(organizationId: string): Promise<TPeoples[]> {
+  public async findAllPeoplesStaticInOrganization(organizationId: string): Promise<TPeoplesNews[]> {
     const getPeoples = this.httpClient.get(`/findallpeoplesstaticUser/${organizationId}`, {
       headers: {
         authorization: localStorage.getItem('@Login:Token') || '',

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  margin: 200px auto;
+  margin: 100px auto;
   width: 400px;
   background: ${({ theme }) => theme.colors.yellows.main};
   -webkit-box-shadow: ${({ theme }) => theme.shadows.webkitBoxShadow};
@@ -10,7 +10,7 @@ export const Container = styled.div`
   border-radius: ${({ theme }) => theme.borderRadius};
   text-align: center;
 
-  h2 {
+  h2, small {
     color: ${({ theme }) => theme.colors.purples.details}
   }
 

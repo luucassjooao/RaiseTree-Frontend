@@ -5,17 +5,8 @@ import Button from '../../../../components/Button';
 import FormGroup from '../../../../components/FormGroup';
 import { Input } from '../../../../components/Input';
 import Select from '../../../../components/Select';
-import { User } from '../../../../context/auth/type';
-import { InputChange } from '../../../../utils/types';
-
-type TMessageError = {
-  fieldName: string;
-}
-
-type TTClassroom = {
-  label: string;
-  value: string;
-}
+import { InputChange, TMessageError, TTClassroom } from '../../../../utils/types/globaTypes';
+import { User } from '../../../../utils/types/typesUser';
 
 type TSpreadSheetChoosing = {
   setType(value: SetStateAction<string>): void;

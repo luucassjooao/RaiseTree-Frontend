@@ -8,13 +8,9 @@ import ActivityForm from '../../components/ActivityForm';
 import useSafeAsyncAction from '../../hooks/useSafeAsyncAction';
 import ActivityService from '../../services/ActivityService';
 import DraftService from '../../services/DraftService';
-import { TActivity, TDraft } from '../../utils/types';
-
-type TOnSubmit = {
-  // eslint-disable-next-line no-unused-vars
-  setFieldsValues: (activity: TDraft) => void;
-  resetFields: () => void;
-}
+import { TOnSubmit } from '../../utils/types/createActivityUseRef';
+import { TActivity } from '../../utils/types/typesActivity';
+import { TDraft } from '../../utils/types/typesDraft';
 
 export default function CreateActivityDraft() {
   const isFirstRender = useRef(true);

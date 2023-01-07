@@ -40,7 +40,7 @@ type TSpinner = {
 }
 
 export const StyledSpinner = styled.div<TSpinner>`
-  color: ${({ isBackgroundLight = false }) => (isBackgroundLight ? '#240046' : '#FFF')};
+  color: ${({ isBackgroundLight = false, theme }) => (isBackgroundLight ? theme.colors.purples.background : theme.colors.textColorWhite)};
   font-size: ${({ size }) => `${size}px`};
   width: 1em;
   height: 1em;

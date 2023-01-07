@@ -43,6 +43,6 @@ export const Container = styled.div<PropsSideBar>`
   background: ${({ colorBackground }) => `${colorBackground}`};
   width: ${({ size }) => `${size}px`};
   height: 100vh;
-  color: #FFF;
+  color: ${({ theme }) => theme.colors.textColorWhite};
   top: 0;
 `;

@@ -1,33 +1,5 @@
-import { TActivity } from '../utils/types';
+import { ArrayActivity, TActivity } from '../utils/types/typesActivity';
 import HttpClient from './utils/HttpClient';
-
-type ObjActivity = {
-  id: string;
-  title: string;
-  description: string;
-  classrooms: string[];
-  type: string;
-  teacherId: string;
-  dateExpiration: Date;
-  Teacher: {
-    subject: {
-      name: string;
-    };
-    user: {
-      name: string;
-    }
-  }
-  subjectId: string;
-  subject: {
-    id: string;
-    name: string;
-  }
-}
-
-type ArrayActivity = {
-  nameSubject: string;
-  activitys: ObjActivity[]
-}
 
 class ActivityService {
   public httpClient: HttpClient;

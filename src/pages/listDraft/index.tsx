@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import CardHome from '../../components/cards/CardsHome';
 import DraftService from '../../services/DraftService';
-import { TDraft } from '../../utils/types';
+import { TDraft } from '../../utils/types/typesDraft';
 import { CardsActivities } from './styled';
 
 export default function ListDraft() {

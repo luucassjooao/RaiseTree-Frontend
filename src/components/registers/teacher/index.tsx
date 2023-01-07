@@ -9,8 +9,7 @@ import AuthService from '../../../services/AuthService';
 import SubjectService from '../../../services/SubjectService';
 
 import isEmailValid from '../../../utils/isEmailValid';
-
-import { InputChange } from '../../../utils/types';
+import { InputChange } from '../../../utils/types/globaTypes';
 
 import Button from '../../Button';
 import FormGroup from '../../FormGroup';

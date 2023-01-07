@@ -4,7 +4,8 @@ import { useEffect, useState } from 'react';
 import Button from '../../../../../../components/Button';
 import { ButtonBackAllActivity, ContainerAnswer, ContainerFooterActivity } from './styles';
 import InputAnswerTeacher from '../../../../../../components/Answer/InputTeacherAnswerReplyActiviyOfStudent';
-import { IAnswerTeacherContainerReply, IObjectAnswer, TTActivityScreen } from '../../../../../../utils/types';
+import { TTActivityScreen } from '../../../../../../utils/types/typesActivity';
+import { IAnswerTeacherContainerReply, TObjectAnswer } from '../../../../../../utils/types/typesAnswerActivity';
 
 export default function ContainerReplyTeacher({
   id,
@@ -15,9 +16,9 @@ export default function ContainerReplyTeacher({
   isLoading,
   fullActivity,
   handleBackAllActivity,
-}: IAnswerTeacherContainerReply<IObjectAnswer | TTActivityScreen>) {
+}: IAnswerTeacherContainerReply<TObjectAnswer | TTActivityScreen>) {
   const [noteAnswer, setNoteAnswer] = useState<boolean>(false);
-  const [replyThisAnswerOfStudent, setReplyThisAnswerOfStudent] = useState<IObjectAnswer>();
+  const [replyThisAnswerOfStudent, setReplyThisAnswerOfStudent] = useState<TObjectAnswer>();
   const [isOneActivity, setIsOneActivity] = useState<boolean>(false);
 
   function handleNoteStudent() {
@@ -26,15 +27,15 @@ export default function ContainerReplyTeacher({
 
   useEffect(() => {
     if (typeof fullActivity.answered_activities !== 'undefined') {
-      const findReplyOnThisStudent: IObjectAnswer = (fullActivity as TTActivityScreen)
+      const findReplyOnThisStudent: TObjectAnswer = (fullActivity as TTActivityScreen)
         .answered_activities
-        .find((idUser: IObjectAnswer) => idUser.Student.user.id === Student.user.id);
+        .find((idUser: TObjectAnswer) => idUser.Student.user.id === Student.user.id);
 
       if (findReplyOnThisStudent.note_of_teacher !== '') {
         setReplyThisAnswerOfStudent(findReplyOnThisStudent);
       }
-    } else if ((fullActivity as IObjectAnswer).note_of_teacher !== '') {
-      setReplyThisAnswerOfStudent((fullActivity as IObjectAnswer));
+    } else if ((fullActivity as TObjectAnswer).note_of_teacher !== '') {
+      setReplyThisAnswerOfStudent((fullActivity as TObjectAnswer));
       setIsOneActivity(true);
     }
   }, []);

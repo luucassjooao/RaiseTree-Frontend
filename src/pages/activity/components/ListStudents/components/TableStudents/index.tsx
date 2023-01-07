@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { IAnswerTeacherTableStudents } from '../../../../../../utils/types';
+import { IAnswerTeacherTableStudents } from '../../../../../../utils/types/typesAnswerActivity';
 
 export default function TableStudents({
   modalOpen, id, Student, answer, createdAt,

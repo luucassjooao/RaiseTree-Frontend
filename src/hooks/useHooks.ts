@@ -1,12 +1,9 @@
 import { useState } from 'react';
+import { TMessageError } from '../utils/types/globaTypes';
 
 type TSetErrors = {
   field: string;
   message: string;
-}
-
-type TFieldName = {
-  fieldName: string;
 }
 
 export function useErrors() {
@@ -25,14 +22,14 @@ export function useErrors() {
     ]);
   }
 
-  function removeError({ fieldName }: TFieldName) {
+  function removeError({ fieldName }: TMessageError) {
     setErrors((prevState) => prevState.filter(
       (error) => error.field !== fieldName,
     ));
   }
 
   // eslint-disable-next-line max-len
-  const getErrorMessageByFieldName = ({ fieldName }: TFieldName) => errors.find((error) => error.field === fieldName)?.message;
+  const getErrorMessageByFieldName = ({ fieldName }: TMessageError) => errors.find((error) => error.field === fieldName)?.message;
 
   return {
     errors, setError, removeError, getErrorMessageByFieldName,

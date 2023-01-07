@@ -7,6 +7,6 @@ export const ChoosingContainer = styled.form`
   align-items: center;
 
   h3 {
-    color: #000;
+    color: ${({ theme }) => theme.colors.textColorBlack};
   }
 `;

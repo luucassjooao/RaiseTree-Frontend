@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import ActivityForm from '../../components/ActivityForm';
 import DraftService from '../../services/DraftService';
-import { TActivity } from '../../utils/types';
+import { TActivity } from '../../utils/types/typesActivity';
 import { Container } from './styles';
 
 export default function Draft() {

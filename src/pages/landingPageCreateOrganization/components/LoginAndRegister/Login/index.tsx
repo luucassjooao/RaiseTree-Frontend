@@ -1,29 +1,12 @@
 /* eslint-disable no-unused-vars */
-import { FormEvent } from 'react';
 import Button from '../../../../../components/Button';
 import FormGroup from '../../../../../components/FormGroup';
 import { Input } from '../../../../../components/Input';
-import { InputChange } from '../../../../../utils/types';
 import { ChoosingContainer } from '../styles';
-
-type TMessageError = {
-  fieldName: string;
-}
-
-type TLogin = {
-  handleLogin(event: FormEvent): Promise<void>;
-  backChoosing(): void;
-  getErrorMessageByFieldName({ fieldName }: TMessageError): string | undefined;
-  email: string;
-  handleEmail(event: InputChange): void;
-  password: string;
-  handlePassword(event: InputChange): void;
-  isSubmitting: boolean;
-  isFormValidLogin: boolean | string;
-}
+import { ISubmit } from '../types';
 
 export default function LoginLP({
-  handleLogin,
+  handleSubmit,
   backChoosing,
   getErrorMessageByFieldName,
   email,
@@ -31,10 +14,10 @@ export default function LoginLP({
   password,
   handlePassword,
   isSubmitting,
-  isFormValidLogin,
-}: TLogin) {
+  isFormValid,
+}: ISubmit) {
   return (
-    <ChoosingContainer onSubmit={handleLogin} noValidate>
+    <ChoosingContainer onSubmit={handleSubmit} noValidate>
       <Button
         isLoading={false}
         size={65}
@@ -70,7 +53,7 @@ export default function LoginLP({
       <Button
         isLoading={isSubmitting}
         size={350}
-        disabled={!isFormValidLogin}
+        disabled={!isFormValid}
         type="submit"
         yellowBackground={false}
       >
