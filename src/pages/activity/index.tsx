@@ -5,12 +5,14 @@ import {
 import useActivity from './useActivity';
 import SideBarListStudents from './components/SideBarListStudents';
 import ListStudents from './components/ListStudents';
+import Loader from '../../components/Loader';
 
 export default function Activity() {
   const {
     user,
     data,
     isLoading,
+    isLoadingPostPut,
     answerList,
     modalOpen,
     studentInfos,
@@ -24,9 +26,12 @@ export default function Activity() {
   } = useActivity();
 
   const activity = data;
+  const isLoadingActivity = isLoading;
 
   return (
     <>
+      <Loader isLoading={isLoadingActivity} />
+
       <SideBarListStudents
         id={studentInfos?.id!}
         answer={studentInfos?.answer!}
@@ -56,7 +61,7 @@ export default function Activity() {
             answerList={answerList}
             activity={activity}
             handleAnswerNote={handleAnswerNote}
-            isLoading={isLoading}
+            isLoading={isLoadingPostPut}
             handleModalOpen={handleModalOpen}
             studentAnswerThisActivity={studentAnswerThisActivity}
             handleBackAllActivity={handleBackAllActivity}
@@ -93,7 +98,7 @@ export default function Activity() {
               : (
                 <>
                   <h2>Responda a está atividade! 😄</h2>
-                  <InputAnswerStudent callback={handleAnswer} isLoading={isLoading} />
+                  <InputAnswerStudent callback={handleAnswer} isLoading={isLoadingPostPut} />
                 </>
               )}
           </div>

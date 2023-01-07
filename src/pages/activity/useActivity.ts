@@ -17,7 +17,7 @@ export default function useActivity() {
   const [searchParams] = useSearchParams();
   const idAnswerStudent = searchParams.get('ai');
 
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoadingPostPut, setIsLoading] = useState<boolean>(false);
   const [answerList, setAnswerList] = useState<boolean>(true);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
 
@@ -27,7 +27,7 @@ export default function useActivity() {
 
   const navigate = useNavigate();
 
-  const { data } = useQuery<TTActivityScreen>(['activity', id], async () => ActivityService.getUniqueActivityById(id as string), {
+  const { data, isLoading } = useQuery<TTActivityScreen>(['activity', id], async () => ActivityService.getUniqueActivityById(id as string), {
     staleTime: 3600000,
     onError(error: any) {
       toast.error(error.body.message);
@@ -122,6 +122,7 @@ export default function useActivity() {
     user,
     data,
     isLoading,
+    isLoadingPostPut,
     answerList,
     modalOpen,
     studentInfos,

@@ -1,5 +1,6 @@
 import useAnimatedUnmount from '../../hooks/useAnimatedUnmount';
 import ReactPortal from '../ReactPortal';
+import Spinner from '../Spinner';
 import { Container, Overlay } from './styles';
 
 const colorLiterals = {
@@ -15,10 +16,11 @@ type PropsSideBar = {
   colorBackground: 'DarkPurple' | 'LightPurple' | 'GrayPurple' | 'YellowMain';
   visible: boolean;
   children: JSX.Element | JSX.Element[];
+  isLoading?: boolean;
 }
 
 export default function SideBar({
-  side, size, colorBackground, visible, children,
+  side, size, colorBackground, visible, children, isLoading,
 }: PropsSideBar) {
   const { shouldRender, animatedElementRef } = useAnimatedUnmount(visible);
 
@@ -36,6 +38,11 @@ export default function SideBar({
           isLeaving={!visible}
         >
           {children}
+          {isLoading && (
+          <div className="div-spinner">
+            <Spinner size={70} isBackgroundLight={false} />
+          </div>
+          )}
         </Container>
       </Overlay>
     </ReactPortal>

@@ -1,14 +1,15 @@
 import {
   useEffect, useRef, useState,
 } from 'react';
+import { useQuery } from 'react-query';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Button from '../../components/Button';
 import CardHome from '../../components/cards/CardsHome';
+import Loader from '../../components/Loader';
 import SideBar from '../../components/SideBar';
 import { useAuth } from '../../hooks/useAuth';
 import ActivityService from '../../services/ActivityService';
-import StudentsCacheRedisService from '../../services/Cache/StudentsCacheRedisService';
 import StudentService from '../../services/StudentService';
 import { TActivityAnswer } from '../../utils/types/typesAnswerActivity';
 import { TStudents } from '../../utils/types/typesStudent';
@@ -22,51 +23,29 @@ export default function Students() {
   const isFirstRender = useRef(true);
 
   const [modalInfosStudentVisible, setModalInfosStudentVisible] = useState<boolean>(false);
+  const [
+    isLoadingFetchAnswerOfStudent,
+    setIsLoadingFetchAnswerOfStudent,
+  ] = useState<boolean>(false);
 
-  const [classroomSelected, setClassroomSelected] = useState<string>('');
-  const [students, setStudents] = useState<TStudents[]>([]);
+  const [classroomSelected, setClassroomSelected] = useState<string>(
+    user?.type_model_teacher?.classrooms[0] as string,
+  );
   const [getAnswerActivityStudentId, setGetAnswerActivityStudentId] = useState<string>('');
   const [
     getActivityOfStudentAnswer,
     setGetActivityOfStudentAnswer,
   ] = useState<TActivityAnswer[]>([]);
 
-  const selectedsClassroomsRef = useRef<string[]>([]);
-
   useEffect(() => {
     if (user?.type !== 'teacher') navigate('/home');
-    setClassroomSelected(user?.type_model_teacher?.classrooms[0] as string);
-
-    return () => {
-      (async () => {
-        await StudentsCacheRedisService
-          .cleanUpStudentsByClassroom(selectedsClassroomsRef.current.join());
-      })();
-    };
   }, []);
 
-  useEffect(() => {
-    if (isFirstRender.current) {
-      isFirstRender.current = false;
-      return;
-    }
-    (async () => {
-      try {
-        const getStudentsByClassroom: TStudents[] = await StudentService
-          .getStudentsByClassroom(classroomSelected);
-        setStudents(getStudentsByClassroom);
-
-        const searchClassroomSelected = selectedsClassroomsRef.current
-          .findIndex((classroom) => classroom === classroomSelected);
-
-        if (searchClassroomSelected === -1) {
-          selectedsClassroomsRef.current.push(classroomSelected);
-        }
-      } catch {
-        toast.error('Ouve algum erro ao buscar os alunos!');
-      }
-    })();
-  }, [classroomSelected]);
+  const { data, isLoading } = useQuery<TStudents[]>(['students', classroomSelected], () => StudentService.getStudentsByClassroom(classroomSelected), {
+    onError() {
+      toast.error('Ouve um erro ao buscar os alunos!');
+    },
+  });
 
   useEffect(() => {
     if (isFirstRender.current) {
@@ -74,6 +53,7 @@ export default function Students() {
       return;
     }
     (async () => {
+      setIsLoadingFetchAnswerOfStudent(true);
       try {
         if (getAnswerActivityStudentId !== '') {
           const getAnswerActivity = await ActivityService
@@ -82,6 +62,8 @@ export default function Students() {
         }
       } catch {
         toast.error('Ouve um erro ao buscar as atividades desse aluno!');
+      } finally {
+        setIsLoadingFetchAnswerOfStudent(false);
       }
     })();
   }, [getAnswerActivityStudentId]);
@@ -100,6 +82,7 @@ export default function Students() {
 
   return (
     <>
+      <Loader isLoading={isLoading} />
       <Container>
         <div className="divButtonsClassrooms">
           {user?.type_model_teacher?.classrooms.map((sala) => (
@@ -121,7 +104,7 @@ export default function Students() {
             </tr>
           </thead>
           <tbody>
-            {students.map((infos) => (
+            {data?.map((infos) => (
               <tr key={infos.id}>
                 <td>{infos.user.name}</td>
                 <td>{infos.current_points}</td>
@@ -143,6 +126,7 @@ export default function Students() {
         size={550}
         visible={modalInfosStudentVisible}
         colorBackground="GrayPurple"
+        isLoading={isLoadingFetchAnswerOfStudent}
       >
         <DivSideBar>
           <Button

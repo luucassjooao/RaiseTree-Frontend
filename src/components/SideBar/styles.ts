@@ -30,6 +30,13 @@ export const Overlay = styled.div<Pick<PropsSideBar, 'isLeaving'>>`
   animation: ${fadeIn} 0.3s;
 
   ${({ isLeaving }) => isLeaving && css`animation: ${fadeOut} 0.2s forwards;`}
+
+  .div-spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 50% auto;
+  }
 `;
 
 export const Container = styled.div<PropsSideBar>`
