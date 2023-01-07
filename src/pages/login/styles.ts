@@ -1,9 +1,13 @@
 /* eslint-disable no-nested-ternary */
 import styled from 'styled-components';
-import { TMessageError } from '../../utils/types/globaTypes';
+
+type TSetErrors = {
+  field: string;
+  message: string;
+}
 
 type TError = {
-  errors: TMessageError[];
+  errors: TSetErrors[];
 }
 
 export const Container = styled.form<TError>`
