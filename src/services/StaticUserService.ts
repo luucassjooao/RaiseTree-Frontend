@@ -44,12 +44,14 @@ class StaticUser {
     });
   }
 
-  public async findAllPeoplesStaticInOrganization(organizationId: string) {
-    return this.httpClient.get(`/findallpeoplesstaticUser/${organizationId}`, {
+  public async findAllPeoplesStaticInOrganization(organizationId: string): Promise<TPeoples[]> {
+    const getPeoples = this.httpClient.get(`/findallpeoplesstaticUser/${organizationId}`, {
       headers: {
         authorization: localStorage.getItem('@Login:Token') || '',
       },
     });
+
+    return getPeoples;
   }
 
   public async createPeoplesOfSheet(sheetId: string, typeOfPeoples: string) {

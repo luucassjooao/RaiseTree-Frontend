@@ -9,7 +9,7 @@ import ListStudents from './components/ListStudents';
 export default function Activity() {
   const {
     user,
-    activity,
+    data,
     isLoading,
     answerList,
     modalOpen,
@@ -22,6 +22,8 @@ export default function Activity() {
     studentAnswerThisActivity,
     handleBackAllActivity,
   } = useActivity();
+
+  const activity = data;
 
   return (
     <>

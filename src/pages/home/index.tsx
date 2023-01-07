@@ -1,8 +1,9 @@
 import {
-  Fragment, useCallback, useEffect, useState,
+  Fragment,
 } from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { useQuery } from 'react-query';
 import CardHome from '../../components/cards/CardsHome';
 import CardPeople from '../../components/cards/CardsPeoples';
 import Loader from '../../components/Loader';
@@ -50,47 +51,33 @@ type TPeoples = {
 export default function Home() {
   const { user } = useAuth();
 
-  const [activities, setActivities] = useState<ArrayActivity[]>([]);
-  const [peoples, setPeoples] = useState<TPeoples[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const verifyUserTeacher = user?.type === 'teacher';
+  const veirifyUserAdmin = user?.type === 'admin';
+  const verifyUserStudent = user?.type === 'student';
+  const verificationUserTypeStudentOrTeacher = verifyUserStudent || verifyUserTeacher;
 
-  const loadInfos = useCallback(async () => {
-    if (user?.type === 'student' || user?.type === 'teacher') {
-      setLoading(true);
-      try {
-        const activitiesList = await ActivityService.getHomeActivities();
-
-        setActivities(activitiesList);
-      } catch {
-        toast.error('Houve um error ao buscar as atividades. Fique tranquilo, já iremos consertar este problema!');
-      } finally {
-        setLoading(false);
-      }
-    } if (user?.type === 'admin') {
-      try {
-        const findPeoples = await StaticUserService
-          .findAllPeoplesStaticInOrganization(user.organizationId);
-
-        setPeoples(findPeoples);
-      } catch {
-        toast.error('Houve um error ao buscar as as pessoas. Fique tranquilo, já iremos consertar este problema!');
-      } finally {
-        setLoading(false);
-      }
-    }
-  }, []);
-
-  useEffect(() => {
-    loadInfos();
-  }, [loadInfos]);
+  const { data, isLoading } = useQuery('home', async () => (verificationUserTypeStudentOrTeacher
+    ? ActivityService.getHomeActivities()
+    : StaticUserService.findAllPeoplesStaticInOrganization(user?.organizationId as string)), {
+    onError() {
+      const messageErrorHomeActivity = 'Houve um error ao buscar as atividades. Fique tranquilo, já iremos consertar este problema!';
+      const messageErrorHomePeoples = 'Houve um error ao buscar as pessoas da sua organização. Fique tranquilo, já iremos consertar este problema!';
+      toast.error(
+        verificationUserTypeStudentOrTeacher
+          ? messageErrorHomeActivity
+          : messageErrorHomePeoples,
+      );
+    },
+  });
+  const responseOfBack = data;
 
   return (
     <>
-      <Loader isLoading={loading} />
+      <Loader isLoading={isLoading} />
       <Container>
-        {user?.type === 'admin' && (
-        <>
-          {peoples.map((pessoas) => (
+        {veirifyUserAdmin && (
+        <div>
+          {(responseOfBack as TPeoples[])?.map((pessoas) => (
             <CardsActivities key={pessoas.id}>
               <CardPeople
                 key={pessoas.name}
@@ -101,32 +88,34 @@ export default function Home() {
               />
             </CardsActivities>
           ))}
-        </>
+        </div>
         )}
-        {user?.type === 'teacher'
-        && activities.length >= 1
+        {verifyUserTeacher
+        && (responseOfBack as ArrayActivity[])?.length >= 1
           ? <TitleMatter>Verifique as respostas nas atividades!</TitleMatter>
-          : (user?.type === 'teacher' && <TitleMatter>Crie alguma atividade!</TitleMatter>)}
-        {activities.map((task) => (
-          <Fragment key={Math.random()}>
-            {user?.type === 'student' && <TitleMatter key={Math.random()}>{task.nameSubject}</TitleMatter>}
-            {task.activitys.map((cardActivity: ObjActivity) => (
-              <CardsActivities key={cardActivity.id}>
-                <Link to={`/activity/${cardActivity.id}`} style={{ textDecoration: 'none' }} key={Math.random()}>
-                  <CardHome
-                    key={cardActivity.title}
-                    teacher={cardActivity.Teacher.user.name}
-                    title={cardActivity.title}
-                    description={cardActivity.description}
-                    dateExpiration={cardActivity.dateExpiration}
-                    typeActivity={cardActivity.type}
-                    isDraft={false}
-                  />
-                </Link>
-              </CardsActivities>
-            ))}
-          </Fragment>
-        ))}
+          : (verifyUserTeacher && <TitleMatter>Crie alguma atividade!</TitleMatter>)}
+        {verificationUserTypeStudentOrTeacher
+          && (responseOfBack as ArrayActivity[])?.map((task) => (
+            <Fragment key={Math.random()}>
+              {verifyUserStudent
+                && <TitleMatter key={Math.random()}>{task.nameSubject}</TitleMatter>}
+              {task.activitys.map((cardActivity: ObjActivity) => (
+                <CardsActivities key={cardActivity.id}>
+                  <Link to={`/activity/${cardActivity.id}`} style={{ textDecoration: 'none' }} key={Math.random()}>
+                    <CardHome
+                      key={cardActivity.title}
+                      teacher={cardActivity.Teacher.user.name}
+                      title={cardActivity.title}
+                      description={cardActivity.description}
+                      dateExpiration={cardActivity.dateExpiration}
+                      typeActivity={cardActivity.type}
+                      isDraft={false}
+                    />
+                  </Link>
+                </CardsActivities>
+              ))}
+            </Fragment>
+          ))}
       </Container>
     </>
   );

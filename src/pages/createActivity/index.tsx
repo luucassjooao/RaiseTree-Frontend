@@ -1,4 +1,5 @@
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { useMutation, useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import ActivityForm from '../../components/ActivityForm';
@@ -14,31 +15,44 @@ type TOnSubmit = {
 
 export default function CreateActivity() {
   const activityFormRef = useRef<TOnSubmit>(null);
+  const isFirstRender = useRef(true);
+
+  const [activity, setActivity] = useState<TActivity>();
 
   const navigate = useNavigate();
 
-  async function handleSubmit(formData: TActivity) {
-    try {
-      const activity = {
-        title: formData.title,
-        description: formData.description,
-        classrooms: formData.classrooms || [],
-        activity: formData.activity,
-        dateExpiration: new Date(formData.dateExpiration),
-        type: formData.type,
-        previousPoints: formData.previousPoints,
-      };
-
-      await ActivityService.createActivity(activity);
-
+  const queryClient = useQueryClient();
+  const { mutate } = useMutation(() => ActivityService.createActivity(activity as TActivity), {
+    onSuccess() {
+      queryClient.invalidateQueries('home');
       activityFormRef.current?.resetFields();
-
       toast.success('Atividade Criada!');
-
       navigate('/home');
-    } catch (error: any) {
+    },
+    onError() {
       toast.error('Ouve um error ao criar está atividade! Tente novamente!');
+    },
+  });
+
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
     }
+    mutate();
+  }, [activity]);
+
+  async function handleSubmit(formData: TActivity) {
+    const formActivity = {
+      title: formData.title,
+      description: formData.description,
+      classrooms: formData.classrooms || [],
+      activity: formData.activity,
+      dateExpiration: new Date(formData.dateExpiration),
+      type: formData.type,
+      previousPoints: formData.previousPoints,
+    };
+    setActivity(formActivity);
   }
 
   return (

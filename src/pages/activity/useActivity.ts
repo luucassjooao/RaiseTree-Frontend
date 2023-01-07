@@ -1,6 +1,8 @@
 import {
-  useCallback, useEffect, useState,
+  useEffect,
+  useState,
 } from 'react';
+import { useQuery } from 'react-query';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useAuth } from '../../hooks/useAuth';
@@ -16,7 +18,6 @@ export default function useActivity() {
   const [searchParams] = useSearchParams();
   const idAnswerStudent = searchParams.get('ai');
 
-  const [activity, setActivity] = useState<TTActivityScreen>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [answerList, setAnswerList] = useState<boolean>(true);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
@@ -27,51 +28,32 @@ export default function useActivity() {
 
   const navigate = useNavigate();
 
-  const loadActivity = useCallback(async () => {
-    try {
-      const getActivity: TTActivityScreen = await ActivityService
-        .getUniqueActivityById(id as string);
-
-      setActivity(getActivity);
-
-      if (user?.type === 'student') {
-        const findClassroomStudentInActivity = getActivity.classrooms
-          .findIndex((sala) => sala === user.type_model_student?.classroom);
-
-        if (findClassroomStudentInActivity === -1) {
-          navigate('/home');
-        }
-
-        const findAnswerActivityOfStudent = getActivity.answered_activities
-          .findIndex((idUser: TFindAnswerStudent) => idUser.Student.user.id === user?.id);
-
-        if (findAnswerActivityOfStudent !== -1) {
-          setStudentAnswerThisActivity(
-            getActivity.answered_activities[findAnswerActivityOfStudent],
-          );
-        }
-      }
-
-      if (idAnswerStudent !== null && user?.type === 'teacher') {
-        const searchIdAnswerStudent = getActivity?.answered_activities
-          .findIndex((answerId: IObjectAnswer) => answerId.id === idAnswerStudent);
-
-        if (searchIdAnswerStudent !== -1) {
-          setStudentAnswerThisActivity(getActivity.answered_activities[searchIdAnswerStudent]);
-        }
-      }
-    } catch (error: any) {
+  const { data } = useQuery<TTActivityScreen>(['activity', id], async () => ActivityService.getUniqueActivityById(id as string), {
+    staleTime: 3600000,
+    onError(error: any) {
       toast.error(error.body.message);
-    }
-  }, [id as string]);
+    },
+  });
 
   useEffect(() => {
-    loadActivity();
+    if (user?.type === 'student') {
+      const findClassroomStudentInActivity = data?.classrooms
+        .findIndex((sala: string) => sala === user.type_model_student?.classroom);
 
-    return () => {
-      setActivity(undefined);
-    };
-  }, [loadActivity]);
+      if (findClassroomStudentInActivity === -1) {
+        navigate('/home');
+      }
+
+      const findAnswerActivityOfStudent = data?.answered_activities
+        .findIndex((idUser: TFindAnswerStudent) => idUser.Student.user.id === user?.id);
+
+      if (findAnswerActivityOfStudent !== -1) {
+        setStudentAnswerThisActivity(
+          data?.answered_activities[findAnswerActivityOfStudent],
+        );
+      }
+    }
+  }, [data]);
 
   function handleBackAllActivity() {
     setStudentAnswerThisActivity(undefined);
@@ -139,7 +121,7 @@ export default function useActivity() {
 
   return {
     user,
-    activity,
+    data,
     isLoading,
     answerList,
     modalOpen,

@@ -8,7 +8,7 @@ import {
   IObjectAnswer,
 } from '../../../../utils/types';
 import { DivButtons } from '../../style';
-import { ContainerTable } from './styles';
+import { ContainerTable, H1Headline } from './styles';
 
 type TListStudents = {
   handleAnswerList(): void;
@@ -36,6 +36,8 @@ export default function ListStudents({
   studentAnswerThisActivity,
   handleBackAllActivity,
 }: TListStudents) {
+  const verifyCountAnswerOfStudents = activity?.answered_activities.length === 0;
+
   return (
     <>
       {studentAnswerThisActivity && (
@@ -51,7 +53,7 @@ export default function ListStudents({
       />
       )}
 
-      {!studentAnswerThisActivity && (
+      {!studentAnswerThisActivity && !verifyCountAnswerOfStudents && (
       <DivButtons>
         <StyledButton
           size={130}
@@ -75,6 +77,10 @@ export default function ListStudents({
         </StyledButton>
       </DivButtons>
 
+      )}
+
+      {verifyCountAnswerOfStudents && (
+        <H1Headline>Nenhum aluno(a) respondeu a está atividade 🙃</H1Headline>
       )}
 
       {!studentAnswerThisActivity

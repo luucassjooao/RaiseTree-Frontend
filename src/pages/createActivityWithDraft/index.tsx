@@ -1,6 +1,7 @@
 import {
   useEffect, useRef, useState,
 } from 'react';
+import { useMutation, useQueryClient } from 'react-query';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import ActivityForm from '../../components/ActivityForm';
@@ -16,12 +17,15 @@ type TOnSubmit = {
 }
 
 export default function CreateActivityDraft() {
-  const [, setIsLoading] = useState(true);
+  const isFirstRender = useRef(true);
+
   const [draft, setDraft] = useState<TDraft>();
   const draftRef = useRef<TOnSubmit>(null);
 
   const { id } = useParams();
   const navigate = useNavigate();
+
+  const [activity, setActivity] = useState<TActivity>();
 
   const safeAsyncAction = useSafeAsyncAction();
 
@@ -32,7 +36,6 @@ export default function CreateActivityDraft() {
 
         safeAsyncAction(() => {
           draftRef.current?.setFieldsValues(draftLoad);
-          setIsLoading(false);
           setDraft(draft);
         });
       } catch {
@@ -44,26 +47,37 @@ export default function CreateActivityDraft() {
     loadDraft();
   }, [id, navigate, safeAsyncAction]);
 
-  async function handleSubmit(formData: TActivity) {
-    try {
-      const activity = {
-        title: formData.title,
-        description: formData.description,
-        classrooms: formData.classrooms || [],
-        activity: formData.activity,
-        dateExpiration: formData.dateExpiration,
-        type: formData.type,
-        previousPoints: formData.previousPoints,
-      };
-
-      await ActivityService.createActivity(activity);
-
+  const queryClient = useQueryClient();
+  const { mutate } = useMutation(() => ActivityService.createActivity(activity as TActivity), {
+    onSuccess() {
+      queryClient.invalidateQueries('home');
       toast.success('Atividade criada!');
-
       navigate('/home');
-    } catch (error: any) {
+    },
+    onError(error: any) {
       toast.error(error.body.message);
+    },
+  });
+
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
     }
+    mutate();
+  }, [activity]);
+
+  async function handleSubmit(formData: TActivity) {
+    const formActivity = {
+      title: formData.title,
+      description: formData.description,
+      classrooms: formData.classrooms || [],
+      activity: formData.activity,
+      dateExpiration: formData.dateExpiration,
+      type: formData.type,
+      previousPoints: formData.previousPoints,
+    };
+    setActivity(formActivity);
   }
 
   return (

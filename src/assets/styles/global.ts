@@ -17,4 +17,20 @@ export default createGlobalStyle`
   button {
     cursor: pointer;
   }
+
+  /* React Multi Select */
+  .rmsc {
+    margin-top: 15px;
+    width: 500px;
+  }
+  .rmsc select {
+    height: 52px;
+  }
+  .dropdown-container {
+    color: #000;
+    height: 52px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+  }
 `;

@@ -47,18 +47,15 @@ export function AuthProvider({ children }: TAuthProvider) {
     const token = localStorage.getItem('@Login:Token');
 
     if (token) {
+      setLoading(true);
       try {
-        setLoading(true);
         loadUserInfos();
-        setLoading(false);
       } catch {
         handleLogout();
+      } finally {
+        setLoading(false);
       }
     }
-
-    return () => {
-      setUser(null);
-    };
   }, []);
 
   const ValuesAuthContextProvider = useMemo(() => ({

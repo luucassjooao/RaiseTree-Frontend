@@ -1,5 +1,10 @@
 import styled from 'styled-components';
 
+export const H1Headline = styled.h1`
+  margin-top: 14px;
+  text-align: center;
+`;
+
 export const ContainerTable = styled.table`
   margin: 25px auto;
   border-collapse: collapse;

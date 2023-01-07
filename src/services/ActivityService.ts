@@ -1,6 +1,34 @@
 import { TActivity } from '../utils/types';
 import HttpClient from './utils/HttpClient';
 
+type ObjActivity = {
+  id: string;
+  title: string;
+  description: string;
+  classrooms: string[];
+  type: string;
+  teacherId: string;
+  dateExpiration: Date;
+  Teacher: {
+    subject: {
+      name: string;
+    };
+    user: {
+      name: string;
+    }
+  }
+  subjectId: string;
+  subject: {
+    id: string;
+    name: string;
+  }
+}
+
+type ArrayActivity = {
+  nameSubject: string;
+  activitys: ObjActivity[]
+}
+
 class ActivityService {
   public httpClient: HttpClient;
 
@@ -55,12 +83,14 @@ class ActivityService {
     });
   }
 
-  public async getHomeActivities() {
-    return this.httpClient.get('/getHomeActivities', {
+  public async getHomeActivities(): Promise<ArrayActivity[]> {
+    const getActivities = await this.httpClient.get('/getHomeActivities', {
       headers: {
         authorization: localStorage.getItem('@Login:Token') || '',
       },
     });
+
+    return getActivities;
   }
 
   public async getUniqueActivityById(id: string) {
