@@ -9,7 +9,7 @@ import useSafeAsyncAction from '../../hooks/useSafeAsyncAction';
 import ActivityService from '../../services/ActivityService';
 import DraftService from '../../services/DraftService';
 import { TOnSubmit } from '../../utils/types/createActivityUseRef';
-import { TActivity } from '../../utils/types/typesActivity';
+import { ICreateActiviyByDraft, TActivity } from '../../utils/types/typesActivity';
 import { TDraft } from '../../utils/types/typesDraft';
 
 export default function CreateActivityDraft() {
@@ -21,7 +21,7 @@ export default function CreateActivityDraft() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const [activity, setActivity] = useState<TActivity>();
+  const [activity, setActivity] = useState<ICreateActiviyByDraft>();
 
   const safeAsyncAction = useSafeAsyncAction();
 
@@ -72,6 +72,7 @@ export default function CreateActivityDraft() {
       dateExpiration: formData.dateExpiration,
       type: formData.type,
       previousPoints: formData.previousPoints,
+      idDraft: id,
     };
     setActivity(formActivity);
   }

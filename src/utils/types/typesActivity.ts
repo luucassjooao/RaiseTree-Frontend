@@ -33,3 +33,7 @@ export type TTActivityScreen = {
   Teacher: TTeacher;
   answered_activities: TObjectAnswer;
 }
+
+export interface ICreateActiviyByDraft extends TActivity {
+  idDraft?: string;
+}

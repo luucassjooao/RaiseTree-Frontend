@@ -4,8 +4,9 @@ import {
 import { Navigate } from 'react-router-dom';
 import Loader from '../../components/Loader';
 import AuthService from '../../services/AuthService';
+import { User } from '../../utils/types/typesUser';
 import {
-  TAuthProvider, IContext, User,
+  TAuthProvider, IContext,
 } from './type';
 
 export const AuthContext = createContext({} as IContext);

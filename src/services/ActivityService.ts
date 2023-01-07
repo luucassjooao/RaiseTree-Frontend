@@ -1,4 +1,4 @@
-import { ArrayActivity, TActivity } from '../utils/types/typesActivity';
+import { ArrayActivity, ICreateActiviyByDraft } from '../utils/types/typesActivity';
 import HttpClient from './utils/HttpClient';
 
 class ActivityService {
@@ -16,8 +16,9 @@ class ActivityService {
     dateExpiration,
     type,
     previousPoints,
-  }: TActivity) {
-    return this.httpClient.post('/createActivity', {
+    idDraft,
+  }: ICreateActiviyByDraft) {
+    return this.httpClient.post(`/createActivity/${idDraft}`, {
       body: {
         title, description, classrooms, activity, dateExpiration, type, previousPoints,
       },
