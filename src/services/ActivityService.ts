@@ -81,6 +81,14 @@ class ActivityService {
       },
     });
   }
+
+  public async adminGetActivity() {
+    return this.httpClient.get('/adminGetActivity', {
+      headers: {
+        authorization: localStorage.getItem('@Login:Token') || '',
+      },
+    });
+  }
 }
 
 export default new ActivityService();

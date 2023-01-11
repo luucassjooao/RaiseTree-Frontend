@@ -3,6 +3,7 @@ import { useAuth } from '../hooks/useAuth';
 
 import Activity from '../pages/activity';
 import AdminRegisterStaticUser from '../pages/adminRegisterStaticUser';
+import AdminViewActivity from '../pages/adminViewActivitys';
 import CreateActivity from '../pages/createActivity';
 import CreateActivityDraft from '../pages/createActivityWithDraft';
 import Draft from '../pages/draft';
@@ -61,6 +62,10 @@ export const privateRouter = [
   {
     path: '/students',
     element: <Students />,
+  },
+  {
+    path: '/ava',
+    element: <AdminViewActivity />,
   },
   {
     path: '/*',

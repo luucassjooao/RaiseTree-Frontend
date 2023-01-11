@@ -32,6 +32,7 @@ export default function Header() {
   ];
   const adminLinks = [
     { label: 'Registrar pessoas', path: '/rsu' },
+    { label: 'Ver atividades dos Professores', path: '/ava' },
   ];
 
   function GoHome() {

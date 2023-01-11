@@ -14,6 +14,7 @@
     { "src": "/createActivity", "dest": "/createActivity" },
     { "src": "/activity", "dest": "/activity" },
     { "src": "/rsu", "dest": "/rsu" },
-    { "src": "/students", "dest": "/students" }
+    { "src": "/students", "dest": "/students" },
+    { "src": "/ava", "dest": "/ava" }
   ]
 }

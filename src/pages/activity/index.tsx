@@ -103,6 +103,9 @@ export default function Activity() {
               )}
           </div>
         )}
+        {user?.type === 'admin' && (
+          <h1 style={{ textAlign: 'center' }}>Você não tem acesso as respostas dos alunos!</h1>
+        )}
       </Container>
     </>
   );

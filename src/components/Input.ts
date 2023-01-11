@@ -25,6 +25,6 @@ export const Input = styled.input<TInput>`
 
   ${({ theme, error }) => error && css`
     color: ${theme.colors.danger.main};
-    border: 1px solid ${theme.colors.danger.main} !important;
+    border: 2px solid ${theme.colors.danger.main} !important;
   `}
 `;
