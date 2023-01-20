@@ -1,5 +1,3 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import SideBar from '../../components/SideBar';
 import LoginLP from './components/LoginAndRegister/Login';
 import RegisterLP from './components/LoginAndRegister/Register';
@@ -8,7 +6,7 @@ import useLandingPageCreateOrganization from './useLandingPageCreateOrganization
 import {
   ButtonAbout,
   ButtonOptionRegister,
-  Card, Container,
+  Container,
   ContainerWrapper,
   DivContainerHeadline,
   HeaderContainer,
@@ -16,11 +14,9 @@ import {
 } from './styled';
 import Modal from '../../components/Modal';
 import TAnswerActivityOfStudentHard from '../../assets/images/comerumcookie.png'; // teacheranswearactivity
+import Card from './components/Card';
 
 export default function LP() {
-  const [modalRegister, setModalRegister] = useState<boolean>(false);
-  const navigate = useNavigate();
-
   const {
     email,
     password,
@@ -46,6 +42,10 @@ export default function LP() {
     isLoadingSubject,
     setSubjectId,
     subjects,
+    modalRegister,
+    setModalRegister,
+    navigate,
+    handleSelectRegister,
   } = useLandingPageCreateOrganization();
 
   const isFormValidLogin = email && password && errors.length === 0;
@@ -55,11 +55,6 @@ export default function LP() {
     && code
     && confirmPassword
     && errors.length === 0;
-
-  function handleSelectRegister() {
-    setSelectOption({ visible: true, option: 'register' });
-    setModalRegister(false);
-  }
 
   return (
     <>
@@ -122,30 +117,24 @@ export default function LP() {
           </div>
 
           <div className="cards">
-            <Card>
-              <h1>
-                <strong>O Professor, </strong>
-                pode criar atividades, rascunhos, ter controle
-                de frequencia e dos alunos virtualmente
-                de Forma simplificada
-              </h1>
-              <img src={TAnswerActivityOfStudentHard} alt="fds" />
-            </Card>
-            <Card>
-              <h1>
-                Agora as escolas podem usar a tecnologia a seu favor da maneira correta,
-                aproveitando os ultimos resursos da tecnologia
-                em um unico lugar!
-              </h1>
-              <img src={TAnswerActivityOfStudentHard} alt="fds" />
-            </Card>
-            <Card>
-              <h1>
-                <strong>Coordenadores e Diretores, </strong>
-                podem agora estar por dentro de tudo que acontece nas escolas
-              </h1>
-              <img src={TAnswerActivityOfStudentHard} alt="fds" />
-            </Card>
+            <Card
+              strongWord="O Professor, "
+              text="pode criar atividades, rascunhos, ter controle
+              de frequencia e dos alunos virtualmente
+              de Forma simplificada"
+              file={TAnswerActivityOfStudentHard}
+            />
+            <Card
+              text="Agora as escolas podem usar a tecnologia a seu favor da maneira correta,
+              aproveitando os ultimos resursos da tecnologia
+              em um unico lugar!"
+              file={TAnswerActivityOfStudentHard}
+            />
+            <Card
+              strongWord="Coordenadores e Diretores, "
+              text="podem agora estar por dentro de tudo que acontece nas escolas"
+              file={TAnswerActivityOfStudentHard}
+            />
           </div>
 
           <div className="finalText" style={{ textAlign: 'center' }} id="aboutus">

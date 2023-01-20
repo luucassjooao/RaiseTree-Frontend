@@ -1,4 +1,5 @@
 import { FormEvent, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useAuth } from '../../hooks/useAuth';
 import { useErrors } from '../../hooks/useHooks';
@@ -37,6 +38,9 @@ export default function useLandingPageCreateOrganization() {
   const [typeUserRegister, setTypeUserRegister] = useState<string>('student');
 
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+
+  const [modalRegister, setModalRegister] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function loadMatters() {
@@ -167,6 +171,11 @@ export default function useLandingPageCreateOrganization() {
     }
   }
 
+  function handleSelectRegister() {
+    setSelectOption({ visible: true, option: 'register' });
+    setModalRegister(false);
+  }
+
   return {
     email,
     password,
@@ -192,5 +201,9 @@ export default function useLandingPageCreateOrganization() {
     isLoadingSubject,
     setSubjectId,
     subjects,
+    modalRegister,
+    setModalRegister,
+    navigate,
+    handleSelectRegister,
   };
 }
