@@ -7,7 +7,7 @@ type TModal = {
   danger: boolean;
   visible: boolean;
   title: string;
-  isLoading: boolean;
+  isLoading?: boolean;
   children: JSX.Element | JSX.Element[];
   cancelLabel: string;
   confirmLabel: string;
@@ -58,7 +58,7 @@ export default function Modal({
               type="button"
               danger={danger}
               onClick={onConfirm}
-              isLoading={isLoading}
+              isLoading={isLoading as boolean}
               style={{ color: '#FFF' }}
             >
               {confirmLabel}

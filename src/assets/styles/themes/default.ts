@@ -32,6 +32,9 @@ export default {
     green: {
       main: '#24a02f',
     },
+    blue: {
+      main: '#0033ff',
+    },
   },
   borderRadius: '5px',
   shadows: {

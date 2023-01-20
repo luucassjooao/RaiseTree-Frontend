@@ -1,21 +1,26 @@
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import SideBar from '../../components/SideBar';
 import LoginLP from './components/LoginAndRegister/Login';
 import RegisterLP from './components/LoginAndRegister/Register';
-import {
-  Container, Footer, Header,
-} from './styled';
 import useLandingPageCreateOrganization from './useLandingPageCreateOrganization';
 
-import CActivity from '../../assets/images/yyyeeeahhhBuuudyyy.png'; // createActivity
-import TviweListStudents from '../../assets/images/skinnyBITCH.png'; // teacherViwerListStudents
-import SAnswerActivity from '../../assets/images/lightWeight.png'; // studentAnsweractivity
+import {
+  ButtonAbout,
+  ButtonOptionRegister,
+  Card, Container,
+  ContainerWrapper,
+  DivContainerHeadline,
+  HeaderContainer,
+  Footer,
+} from './styled';
+import Modal from '../../components/Modal';
 import TAnswerActivityOfStudentHard from '../../assets/images/comerumcookie.png'; // teacheranswearactivity
-import CDraft from '../../assets/images/fazmaiscinco.png'; // createDraft
-
-import Arrow from '../../assets/images/arrow.svg';
 
 export default function LP() {
+  const [modalRegister, setModalRegister] = useState<boolean>(false);
+  const navigate = useNavigate();
+
   const {
     email,
     password,
@@ -41,8 +46,6 @@ export default function LP() {
     isLoadingSubject,
     setSubjectId,
     subjects,
-    imagesAnswer,
-    ArrowImagesAnswers,
   } = useLandingPageCreateOrganization();
 
   const isFormValidLogin = email && password && errors.length === 0;
@@ -53,8 +56,134 @@ export default function LP() {
     && confirmPassword
     && errors.length === 0;
 
+  function handleSelectRegister() {
+    setSelectOption({ visible: true, option: 'register' });
+    setModalRegister(false);
+  }
+
   return (
     <>
+      <HeaderContainer>
+        <div className="divDetails">
+          <h1>LOGO</h1>
+
+          <div className="infosDetails">
+            <button type="button" onClick={() => setSelectOption({ visible: true, option: 'login' })}>
+              <span className="login-span">Login</span>
+            </button>
+            <button type="button" onClick={() => setModalRegister(true)}>
+              <span className="register-span">Registra-se</span>
+            </button>
+            <button type="button">
+              <a href="/#aboutus" className="about-span">
+                <span>Sobre nós</span>
+              </a>
+            </button>
+          </div>
+        </div>
+        <div className="divButtonContact">
+          <ButtonAbout type="button" className="buttonAbout">
+            <a href="mailto:mainexcalibur@protonmail.com">
+              <span>Nós Contate</span>
+            </a>
+          </ButtonAbout>
+        </div>
+      </HeaderContainer>
+      <Container>
+        <ContainerWrapper>
+
+          <div className="header">
+            <DivContainerHeadline>
+              <h1>Raise Tree</h1>
+              <h1>É feito para o</h1>
+              <b>
+                <div className="innerIam">
+                  <h2>Aluno</h2>
+                  <h2>Professor</h2>
+                  <h2>Cordenador</h2>
+                  <h2>Fds1</h2>
+                  <h2>fds2</h2>
+                  <br />
+                </div>
+              </b>
+              <br />
+              <ButtonAbout type="button">
+                <span>Se juntar</span>
+              </ButtonAbout>
+            </DivContainerHeadline>
+
+            <div className="divImg">
+              <img src={TAnswerActivityOfStudentHard} alt="TAnswerActivityOfStudentHard" />
+            </div>
+          </div>
+
+          <div className="phraseHeadline">
+            <h1>Conectando mentes atraves da tecnologia</h1>
+          </div>
+
+          <div className="cards">
+            <Card>
+              <h1>
+                <strong>O Professor, </strong>
+                pode criar atividades, rascunhos, ter controle
+                de frequencia e dos alunos virtualmente
+                de Forma simplificada
+              </h1>
+              <img src={TAnswerActivityOfStudentHard} alt="fds" />
+            </Card>
+            <Card>
+              <h1>
+                Agora as escolas podem usar a tecnologia a seu favor da maneira correta,
+                aproveitando os ultimos resursos da tecnologia
+                em um unico lugar!
+              </h1>
+              <img src={TAnswerActivityOfStudentHard} alt="fds" />
+            </Card>
+            <Card>
+              <h1>
+                <strong>Coordenadores e Diretores, </strong>
+                podem agora estar por dentro de tudo que acontece nas escolas
+              </h1>
+              <img src={TAnswerActivityOfStudentHard} alt="fds" />
+            </Card>
+          </div>
+
+          <div className="finalText" style={{ textAlign: 'center' }} id="aboutus">
+            <h1 style={{ margin: '18px' }}>
+              Bem-vindo(a) ao RaiseTree! Ou RT, para os íntimos.
+            </h1>
+            <h1 style={{ margin: '18px' }}>
+              O RT é dedicado para escolas/professores que
+              querem ganhar tempo na rotina através da tecnologia
+            </h1>
+            <h1 style={{ margin: '18px 18px 0px' }}>
+              Você pode usar o RT para gerenciar atividades de sala, frequencia,
+              ter o controle de respostas e nota dos alunos.
+            </h1>
+          </div>
+        </ContainerWrapper>
+      </Container>
+      <Footer>
+        <span>
+          made in 🇧🇷! with
+          <span
+            title="raiva, preguiça e ambição                         👺"
+            style={{ color: 'transparent' }}
+          >
+            😠
+
+          </span>
+          &
+          <span>live long and prosper</span>
+        </span>
+        <span>
+          Quer fazer contato?
+          <a href="mailto:mainexcalibur@protonmail.com">
+            {' '}
+            Clique aqui
+          </a>
+        </span>
+      </Footer>
       <SideBar
         side="left"
         visible={selectOption.visible}
@@ -104,96 +233,22 @@ export default function LP() {
             )}
         </>
       </SideBar>
-      <Header>
-        <button type="button" className="OptionButton" onClick={() => setSelectOption({ visible: true, option: 'login' })}>
-          <h3>Fazer login</h3>
-        </button>
-        <Link to="/corganization" className="link">Registrar minha organização</Link>
-        <button type="button" className="OptionButton" onClick={() => setSelectOption({ visible: true, option: 'register' })}>
-          <h3>Se juntar a uma organização</h3>
-        </button>
-      </Header>
-      <Container>
-        <h1>RaiseTree</h1>
-        <br />
-        <h2>
-          Bem-vindo(a) ao RaiseTree! Ou RT, para os íntimos.
-        </h2>
-        <br />
-        <h2>
-          Estou feliz por você ter nos encontrado!
-          O RT é dedicado para escolas/professores que
-          querem ganhar tempo na rotina através da tecnologia
-        </h2>
-        <br />
-        <h2>
-          Você pode usar o RT para gerenciar atividades de sala,
-          ter o controle de respostas e nota dos alunos.
-        </h2>
-        <br />
-        <h2>
-          Essa é apenas a primeira versão do RaiseTree.
-          <br />
-          Por isso contamos com sua colaboração para melhora.
-        </h2>
-        <br />
-        <h2>
-          Caso tenha alguma suggestão ou alguma funcionalidade esteja com algum bug,
-          <a href="mailto:mainexcalibur@protonmail.com">
-            clique aqui e nós contate!
-          </a>
-        </h2>
-        <br />
-        <div className="divone">
-          <div>
-            <div className="divtwo">
-              <div>
-                <h2>Crie Atividades</h2>
-                <img src={CActivity} alt="CActivity" />
-              </div>
-              <div>
-                <h2>Crie Rascunhos</h2>
-                <img src={CDraft} alt="CDraft" />
-              </div>
-            </div>
-          </div>
-          <div>
-            <div className="divtwo">
-              <div>
-                <h2>Veja os estudantes que responderão as atividades, e os responda!</h2>
-                {imagesAnswer === 1 && (
-                  <img src={TviweListStudents} alt="TviweListStudents" style={{ marginRight: '-24px' }} />
-                )}
-                {imagesAnswer === 2 && (
-                  <img src={TAnswerActivityOfStudentHard} alt="TAnswerActivityOfStudentHard" style={{ marginRight: '-24px' }} />
-                )}
-                <button type="button" onClick={ArrowImagesAnswers} className="arrowImagesAnswer">
-                  <img src={Arrow} alt="arrow" />
-                </button>
-              </div>
-              <div>
-                <h2>Responda a atividades</h2>
-                <img src={SAnswerActivity} alt="SAnswerActivity" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </Container>
-      <Footer>
-        <span>
-          made in 🇧🇷! with
-          <span title="raiva, preguiça e ambição                         👺" style={{ color: 'transparent' }}>😠</span>
-          &
-          <span>live long and prosper</span>
-        </span>
-        <span>
-          Quer fazer contato?
-          <a href="mailto:mainexcalibur@protonmail.com">
-            {' '}
-            Clique aqui
-          </a>
-        </span>
-      </Footer>
+      <Modal
+        danger={false}
+        visible={modalRegister}
+        title="Você quer escolher um rascunho ou criar uma atividade do zero?"
+        confirmLabel="Cancelar"
+        cancelLabel=""
+        onCancel={() => {}}
+        onConfirm={() => setModalRegister(false)}
+      >
+        <ButtonOptionRegister type="button" onClick={() => navigate('/corganization')}>
+          <h2>Criar uma organização</h2>
+        </ButtonOptionRegister>
+        <ButtonOptionRegister type="button" onClick={handleSelectRegister}>
+          <h2>Se juntar a uma organizaçãoo</h2>
+        </ButtonOptionRegister>
+      </Modal>
     </>
   );
 }

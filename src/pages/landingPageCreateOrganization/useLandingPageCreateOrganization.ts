@@ -38,8 +38,6 @@ export default function useLandingPageCreateOrganization() {
 
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
-  const [imagesAnswer, setImageAnswer] = useState<number>(1);
-
   useEffect(() => {
     async function loadMatters() {
       try {
@@ -123,9 +121,6 @@ export default function useLandingPageCreateOrganization() {
       setSelectOption({ visible: false, option: 'register' });
     }
   }
-  function ArrowImagesAnswers() {
-    setImageAnswer((prevState) => (prevState === 1 ? 2 : 1));
-  }
 
   async function handleLogin(event: FormEvent) {
     event.preventDefault();
@@ -197,7 +192,5 @@ export default function useLandingPageCreateOrganization() {
     isLoadingSubject,
     setSubjectId,
     subjects,
-    imagesAnswer,
-    ArrowImagesAnswers,
   };
 }
