@@ -215,10 +215,6 @@ export default function useAdminRegisterStaticUser() {
     }
   }
 
-  function SplitNameSchool(nameSchool: string) {
-    return nameSchool.split(' | ')[1];
-  }
-
   return {
     name,
     type,
@@ -258,6 +254,5 @@ export default function useAdminRegisterStaticUser() {
     handleVisibleCreatePeoplesModal,
     handleOnSubmitPeoplesOfSheet,
     handleOnSubmitOnePerson,
-    SplitNameSchool,
   };
 }

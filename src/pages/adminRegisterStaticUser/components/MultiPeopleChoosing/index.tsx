@@ -5,6 +5,7 @@ import Button from '../../../../components/Button';
 import FormGroup from '../../../../components/FormGroup';
 import { Input } from '../../../../components/Input';
 import Select from '../../../../components/Select';
+import { SplitNameSchool } from '../../../../utils/funcs/SplitNameSchool';
 import { InputChange, TMessageError, TTClassroom } from '../../../../utils/types/globaTypes';
 import { User } from '../../../../utils/types/typesUser';
 
@@ -12,7 +13,6 @@ type TSpreadSheetChoosing = {
   setType(value: SetStateAction<string>): void;
   type: string;
   user: User | null;
-  SplitNameSchool(sala: string): string;
   getErrorMessageByFieldName({ fieldName }: TMessageError): string | undefined;
   handleChangeName(event: InputChange): void;
   name: string;
@@ -34,7 +34,6 @@ export default function MultiPeopleChoosing({
   setType,
   type,
   user,
-  SplitNameSchool,
   getErrorMessageByFieldName,
   handleChangeName,
   name,

@@ -12,6 +12,7 @@ import useAdminRegisterStaticUser from './useAdminRegisterStaticUser';
 import SpreadSheetChoosing from './components/SpreadSheetChoosing';
 import MultiPeopleChoosing from './components/MultiPeopleChoosing';
 import OnePersonChoosing from './components/OnePersonChoosign';
+import { SplitNameSchool } from '../../utils/funcs/SplitNameSchool';
 
 export default function AdminRegisterStaticUser() {
   const {
@@ -53,7 +54,6 @@ export default function AdminRegisterStaticUser() {
     handleVisibleCreatePeoplesModal,
     handleOnSubmitPeoplesOfSheet,
     handleOnSubmitOnePerson,
-    SplitNameSchool,
   } = useAdminRegisterStaticUser();
 
   const isAddMorePeopleStudent = (
@@ -68,7 +68,7 @@ export default function AdminRegisterStaticUser() {
   return (
     <Container>
       <Modal
-        danger={false}
+        danger
         visible={isVisibleModalCreatePeoples}
         isLoading={isSubmitting}
         title="Você tem certeza que deseja adicionar todas essas pessoas?"
@@ -97,7 +97,7 @@ export default function AdminRegisterStaticUser() {
               )}
 
             </h3>
-            <h3>{pessoas.type === 'student' ? `CPF: ${' '} ${pessoas.cpf}` : null}</h3>
+            <h3>{pessoas.type === 'student' ? `CPF: ${' '}${pessoas.cpf}` : null}</h3>
             <h3>
               Classificação:
               {pessoas.type === 'student' ? 'Estudante' : 'Professor'}
@@ -232,7 +232,6 @@ export default function AdminRegisterStaticUser() {
             setType={setType}
             type={type}
             user={user}
-            SplitNameSchool={SplitNameSchool}
             getErrorMessageByFieldName={getErrorMessageByFieldName}
             handleChangeName={handleChangeName}
             name={name}
@@ -256,7 +255,6 @@ export default function AdminRegisterStaticUser() {
             setType={setType}
             type={type}
             user={user}
-            SplitNameSchool={SplitNameSchool}
             getErrorMessageByFieldName={getErrorMessageByFieldName}
             handleChangeName={handleChangeName}
             name={name}
