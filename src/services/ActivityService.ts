@@ -16,9 +16,28 @@ class ActivityService {
     dateExpiration,
     type,
     previousPoints,
+  }: ICreateActiviyByDraft) {
+    return this.httpClient.post('/createActivity', {
+      body: {
+        title, description, classrooms, activity, dateExpiration, type, previousPoints,
+      },
+      headers: {
+        authorization: localStorage.getItem('@Login:Token') || '',
+      },
+    });
+  }
+
+  public async createActivityWithDraft({
+    title,
+    description,
+    classrooms,
+    activity,
+    dateExpiration,
+    type,
+    previousPoints,
     idDraft,
   }: ICreateActiviyByDraft) {
-    return this.httpClient.post(`/createActivity/${idDraft}`, {
+    return this.httpClient.post(`/createActivitywithDraft/${idDraft}`, {
       body: {
         title, description, classrooms, activity, dateExpiration, type, previousPoints,
       },

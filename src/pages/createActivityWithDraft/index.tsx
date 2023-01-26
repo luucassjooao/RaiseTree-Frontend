@@ -44,7 +44,8 @@ export default function CreateActivityDraft() {
   }, [id, navigate, safeAsyncAction]);
 
   const queryClient = useQueryClient();
-  const { mutate } = useMutation(() => ActivityService.createActivity(activity as TActivity), {
+  const { mutate } = useMutation(() => ActivityService
+    .createActivityWithDraft(activity as TActivity), {
     onSuccess() {
       queryClient.invalidateQueries('home');
       toast.success('Atividade criada!');
