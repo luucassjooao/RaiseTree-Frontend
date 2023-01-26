@@ -1,197 +1,50 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import {
-  useEffect, useRef, useState,
-} from 'react';
-import { useQuery } from 'react-query';
-import { Link, useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
 import Button from '../../components/Button';
 import Calendar from '../../components/Calendar';
 import CardHome from '../../components/cards/CardsHome';
 import Loader from '../../components/Loader';
 import Modal from '../../components/Modal';
 import SideBar from '../../components/SideBar';
-import { useAuth } from '../../hooks/useAuth';
-import ActivityService from '../../services/ActivityService';
-import StudentService from '../../services/StudentService';
 import { SplitNameSchool } from '../../utils/funcs/SplitNameSchool';
-import { TActivityAnswer } from '../../utils/types/typesAnswerActivity';
-import { TStudents } from '../../utils/types/typesStudent';
+import RegisterFrequency from './components/RegisterFrequency';
+import ViewInfosStudents from './components/ViewInfosStudents';
 import {
   CardsPeoples,
   Container,
-  ContainerTable,
   DivSideBar,
   DivSideBarActivity,
   InputButton,
-  TDCountActivities,
-  TDInfoStudentFrequency,
 } from './styled';
-
-interface TFrequencyStudents {
-  subjectName: string;
-  frequency: boolean;
-  student: TStudents;
-}
-
-interface TReturnFindStudent {
-  label: string;
-  isPresence: boolean;
-}
+import useStudent from './useStudents';
 
 export default function Students() {
-  const { user } = useAuth();
-  const navigate = useNavigate();
-  const isFirstRender = useRef(true);
-
-  const [modalInfosStudentVisible, setModalInfosStudentVisible] = useState<boolean>(false);
-  const [
-    isLoadingFetchAnswerOfStudent,
-    setIsLoadingFetchAnswerOfStudent,
-  ] = useState<boolean>(false);
-
-  const [classroomSelected, setClassroomSelected] = useState<string>(
-    user?.type_model_teacher?.classrooms[0] as string,
-  );
-  const [getAnswerActivityStudentId, setGetAnswerActivityStudentId] = useState<string>('');
-  const [
-    getActivityOfStudentAnswer,
-    setGetActivityOfStudentAnswer,
-  ] = useState<TActivityAnswer[]>([]);
-
-  const [typeView, setTypeView] = useState<'viewStudents' | 'addFrequency'>('viewStudents');
-
-  const [frequencyStudents, setFrequencyStudents] = useState<TFrequencyStudents[]>([]);
-  const [
+  const {
+    isLoading,
+    typeView,
+    setTypeView,
+    user,
+    classroomSelected,
+    ChangeClassroomSelected,
+    data,
+    handleVisibleCalendar,
+    handleChangeFrequency,
+    FindStudentOnFrequency,
+    findPresenceToday,
+    handleChangeVisibleModalConfirmFrequency,
+    frequencyStudents,
+    isModalConfirmFrequency,
     isLoadingSubmitFrequencyStudents,
-    setIsLoadingSubmitFrequencyStudents,
-  ] = useState<boolean>(false);
-  const [isModalConfirmFrequency, setIsModalConfirmFrequency] = useState<boolean>(false);
-  const [isCalendarVisible, setIsCalendarVisible] = useState<boolean>(false);
-  const [studentInfosFrequencyCalendar, setStudentInfosFrequencyCalendar] = useState<string[]>([]);
-
-  useEffect(() => {
-    if (user?.type !== 'teacher') navigate('/home');
-  }, []);
-
-  const { data, isLoading } = useQuery<TStudents[]>(['students', classroomSelected], () => StudentService.getStudentsByClassroom(classroomSelected), {
-    onError() {
-      toast.error('Ouve um erro ao buscar os alunos!');
-    },
-  });
-
-  useEffect(() => {
-    if (isFirstRender.current) {
-      isFirstRender.current = false;
-      return;
-    }
-    (async () => {
-      setIsLoadingFetchAnswerOfStudent(true);
-      try {
-        if (getAnswerActivityStudentId !== '') {
-          const getAnswerActivity = await ActivityService
-            .getAllAnswerActivityOfStudent(getAnswerActivityStudentId);
-          setGetActivityOfStudentAnswer(getAnswerActivity);
-        }
-      } catch {
-        toast.error('Ouve um erro ao buscar as atividades desse aluno!');
-      } finally {
-        setIsLoadingFetchAnswerOfStudent(false);
-      }
-    })();
-  }, [getAnswerActivityStudentId]);
-
-  function handleModalInfosStudentVisible(studentId: string) {
-    setModalInfosStudentVisible((prevState) => (prevState !== true));
-
-    if (studentId !== '') {
-      setGetAnswerActivityStudentId(studentId);
-    }
-  }
-
-  function ChangeClassroomSelected(classroom: string) {
-    setClassroomSelected(classroom);
-  }
-
-  function handleChangeFrequency(student: TStudents) {
-    setFrequencyStudents((prevState) => {
-      const indexStudent = prevState
-        .findIndex((infoStudent) => infoStudent.student.id === student.id);
-
-      if (indexStudent === -1) {
-        return prevState.concat({
-          student,
-          frequency: true,
-          subjectName: user?.type_model_teacher?.subject.name as string,
-        });
-      }
-
-      return prevState.filter((infoStudent) => infoStudent.student.id !== student.id);
-    });
-  }
-
-  function handleChangeVisibleModalConfirmFrequency() {
-    setIsModalConfirmFrequency((prevState) => prevState !== true);
-  }
-
-  async function handleSubmitFrequency() {
-    try {
-      setIsLoadingSubmitFrequencyStudents(true);
-      StudentService.addFrequencyStudents(frequencyStudents);
-      toast.success('Estamos anotando as frequencias!');
-      setFrequencyStudents([]);
-    } catch {
-      toast.error('Houve um error ao registrar a frequencia dos alunos!');
-    } finally {
-      setIsLoadingSubmitFrequencyStudents(false);
-      setIsModalConfirmFrequency(false);
-    }
-  }
-
-  function handleVisibleCalendar(student: TStudents) {
-    setIsCalendarVisible(true);
-    const findFrequency = student.frequency
-      .find((frequency) => frequency.subjectName === user?.type_model_teacher?.subject.name);
-    setStudentInfosFrequencyCalendar(findFrequency?.dates as string[]);
-  }
-  function handleCloseCalendar() {
-    setIsCalendarVisible(false);
-    setStudentInfosFrequencyCalendar([]);
-  }
-
-  function findPresenceToday(infosStudent: TStudents): boolean {
-    const findSubjectTeacher = infosStudent.frequency
-      .find(({ subjectName }) => subjectName === user?.type_model_teacher?.subject.name);
-    const findToday = findSubjectTeacher?.dates
-      .find((today) => today === String(new Date().toLocaleDateString('pt-br')));
-    if (findToday) return true;
-    return false;
-  }
-
-  function FindStudentOnFrequency(infosStudent: TStudents): TReturnFindStudent {
-    const { id } = infosStudent;
-    if (findPresenceToday(infosStudent) === true) {
-      return {
-        label: 'Este aluno já recebeu presença hoje!',
-        isPresence: true,
-      };
-    }
-    const findStudent = frequencyStudents
-      .findIndex((student) => student.student.id === id);
-
-    if (findStudent === -1) {
-      return {
-        label: 'FALTA',
-        isPresence: false,
-      };
-    }
-
-    return {
-      label: 'PRESENTE',
-      isPresence: true,
-    };
-  }
+    handleSubmitFrequency,
+    modalInfosStudentVisible,
+    isLoadingFetchAnswerOfStudent,
+    handleModalInfosStudentVisible,
+    getActivityOfStudentAnswer,
+    isCalendarVisible,
+    studentInfosFrequencyCalendar,
+    handleCloseCalendar,
+  } = useStudent();
 
   return (
     <>
@@ -228,82 +81,23 @@ export default function Students() {
         {data?.length === 0 && (<h1 style={{ textAlign: 'center' }}>Ainda não tem alunos nesta sala!</h1>)}
         {typeView === 'viewStudents'
           ? (
-            <ContainerTable role="grid" key="view">
-              {data?.length as number > 0 && (
-                <thead>
-                  <tr>
-                    <th>Nome</th>
-                    <th>Pontos</th>
-                    <th>Frequencia</th>
-                    <th>Atividades Entregues</th>
-                  </tr>
-                </thead>
-              )}
-              <tbody>
-                {data?.map((infos) => (
-                  <tr key={infos.id}>
-                    <td>{infos.user.name}</td>
-                    <td>{infos.current_points}</td>
-                    <td
-                      role="gridcell"
-                      className="watch-frequency"
-                      onClick={() => handleVisibleCalendar(infos)}
-                    >
-                      Ver Frequencia
-                    </td>
-                    <TDCountActivities
-                      role="gridcell"
-                      onClick={() => infos._count?.reply_activities as number > 0
-                        && handleModalInfosStudentVisible(infos.id)}
-                      activities={infos._count?.reply_activities !== 0}
-                    >
-                      Clique para visuzalizar
-                    </TDCountActivities>
-                  </tr>
-                ))}
-              </tbody>
-            </ContainerTable>
+            <ViewInfosStudents
+              data={data}
+              handleModalInfosStudentVisible={handleModalInfosStudentVisible}
+              handleVisibleCalendar={handleVisibleCalendar}
+              key="view"
+            />
           )
           : (
-            <>
-              <ContainerTable role="grid" key="view">
-                {data?.length as number > 0 && (
-                <thead>
-                  <tr>
-                    <th>Nome</th>
-                    <th>Frequencia</th>
-                  </tr>
-                </thead>
-                )}
-                <tbody>
-                  {data?.map((infos) => (
-                    <tr key={infos.id}>
-                      <td>{infos.user.name}</td>
-                      <TDInfoStudentFrequency
-                        role="gridcell"
-                        onClick={() => handleChangeFrequency(infos)}
-                        frequency={FindStudentOnFrequency(infos).isPresence}
-                        isPresenceToday={findPresenceToday(infos)}
-                      >
-                        {FindStudentOnFrequency(infos).label}
-                      </TDInfoStudentFrequency>
-                    </tr>
-                  ))}
-                </tbody>
-              </ContainerTable>
-              {data?.length as number > 0 && (
-              <div className="divButtonConfirmFrequency">
-                <Button
-                  type="button"
-                  size={190}
-                  onClick={handleChangeVisibleModalConfirmFrequency}
-                  disabled={frequencyStudents.length <= 0}
-                >
-                  Confirmar Frequencia
-                </Button>
-              </div>
-              )}
-            </>
+            <RegisterFrequency
+              data={data}
+              FindStudentOnFrequency={FindStudentOnFrequency}
+              findPresenceToday={findPresenceToday}
+              frequencyStudents={frequencyStudents}
+              handleChangeFrequency={handleChangeFrequency}
+              handleChangeVisibleModalConfirmFrequency={handleChangeVisibleModalConfirmFrequency}
+              key="view"
+            />
           )}
       </Container>
 

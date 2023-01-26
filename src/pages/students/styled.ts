@@ -48,10 +48,6 @@ export const ContainerTable = styled.table`
     background: ${({ theme }) => theme.colors.textColorWhite};
     &:hover {
       background: ${({ theme }) => theme.colors.yellows.main};
-
-      /* td {
-        color: ${({ theme }) => theme.colors.textColorBlack};
-      } */
     }
   }
 
@@ -86,49 +82,6 @@ export const ContainerTable = styled.table`
     border: solid ${({ theme }) => theme.colors.yellows.main};
     background: ${({ theme }) => theme.colors.yellows.main};
   }
-`;
-
-type TTDCountActivities = {
-  activities: boolean;
-}
-
-export const TDCountActivities = styled.td<TTDCountActivities>`
-  cursor: ${({ activities }) => (activities ? 'point' : 'not-allowed')};
-  background: ${({ theme, activities }) => (activities ? theme.colors.yellows.main : theme.colors.gray[200])};
-  border: 1px solid ${({ theme }) => theme.colors.yellows.main};
-  transition: 0.2s all;
-
-  &:hover {
-    background: ${({ theme, activities }) => (activities && theme.colors.green.main)};
-    color: ${({ theme, activities }) => (!activities ? theme.colors.textColorBlack : theme.colors.textColorWhite)};
-  }
-`;
-
-type TFrequency = {
-  frequency: boolean;
-  isPresenceToday: boolean | null;
-}
-
-export const TDInfoStudentFrequency = styled.td<TFrequency>`
-  background: ${({ theme, frequency }) => (frequency ? theme.colors.green.main : theme.colors.danger.main)};
-  color: ${({ theme }) => theme.colors.textColorWhite} !important;
-  cursor: pointer;
-  border: 1px solid ${({ theme }) => theme.colors.yellows.main};
-  transition: 0.2s all;
-
-  &:hover {
-    background: ${({ theme, frequency }) => (frequency ? theme.colors.green.secondary : theme.colors.oranges.main)};
-  }
-
-  ${({ isPresenceToday }) => isPresenceToday && css`
-    background: ${({ theme }) => theme.colors.gray[200]};
-    color: ${({ theme }) => theme.colors.textColorBlack};
-
-    &:hover {
-      background: ${({ theme }) => theme.colors.gray[200]};
-      color: ${({ theme }) => theme.colors.textColorBlack};
-    }
-  `}
 `;
 
 export const DivSideBar = styled.div`
