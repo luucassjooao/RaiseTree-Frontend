@@ -3,7 +3,7 @@ import Spinner from '../Spinner';
 import { StyledButton } from './styled';
 
 interface TButton extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  isLoading: boolean;
+  isLoading?: boolean;
   size: number;
   isStudent?: boolean;
   isRegister?: boolean;

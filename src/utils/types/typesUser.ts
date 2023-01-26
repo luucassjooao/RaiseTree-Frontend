@@ -7,7 +7,10 @@ export type UserInformations = {
   classroom?: string[] | string;
   email: string;
   password: string;
-  subjectId?: string;
+  subject?: {
+    id: string;
+    name: string;
+  };
 }
 
 export interface UserInformationsForSendMail extends UserInformations {

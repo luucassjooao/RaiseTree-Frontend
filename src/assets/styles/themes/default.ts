@@ -31,9 +31,11 @@ export default {
     },
     green: {
       main: '#24a02f',
+      secondary: '#1C8025',
     },
     blue: {
       main: '#0033ff',
+      secondary: '#0023b2',
     },
   },
   borderRadius: '5px',

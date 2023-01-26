@@ -4,17 +4,18 @@ import { Overlay } from './styles';
 
 type TLoader = {
   isLoading: boolean
+  theme?: 'blur' | 'light';
 }
 
-export default function Loader({ isLoading }: TLoader) {
+export default function Loader({ isLoading, theme }: TLoader) {
   if (!isLoading) {
     return null;
   }
 
   return (
     <ReactPortal containerId="loader-root">
-      <Overlay>
-        <Spinner size={90} />
+      <Overlay themeBackground={theme!}>
+        <Spinner size={90} isBackgroundLight={theme !== 'blur'} />
       </Overlay>
     </ReactPortal>
   );

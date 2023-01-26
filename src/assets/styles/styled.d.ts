@@ -34,9 +34,11 @@ declare module 'styled-components' {
       };
       green: {
         main: string;
+        secondary: string;
       };
       blue: {
         main: string;
+        secondary: string;
       };
     };
     borderRadius: string;
