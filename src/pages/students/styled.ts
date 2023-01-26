@@ -106,6 +106,7 @@ export const TDCountActivities = styled.td<TTDCountActivities>`
 
 type TFrequency = {
   frequency: boolean;
+  isPresenceToday: boolean | null;
 }
 
 export const TDInfoStudentFrequency = styled.td<TFrequency>`
@@ -118,6 +119,16 @@ export const TDInfoStudentFrequency = styled.td<TFrequency>`
   &:hover {
     background: ${({ theme, frequency }) => (frequency ? theme.colors.green.secondary : theme.colors.oranges.main)};
   }
+
+  ${({ isPresenceToday }) => isPresenceToday && css`
+    background: ${({ theme }) => theme.colors.gray[200]};
+    color: ${({ theme }) => theme.colors.textColorBlack};
+
+    &:hover {
+      background: ${({ theme }) => theme.colors.gray[200]};
+      color: ${({ theme }) => theme.colors.textColorBlack};
+    }
+  `}
 `;
 
 export const DivSideBar = styled.div`

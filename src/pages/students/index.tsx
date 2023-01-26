@@ -131,22 +131,6 @@ export default function Students() {
     });
   }
 
-  function FindStudentOnFrequency(studentId: string): TReturnFindStudent {
-    const findStudent = frequencyStudents.findIndex((student) => student.student.id === studentId);
-
-    if (findStudent === -1) {
-      return {
-        label: 'FALTA',
-        isPresence: false,
-      };
-    }
-
-    return {
-      label: 'PRESENTE',
-      isPresence: true,
-    };
-  }
-
   function handleChangeVisibleModalConfirmFrequency() {
     setIsModalConfirmFrequency((prevState) => prevState !== true);
   }
@@ -174,6 +158,39 @@ export default function Students() {
   function handleCloseCalendar() {
     setIsCalendarVisible(false);
     setStudentInfosFrequencyCalendar([]);
+  }
+
+  function findPresenceToday(infosStudent: TStudents): boolean {
+    const findSubjectTeacher = infosStudent.frequency
+      .find(({ subjectName }) => subjectName === user?.type_model_teacher?.subject.name);
+    const findToday = findSubjectTeacher?.dates
+      .find((today) => today === String(new Date().toLocaleDateString('pt-br')));
+    if (findToday) return true;
+    return false;
+  }
+
+  function FindStudentOnFrequency(infosStudent: TStudents): TReturnFindStudent {
+    const { id } = infosStudent;
+    if (findPresenceToday(infosStudent) === true) {
+      return {
+        label: 'Este aluno já recebeu presença hoje!',
+        isPresence: true,
+      };
+    }
+    const findStudent = frequencyStudents
+      .findIndex((student) => student.student.id === id);
+
+    if (findStudent === -1) {
+      return {
+        label: 'FALTA',
+        isPresence: false,
+      };
+    }
+
+    return {
+      label: 'PRESENTE',
+      isPresence: true,
+    };
   }
 
   return (
@@ -265,9 +282,10 @@ export default function Students() {
                       <TDInfoStudentFrequency
                         role="gridcell"
                         onClick={() => handleChangeFrequency(infos)}
-                        frequency={FindStudentOnFrequency(infos.id).isPresence}
+                        frequency={FindStudentOnFrequency(infos).isPresence}
+                        isPresenceToday={findPresenceToday(infos)}
                       >
-                        {FindStudentOnFrequency(infos.id).label}
+                        {FindStudentOnFrequency(infos).label}
                       </TDInfoStudentFrequency>
                     </tr>
                   ))}
