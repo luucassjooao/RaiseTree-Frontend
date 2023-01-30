@@ -13,7 +13,8 @@ import {
   Footer,
 } from './styled';
 import Modal from '../../components/Modal';
-import TAnswerActivityOfStudentHard from '../../assets/images/comerumcookie.png'; // teacheranswearactivity
+import MenuDropDown from '../../assets/images/menu.png';
+import Logo from '../../assets/images/logo.png';
 import Card from './components/Card';
 
 export default function LP() {
@@ -46,6 +47,9 @@ export default function LP() {
     setModalRegister,
     navigate,
     handleSelectRegister,
+    dropDownOptions,
+    handleDropDownOpions,
+    urlImage,
   } = useLandingPageCreateOrganization();
 
   const isFormValidLogin = email && password && errors.length === 0;
@@ -60,7 +64,7 @@ export default function LP() {
     <>
       <HeaderContainer>
         <div className="divDetails">
-          <h1>LOGO</h1>
+          <img src={Logo} alt="Raise Tree" />
 
           <div className="infosDetails">
             <button type="button" onClick={() => setSelectOption({ visible: true, option: 'login' })}>
@@ -83,8 +87,48 @@ export default function LP() {
             </a>
           </ButtonAbout>
         </div>
+        {selectOption.visible === false && (
+        <div className="options-phone">
+          <button type="button" onClick={handleDropDownOpions}>
+            <img src={MenuDropDown} alt="drop" />
+          </button>
+        </div>
+        )}
       </HeaderContainer>
+
       <Container>
+        {dropDownOptions && (
+        <div className="div-options">
+          <button
+            type="button"
+            onClick={() => {
+              setSelectOption({ visible: true, option: 'login' });
+              handleDropDownOpions();
+            }}
+          >
+            <span className="login-span">Login</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setModalRegister(true);
+              handleDropDownOpions();
+            }}
+          >
+            <span className="register-span">Registre-se</span>
+          </button>
+          <button type="button">
+            <a href="/#aboutus" className="about-span">
+              <span>Sobre-nós</span>
+            </a>
+          </button>
+          <button type="button">
+            <a href="mailto:mainexcalibur@protonmail.com" style={{ textDecoration: 'none' }}>
+              <span>Nós Contate</span>
+            </a>
+          </button>
+        </div>
+        )}
         <ContainerWrapper>
 
           <div className="header">
@@ -93,27 +137,23 @@ export default function LP() {
               <h1>É feito para o</h1>
               <b>
                 <div className="innerIam">
-                  <h2>Aluno</h2>
                   <h2>Professor</h2>
+                  <h2>Aluno</h2>
                   <h2>Cordenador</h2>
-                  <h2>Fds1</h2>
-                  <h2>fds2</h2>
+                  <h2>Diretor</h2>
                   <br />
                 </div>
               </b>
               <br />
-              <ButtonAbout type="button">
+              <ButtonAbout type="button" onClick={() => setModalRegister(true)}>
                 <span>Se juntar</span>
               </ButtonAbout>
             </DivContainerHeadline>
 
             <div className="divImg">
-              <img src={TAnswerActivityOfStudentHard} alt="TAnswerActivityOfStudentHard" />
+              <h2>Geração de Memes Aleatorios sobre as Máterias da escola! </h2>
+              <img src={urlImage} alt="TAnswerActivityOfStudentHard" />
             </div>
-          </div>
-
-          <div className="phraseHeadline">
-            <h1>Conectando mentes atraves da tecnologia</h1>
           </div>
 
           <div className="cards">
@@ -122,30 +162,27 @@ export default function LP() {
               text="pode criar atividades, rascunhos, ter controle
               de frequencia e dos alunos virtualmente
               de Forma simplificada"
-              file={TAnswerActivityOfStudentHard}
             />
             <Card
               text="Agora as escolas podem usar a tecnologia a seu favor da maneira correta,
               aproveitando os ultimos resursos da tecnologia
               em um unico lugar!"
-              file={TAnswerActivityOfStudentHard}
             />
             <Card
               strongWord="Coordenadores e Diretores, "
               text="podem agora estar por dentro de tudo que acontece nas escolas"
-              file={TAnswerActivityOfStudentHard}
             />
           </div>
 
-          <div className="finalText" style={{ textAlign: 'center' }} id="aboutus">
-            <h1 style={{ margin: '18px' }}>
+          <div className="finalText" id="aboutus">
+            <h1>
               Bem-vindo(a) ao RaiseTree! Ou RT, para os íntimos.
             </h1>
-            <h1 style={{ margin: '18px' }}>
+            <h1>
               O RT é dedicado para escolas/professores que
               querem ganhar tempo na rotina através da tecnologia
             </h1>
-            <h1 style={{ margin: '18px 18px 0px' }}>
+            <h1 className="lastH1">
               Você pode usar o RT para gerenciar atividades de sala, frequencia,
               ter o controle de respostas e nota dos alunos.
             </h1>
@@ -173,6 +210,7 @@ export default function LP() {
           </a>
         </span>
       </Footer>
+
       <SideBar
         side="left"
         visible={selectOption.visible}

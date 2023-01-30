@@ -2,8 +2,8 @@
 import Button from '../../../../../components/Button';
 import FormGroup from '../../../../../components/FormGroup';
 import { Input } from '../../../../../components/Input';
-import { ChoosingContainer } from '../styles';
 import { ISubmit } from '../types';
+import { ChoosingContainer } from './styled';
 
 export default function LoginLP({
   handleSubmit,

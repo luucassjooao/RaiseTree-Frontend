@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 
 export const StyledCard = styled.div`
-  padding: 24px 88px 24px 24px;
+  padding: 32px 44px;
   flex: 1;
   border: 2px solid #fff;
 
-  img {
+  /* img {
     display: none;
   }
 
@@ -21,5 +21,5 @@ export const StyledCard = styled.div`
     h1 {
       display: none;
     }
-  }
+  } */
 `;

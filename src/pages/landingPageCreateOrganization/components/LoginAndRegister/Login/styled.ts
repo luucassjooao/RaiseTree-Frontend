@@ -9,4 +9,10 @@ export const ChoosingContainer = styled.form`
   h3 {
     color: ${({ theme }) => theme.colors.textColorBlack};
   }
+
+  @media only screen and (max-width: 525px) {
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin: 120px 40px;
+  }
 `;

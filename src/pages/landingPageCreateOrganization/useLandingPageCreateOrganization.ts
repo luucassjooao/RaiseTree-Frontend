@@ -5,7 +5,9 @@ import { useAuth } from '../../hooks/useAuth';
 import { useErrors } from '../../hooks/useHooks';
 import AuthService from '../../services/AuthService';
 import SubjectService from '../../services/SubjectService';
+import { GetRandomIndex } from '../../utils/funcs/GetRandomIndex';
 import { InputChange } from '../../utils/types/globaTypes';
+import { Memes, TMemes } from './memes';
 
 type StateSelectOption = {
   visible: boolean;
@@ -41,6 +43,14 @@ export default function useLandingPageCreateOrganization() {
 
   const [modalRegister, setModalRegister] = useState<boolean>(false);
   const navigate = useNavigate();
+
+  const [dropDownOptions, setDropDownOptions] = useState<boolean>(false);
+
+  const [urlImage, setUrlImage] = useState<string>('');
+
+  useEffect(() => {
+    setUrlImage(GetRandomIndex<TMemes>(Memes).url);
+  }, []);
 
   useEffect(() => {
     async function loadMatters() {
@@ -176,6 +186,10 @@ export default function useLandingPageCreateOrganization() {
     setModalRegister(false);
   }
 
+  function handleDropDownOpions() {
+    setDropDownOptions((prevState) => prevState !== true);
+  }
+
   return {
     email,
     password,
@@ -205,5 +219,8 @@ export default function useLandingPageCreateOrganization() {
     setModalRegister,
     navigate,
     handleSelectRegister,
+    dropDownOptions,
+    handleDropDownOpions,
+    urlImage,
   };
 }

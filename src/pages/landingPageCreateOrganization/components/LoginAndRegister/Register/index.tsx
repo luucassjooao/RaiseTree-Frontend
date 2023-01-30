@@ -4,9 +4,8 @@ import { StyledButton } from '../../../../../components/Button/styled';
 import FormGroup from '../../../../../components/FormGroup';
 import { Input } from '../../../../../components/Input';
 import Select from '../../../../../components/Select';
-import { ChoosingContainer } from '../styles';
 import { TRegister } from '../types';
-import { ContainerInputsRegisters, DivButtons } from './styles';
+import { ChoosingContainer, ContainerInputsRegisters, DivButtons } from './styles';
 
 export default function RegisterLP({
   handleSubmit,
