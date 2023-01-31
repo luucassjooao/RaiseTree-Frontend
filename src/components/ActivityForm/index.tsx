@@ -166,9 +166,10 @@ const ActivityForm = forwardRef<TOnSubmit, TActivityForm>(
 
           <ContainerForm>
             <div>
-              <Title>Qual será o título? **</Title>
+              <Title>Qual será o título?</Title>
               <FormGroup error={getErrorMessageByFieldName({ fieldName: 'title' })}>
                 <Input
+                  className="inputForm"
                   type="text"
                   size={500}
                   value={title}
@@ -177,15 +178,16 @@ const ActivityForm = forwardRef<TOnSubmit, TActivityForm>(
                   maxLength={50}
                   minLength={30}
                 />
-                <small>
+                <small className="countLength">
                   {title.length}
                   /50
                 </small>
               </FormGroup>
 
-              <TitleDescription>Qual será a descrição? **</TitleDescription>
+              <TitleDescription>Qual será a descrição?</TitleDescription>
               <FormGroup error={getErrorMessageByFieldName({ fieldName: 'description' })}>
                 <Input
+                  className="inputForm"
                   type="text"
                   size={500}
                   value={description}
@@ -194,7 +196,7 @@ const ActivityForm = forwardRef<TOnSubmit, TActivityForm>(
                   maxLength={100}
                   minLength={50}
                 />
-                <small>
+                <small className="countLength">
                   {description.length}
                   /100
                 </small>
@@ -202,21 +204,24 @@ const ActivityForm = forwardRef<TOnSubmit, TActivityForm>(
 
               {type === 'createActivity' && (
               <>
-                <Title>Quais salas irão fazer está atividade? **</Title>
+                <Title>Quais salas irão fazer está atividade?</Title>
                 <FormGroup error={getErrorMessageByFieldName({ fieldName: 'classroom' })}>
-                  <MultiSelect
-                    options={optionsClassroom}
-                    value={classrooms}
-                    onChange={setClassroom}
-                    labelledBy="Selecione as salas que irao fazer esta atividade"
-                  />
+                  <div className="divMultiClassrooms">
+                    <MultiSelect
+                      options={optionsClassroom}
+                      value={classrooms}
+                      onChange={setClassroom}
+                      labelledBy="Selecione as salas que irao fazer esta atividade"
+                    />
+                  </div>
                 </FormGroup>
 
                 <TitleDescription>
-                  Qual a data máxima para entregar está atividade? **
+                  Qual data máxima para a entrega destá atividade?
                 </TitleDescription>
                 <FormGroup error={getErrorMessageByFieldName({ fieldName: 'dateExpiration' })}>
                   <Input
+                    className="inputForm"
                     type="datetime-local"
                     value={dateTask}
                     onChange={handleChangeDateExpiration}
@@ -224,9 +229,10 @@ const ActivityForm = forwardRef<TOnSubmit, TActivityForm>(
                   />
                 </FormGroup>
 
-                <TitleDescription>Qual a categoria desta atividade? **</TitleDescription>
+                <TitleDescription>Qual a categoria desta atividade?</TitleDescription>
                 <FormGroup>
                   <Select
+                    className="inputForm"
                     is500
                     value={typeActivity}
                     onChange={((event) => setTypeActivity(event.target.value))}
@@ -275,7 +281,10 @@ const ActivityForm = forwardRef<TOnSubmit, TActivityForm>(
             ? <Title style={{ textAlign: 'center' }}>Como será a atividade? 🧑‍💻</Title>
             : <Title style={{ textAlign: 'center' }}>Como será o Rascunho? 🤔</Title>}
 
-          <div style={{ width: '80%', margin: '0px auto', marginTop: '20px' }}>
+          <div style={{
+            width: '95%', margin: '0px auto', marginTop: '20px', textAlign: 'start',
+          }}
+          >
             <JoditEditor setBody={setText} body={text} />
           </div>
 

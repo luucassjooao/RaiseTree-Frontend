@@ -17,7 +17,7 @@ export default function App() {
     <BrowserRouter>
       <ThemeProvider theme={defaultTHemes}>
         <GlobalStyles />
-        <ToastContainer position="bottom-center" />
+        <ToastContainer position="top-right" />
         <Container>
           <AuthProvider>
             <Routes />

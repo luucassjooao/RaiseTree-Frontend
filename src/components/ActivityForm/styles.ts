@@ -13,6 +13,51 @@ export const Form = styled.form`
   small {
     margin-left: 5px;
   }
+
+  @media only screen and (max-width: 720px) {
+    .inputForm {
+      width: 90%;
+    }
+
+    .countLength {
+      transform: translate(-60px, 16px);
+      color: ${({ theme }) => theme.colors.danger.main};
+    }
+  }
+
+  @media only screen and (max-width: 1065px) {
+    align-items: center;
+    word-break: word-break;
+    text-align: center;
+
+    .divMultiClassrooms {
+      justify-content: center;
+      align-items: center;
+      display: flex;
+    }
+
+    .countLength {
+      position: absolute;
+      margin-top: 33px;
+    }
+  }
+
+  @media only screen and (max-width: 545px) {
+    margin: 0px;
+    h2 {
+      font-size: 100%;
+      word-break: word-break;
+    }
+
+    .inputForm {
+      width: 70%;
+    }
+
+    .divMultiClassrooms {
+      width: 70%;
+      margin: 0px auto;
+    }
+  }
 `;
 
 export const ContainerForm = styled.div`
@@ -24,6 +69,10 @@ export const ContainerForm = styled.div`
 export const Title = styled.h2`
   margin-top: 10px;
   margin-bottom: -10px;
+
+  @media only screen and (max-width: 1065px) {
+    text-align: center;
+  }
 `;
 
 export const TitleDescription = styled.h2`
@@ -46,4 +95,8 @@ export const ButtonContainer = styled.div`
 
 export const DivCardHome = styled.div`
   display: grid;
+
+  @media only screen and (max-width: 1065px) {
+    display: none;
+  }
 `;
