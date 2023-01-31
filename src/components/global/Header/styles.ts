@@ -10,6 +10,7 @@ export const ContainerHeader = styled.div`
   justify-content: space-around;
   align-items: center;
   display: flex;
+  z-index: 9;
 
   background: ${({ theme }) => theme.colors.yellows.main};
   opacity: 1;
@@ -23,11 +24,32 @@ export const ContainerHeader = styled.div`
    h2, button {
     color: ${({ theme }) => theme.colors.textColorBlack};
    }
+
+   img {
+    height: 67px;
+   }
+
+   .options-phone {
+    display: none;
+   }
+
+   @media only screen and (max-width: 768px) {
+    .options-phone {
+      display: inline-block;
+    }
+    .button-fixed-option {
+      display: none;
+    }
+   }
 `;
 
 export const DivHeaderRight = styled.div`
   float: right;
   padding-right: 24px;
+
+  @media only screen and (max-width: 768px) {
+    display: none;
+  }
 `;
 
 export const Button = styled.button`
@@ -44,4 +66,38 @@ export const Button = styled.button`
     background: ${({ theme }) => theme.colors.gray[300]};
     border-radius: 0;
   }
+`;
+
+export const DivOptionsDropDown = styled.div`
+    border-top: 1px solid ${({ theme }) => theme.colors.purples.gray};
+    right: 0;
+    position: fixed;
+    background: rgb(36,0,70);
+    align-items: center;
+    flex-direction: column;
+    display: grid;
+    z-index: 99;
+
+    button {
+      padding: 8px;
+      background: transparent;
+      border: 1px solid ${({ theme }) => theme.colors.purples.gray};
+      max-width: 100%;
+
+      span {
+        font-size: 28px;
+      }
+
+      .login-span {
+        color: ${({ theme }) => theme.colors.yellows.main};
+      }
+      .register-span {
+        color: ${({ theme }) => theme.colors.green.main};
+      }
+
+      .about-span {
+        text-decoration: none;
+        color: ${({ theme }) => theme.colors.oranges.main};
+      }
+    }
 `;

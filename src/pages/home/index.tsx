@@ -1,5 +1,5 @@
 import {
-  Fragment,
+  Fragment, useState,
 } from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -13,9 +13,17 @@ import StaticUserService from '../../services/StaticUserService';
 import { CardsActivities, Container, TitleMatter } from './style';
 import { ArrayActivity, ObjActivity } from '../../utils/types/typesActivity';
 import { TPeoples } from '../../utils/types/typesPeoples';
+import Arrow from '../../assets/images/arrowWhite.svg';
+
+type TDrowpDownActivities = {
+  subject: string;
+  activityVisible: boolean;
+}
 
 export default function Home() {
   const { user } = useAuth();
+
+  const [dropdownActivities, setDropDownActivities] = useState<TDrowpDownActivities[]>([]);
 
   const verifyUserTeacher = user?.type === 'teacher';
   const veirifyUserAdmin = user?.type === 'admin';
@@ -36,6 +44,25 @@ export default function Home() {
     },
   });
   const responseOfBack = data;
+
+  function handleVisibleSubjectActivity(subject: string) {
+    setDropDownActivities((prevState) => {
+      const findSubject = prevState.findIndex((state) => state.subject === subject);
+
+      if (findSubject === -1) {
+        return prevState.concat({ subject, activityVisible: false });
+      }
+
+      return prevState.filter((state) => state.subject !== subject);
+    });
+  }
+
+  function findDropDownSubject(nameSubject: string) {
+    const find = dropdownActivities
+      .find(({ subject }) => subject === nameSubject);
+
+    return find;
+  }
 
   return (
     <>
@@ -64,8 +91,19 @@ export default function Home() {
           && (responseOfBack as unknown as ArrayActivity[])?.map((task) => (
             <Fragment key={Math.random()}>
               {verifyUserStudent
-                && <TitleMatter key={Math.random()}>{task.nameSubject}</TitleMatter>}
-              {task.activitys.map((cardActivity: ObjActivity) => (
+                && (
+                <TitleMatter
+                  key={Math.random()}
+                  visible={findDropDownSubject(task.nameSubject)?.activityVisible !== false}
+                >
+                  {task.nameSubject}
+                  <button type="button" onClick={() => handleVisibleSubjectActivity(task.nameSubject)}>
+                    <img src={Arrow} alt="dropDown" />
+                  </button>
+                </TitleMatter>
+                )}
+              {(findDropDownSubject(task.nameSubject)?.activityVisible !== false)
+              && task.activitys.map((cardActivity: ObjActivity) => (
                 <CardsActivities key={cardActivity.id}>
                   <Link to={`/activity/${cardActivity.id}`} style={{ textDecoration: 'none' }} key={Math.random()}>
                     <CardHome

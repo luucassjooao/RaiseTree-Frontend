@@ -128,17 +128,17 @@ export const Container = styled.div`
         font-size: 28px;
       }
 
-    .login-span {
-      color: ${({ theme }) => theme.colors.yellows.main};
-    }
-    .register-span {
-      color: ${({ theme }) => theme.colors.green.main};
-    }
+      .login-span {
+        color: ${({ theme }) => theme.colors.yellows.main};
+      }
+      .register-span {
+        color: ${({ theme }) => theme.colors.green.main};
+      }
 
-    .about-span {
-      text-decoration: none;
-      color: ${({ theme }) => theme.colors.oranges.main};
-    }
+      .about-span {
+        text-decoration: none;
+        color: ${({ theme }) => theme.colors.oranges.main};
+      }
     }
   }
 

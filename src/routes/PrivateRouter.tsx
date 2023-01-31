@@ -23,7 +23,6 @@ export function PrivateRouter({ children }: PrivateRouterType) {
   }
 
   return (
-    // eslint-disable-next-line react/jsx-no-useless-fragment
     <div style={{ marginTop: '70px' }}>
       { children }
     </div>
