@@ -51,9 +51,11 @@ export default function SpreadSheetChoosing({
         <p className="p-primary">Precisamos de algumas informações para continuar!</p>
         <p className="p-primary">Verifique se na planilha existe essas informações</p>
         <br />
-        <h4>Nome</h4>
-        <h4>Sala</h4>
-        <h4>CPF</h4>
+        <p className="p-primary">(Clique em qualquer uma das propriedades para copiá-las)</p>
+        <button type="button" onClick={() => CopyText('Nome')} className="button-copy-classroom">Nome</button>
+        <button type="button" onClick={() => CopyText('Sala')} className="button-copy-classroom">Sala</button>
+        <button type="button" onClick={() => CopyText('CPF')} className="button-copy-classroom">CPF</button>
+        <br />
         <br />
         <p className="p-primary">Nas células de &quot;Sala&quot;, lembre-se de colocar algumas das salas abaixo!</p>
         <span>Clique em qualquer opção abaixo para copia-lá</span>
@@ -79,8 +81,11 @@ export default function SpreadSheetChoosing({
         <p className="p-primary">Precisamos de algumas informações para continuar!</p>
         <p className="p-primary">Verifique se na planilha existe essas informações</p>
         <br />
-        <h4>Nome</h4>
-        <h4>Sala</h4>
+        <p className="p-primary">(Clique em qualquer uma das propriedades para copiá-las)</p>
+        <button type="button" onClick={() => CopyText('Nome')} className="button-copy-classroom">Nome</button>
+        <button type="button" onClick={() => CopyText('Email')} className="button-copy-classroom">Email</button>
+        <button type="button" onClick={() => CopyText('Sala')} className="button-copy-classroom">Sala</button>
+        <br />
         <span>
           (Para registrar um professor com todas as suas turmas, coloque uma VIRGULA
           separando cada sala de aula! Não pode haver espaços antes e nem depois da VIRGULA!)

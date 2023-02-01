@@ -54,6 +54,8 @@ export default function AdminRegisterStaticUser() {
     handleVisibleCreatePeoplesModal,
     handleOnSubmitPeoplesOfSheet,
     handleOnSubmitOnePerson,
+    email,
+    handleEmailChange,
   } = useAdminRegisterStaticUser();
 
   const isAddMorePeopleStudent = (
@@ -247,6 +249,8 @@ export default function AdminRegisterStaticUser() {
             handleAddMorePeoples={handleAddMorePeoples}
             isMoreOnePerson={isMoreOnePerson}
             handleVisibleCreatePeoplesModal={handleVisibleCreatePeoplesModal}
+            email={email}
+            handleEmailChange={handleEmailChange}
           />
         )}
 

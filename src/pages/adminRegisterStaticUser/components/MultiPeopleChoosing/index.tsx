@@ -28,6 +28,8 @@ type TSpreadSheetChoosing = {
   handleAddMorePeoples(): void;
   isMoreOnePerson: boolean | string;
   handleVisibleCreatePeoplesModal(): void;
+  email: string;
+  handleEmailChange(event: InputChange): void;
 }
 
 export default function MultiPeopleChoosing({
@@ -49,6 +51,8 @@ export default function MultiPeopleChoosing({
   handleAddMorePeoples,
   isMoreOnePerson,
   handleVisibleCreatePeoplesModal,
+  email,
+  handleEmailChange,
 }: TSpreadSheetChoosing) {
   return (
     <>
@@ -62,17 +66,19 @@ export default function MultiPeopleChoosing({
         <option value="student">Estudante</option>
         <option value="teacher">Professor</option>
       </Select>
+      {type !== '' && (
+      <FormGroup error={getErrorMessageByFieldName({ fieldName: 'name' })}>
+        <Input
+          type="text"
+          size={350}
+          value={name}
+          onChange={handleChangeName}
+          placeholder="Nome"
+        />
+      </FormGroup>
+      )}
       {type === 'student' && (
       <>
-        <FormGroup error={getErrorMessageByFieldName({ fieldName: 'name' })}>
-          <Input
-            type="text"
-            size={350}
-            value={name}
-            onChange={handleChangeName}
-            placeholder="Nome"
-          />
-        </FormGroup>
         <Select
           is500={false}
           value={classroomStudent}
@@ -98,13 +104,13 @@ export default function MultiPeopleChoosing({
       )}
       {type === 'teacher' && (
       <div className="divMultiSelect">
-        <FormGroup error={getErrorMessageByFieldName({ fieldName: 'name' })}>
+        <FormGroup error={getErrorMessageByFieldName({ fieldName: 'email' })}>
           <Input
-            type="text"
+            type="email"
             size={350}
-            value={name}
-            onChange={handleChangeName}
-            placeholder="Nome"
+            value={email}
+            onChange={handleEmailChange}
+            placeholder="Endereço de email"
           />
         </FormGroup>
         <MultiSelect

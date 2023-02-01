@@ -6,6 +6,7 @@ import { useErrors } from '../../hooks/useHooks';
 import StaticUserService from '../../services/StaticUserService';
 import { InputChange, TTClassroom } from '../../utils/types/globaTypes';
 import { TPeoplesNews } from '../../utils/types/typesPeoples';
+import isEmailValid from '../../utils/isEmailValid';
 
 export default function useAdminRegisterStaticUser() {
   const { user } = useAuth();
@@ -21,6 +22,7 @@ export default function useAdminRegisterStaticUser() {
   const [onePersonChoosing, setOnePersonChoosing] = useState<boolean>(false);
 
   const [name, setName] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
   const [type, setType] = useState<string>('');
   const [classroomStudent, setClassroomStudent] = useState<string>('');
   const [classroomTeacher, setClassroomTeacher] = useState<TTClassroom[]>([]);
@@ -101,6 +103,15 @@ export default function useAdminRegisterStaticUser() {
       removeError({ fieldName: 'name' });
     }
   }
+  function handleEmailChange(event: InputChange) {
+    setEmail(event.target.value);
+
+    if (!event.target.value && !isEmailValid(email)) {
+      setError({ field: 'email', message: 'Coloque um email válido!' });
+    } else {
+      removeError({ fieldName: 'email' });
+    }
+  }
   function handleChangeCPF(event: InputChange) {
     setCpf(event.target.value);
 
@@ -121,6 +132,7 @@ export default function useAdminRegisterStaticUser() {
         classroom: type === 'student' ? [classroomStudent] : arrayClassroom,
         type,
         cpf: type === 'student' ? cpf : '',
+        email,
       },
     ]);
 
@@ -254,5 +266,7 @@ export default function useAdminRegisterStaticUser() {
     handleVisibleCreatePeoplesModal,
     handleOnSubmitPeoplesOfSheet,
     handleOnSubmitOnePerson,
+    handleEmailChange,
+    email,
   };
 }
