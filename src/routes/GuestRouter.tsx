@@ -3,6 +3,7 @@ import { Navigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 
 import Active from '../pages/active';
+import ActiveTeacher from '../pages/activeTeacher';
 import FormCreateOrganization from '../pages/formCreateOrganization';
 import LP from '../pages/landingPageCreateOrganization';
 import Login from '../pages/login';
@@ -40,6 +41,10 @@ export const guestRouter = [
   {
     path: '/active',
     element: <Active />,
+  },
+  {
+    path: '/activeTeacher',
+    element: <ActiveTeacher />,
   },
   {
     path: '/hp',

@@ -27,6 +27,20 @@ class RegisterService {
       },
     });
   }
+
+  public async registerTeacher(
+    activeToken: string,
+    password: string,
+    subjectId: string,
+  ) {
+    return this.httpClient.post('/activeTeacher', {
+      body: {
+        activeToken,
+        password,
+        subjectId,
+      },
+    });
+  }
 }
 
 export default new RegisterService();

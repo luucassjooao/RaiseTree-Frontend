@@ -4,6 +4,7 @@
     { "src": "/login", "dest": "/login" },
     { "src": "/register", "dest": "/register" },
     { "src": "/active", "dest": "/active" },
+    { "src": "/activeTeacher", "dest": "/activeTeacher" },
     { "src": "/hp", "dest": "/hp" },
     { "src": "/corganization", "dest": "/corganization" },
     { "src": "/ve", "dest": "/ve" },

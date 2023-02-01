@@ -11,4 +11,5 @@ export type TPeoplesNews = {
   type: string;
   classroom: string[];
   cpf?: string | null;
+  email: string;
 }
