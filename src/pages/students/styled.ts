@@ -17,6 +17,13 @@ export const Container = styled.div`
     justify-content: center;
     display: flex;
   }
+
+  @media only screen and (max-width: 300px) {
+    .divTypeView {
+      display: grid;
+      flex-direction: column;
+    }
+  }
 `;
 
 export const ButtonClassroom = styled.button`

@@ -1,4 +1,4 @@
-import { Fragment, useEffect } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -7,11 +7,20 @@ import Loader from '../../components/Loader';
 import { useAuth } from '../../hooks/useAuth';
 import ActivityService from '../../services/ActivityService';
 import { ArrayActivity } from '../../utils/types/typesActivity';
-import { CardsActivities, TitleMatter } from './styles';
+import { CardsActivities, Container, TitleMatter } from './styles';
+
+import Arrow from '../../assets/images/arrowWhite.svg';
+
+type TDrowpDownActivities = {
+  subject: string;
+  activityVisible: boolean;
+}
 
 export default function AdminViewActivity() {
   const { user } = useAuth();
   const navigate = useNavigate();
+
+  const [dropdownActivities, setDropDownActivities] = useState<TDrowpDownActivities[]>([]);
 
   const { data, isLoading } = useQuery<ArrayActivity[]>('adminViewActivity', () => ActivityService.adminGetActivity(), {
     onError() {
@@ -26,13 +35,40 @@ export default function AdminViewActivity() {
     }
   }, []);
 
+  function handleVisibleSubjectActivity(subject: string) {
+    setDropDownActivities((prevState) => {
+      const findSubject = prevState.findIndex((state) => state.subject === subject);
+
+      if (findSubject === -1) {
+        return prevState.concat({ subject, activityVisible: false });
+      }
+
+      return prevState.filter((state) => state.subject !== subject);
+    });
+  }
+
+  function findDropDownSubject(nameSubject: string) {
+    const find = dropdownActivities
+      .find(({ subject }) => subject === nameSubject);
+
+    return find;
+  }
+
   return (
-    <>
+    <Container>
       <Loader isLoading={isLoading} />
       {data?.map((task) => (
         <Fragment key={task.nameSubject}>
-          <TitleMatter>{task.nameSubject}</TitleMatter>
-          {task.activitys.map((cardActivity) => (
+          <TitleMatter
+            visible={findDropDownSubject(task.nameSubject)?.activityVisible !== false}
+          >
+            {task.nameSubject}
+            <button type="button" onClick={() => handleVisibleSubjectActivity(task.nameSubject)}>
+              <img src={Arrow} alt="dropDown" />
+            </button>
+          </TitleMatter>
+          {(findDropDownSubject(task.nameSubject)?.activityVisible !== false
+          ) && task.activitys.map((cardActivity) => (
             <CardsActivities key={cardActivity.id}>
               <Link to={`/activity/${cardActivity.id}`} style={{ textDecoration: 'none' }}>
                 <CardHome
@@ -50,6 +86,6 @@ export default function AdminViewActivity() {
           ))}
         </Fragment>
       ))}
-    </>
+    </Container>
   );
 }

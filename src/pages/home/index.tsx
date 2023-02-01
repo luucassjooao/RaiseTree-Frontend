@@ -69,7 +69,7 @@ export default function Home() {
       <Loader isLoading={isLoading} />
       <Container>
         {veirifyUserAdmin && (
-        <div>
+        <Fragment key="adminView">
           {(responseOfBack as TPeoples[])?.map((pessoas) => (
             <CardsActivities key={pessoas.id}>
               <CardPeople
@@ -81,7 +81,7 @@ export default function Home() {
               />
             </CardsActivities>
           ))}
-        </div>
+        </Fragment>
         )}
         {verifyUserTeacher
         && (responseOfBack as TPeoples[])?.length >= 1

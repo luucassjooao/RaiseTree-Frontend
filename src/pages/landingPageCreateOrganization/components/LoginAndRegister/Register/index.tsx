@@ -93,7 +93,7 @@ export default function RegisterLP({
           <FormGroup error={getErrorMessageByFieldName({ fieldName: 'email' })}>
             <Input
               size={350}
-              type="text"
+              type="email"
               placeholder="Qual seu Email? **"
               error={getErrorMessageByFieldName({ fieldName: 'email' })}
               value={email}
@@ -137,7 +137,7 @@ export default function RegisterLP({
           <FormGroup error={getErrorMessageByFieldName({ fieldName: 'email' })}>
             <Input
               size={350}
-              type="text"
+              type="email"
               placeholder="Qual seu Email? **"
               error={getErrorMessageByFieldName({ fieldName: 'email' })}
               value={email}

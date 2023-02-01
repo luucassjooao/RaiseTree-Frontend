@@ -32,7 +32,7 @@ export default function LoginLP({
       <FormGroup error={getErrorMessageByFieldName({ fieldName: 'email' })}>
         <Input
           size={350}
-          type="text"
+          type="email"
           placeholder="Email"
           error={getErrorMessageByFieldName({ fieldName: 'email' })}
           value={email}
