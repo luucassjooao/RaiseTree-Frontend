@@ -45,18 +45,20 @@ export function AuthProvider({ children }: TAuthProvider) {
   }
 
   useEffect(() => {
-    const token = localStorage.getItem('@Login:Token');
+    (async () => {
+      const token = localStorage.getItem('@Login:Token');
 
-    if (token) {
       setLoading(true);
-      try {
-        loadUserInfos();
-      } catch {
-        handleLogout();
-      } finally {
-        setLoading(false);
+      if (token) {
+        try {
+          await loadUserInfos();
+        } catch {
+          handleLogout();
+        } finally {
+          setLoading(false);
+        }
       }
-    }
+    })();
   }, []);
 
   const ValuesAuthContextProvider = useMemo(() => ({

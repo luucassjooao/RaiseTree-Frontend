@@ -81,7 +81,6 @@ export default function Header() {
 
   return (
     <>
-      {user?.type === undefined && <Loader isLoading theme="blur" />}
       <ContainerHeader>
 
         <Modal
