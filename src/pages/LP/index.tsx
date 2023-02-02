@@ -152,7 +152,7 @@ export default function LP() {
 
             <div className="divImg">
               <h2>Geração de Memes Aleatorios sobre as Máterias da escola! </h2>
-              <img src={urlImage} alt="TAnswerActivityOfStudentHard" />
+              <img src={urlImage} alt="unsmemezinai" />
             </div>
           </div>
 
