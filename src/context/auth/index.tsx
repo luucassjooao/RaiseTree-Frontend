@@ -48,8 +48,8 @@ export function AuthProvider({ children }: TAuthProvider) {
     (async () => {
       const token = localStorage.getItem('@Login:Token');
 
-      setLoading(true);
       if (token) {
+        setLoading(true);
         try {
           await loadUserInfos();
         } catch {
