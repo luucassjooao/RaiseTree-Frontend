@@ -1,7 +1,7 @@
 import SideBar from '../../components/SideBar';
 import LoginLP from './components/LoginAndRegister/Login';
 import RegisterLP from './components/LoginAndRegister/Register';
-import useLandingPageCreateOrganization from './useLandingPageCreateOrganization';
+import useLP from './useLP';
 
 import {
   ButtonAbout,
@@ -50,7 +50,7 @@ export default function LP() {
     dropDownOptions,
     handleDropDownOpions,
     urlImage,
-  } = useLandingPageCreateOrganization();
+  } = useLP();
 
   const isFormValidLogin = email && password && errors.length === 0;
   const isFormValidRegister = name
@@ -83,7 +83,7 @@ export default function LP() {
         <div className="divButtonContact">
           <ButtonAbout type="button" className="buttonAbout">
             <a href="mailto:mainexcalibur@protonmail.com">
-              <span>Nós Contate</span>
+              <span>Contate-nos</span>
             </a>
           </ButtonAbout>
         </div>
@@ -124,7 +124,7 @@ export default function LP() {
           </button>
           <button type="button">
             <a href="mailto:mainexcalibur@protonmail.com" style={{ textDecoration: 'none' }}>
-              <span>Nós Contate</span>
+              <span>Contate-nos</span>
             </a>
           </button>
         </div>
@@ -139,7 +139,7 @@ export default function LP() {
                 <div className="innerIam">
                   <h2>Professor</h2>
                   <h2>Aluno</h2>
-                  <h2>Cordenador</h2>
+                  <h2>Coordenador</h2>
                   <h2>Diretor</h2>
                   <br />
                 </div>
@@ -160,13 +160,13 @@ export default function LP() {
             <Card
               strongWord="O Professor, "
               text="pode criar atividades, rascunhos, ter controle
-              de frequencia e dos alunos virtualmente
+              de frequência e dos alunos virtualmente
               de Forma simplificada"
             />
             <Card
               text="Agora as escolas podem usar a tecnologia a seu favor da maneira correta,
               aproveitando os ultimos resursos da tecnologia
-              em um unico lugar!"
+              em um único lugar!"
             />
             <Card
               strongWord="Coordenadores e Diretores, "

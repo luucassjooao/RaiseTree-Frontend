@@ -5,7 +5,7 @@ import { useAuth } from '../hooks/useAuth';
 import Active from '../pages/active';
 import ActiveTeacher from '../pages/activeTeacher';
 import FormCreateOrganization from '../pages/formCreateOrganization';
-import LP from '../pages/landingPageCreateOrganization';
+import LP from '../pages/LP';
 import Login from '../pages/login';
 import Register from '../pages/register';
 import VerifyEmail from '../pages/verifyEmail';
