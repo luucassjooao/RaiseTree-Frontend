@@ -273,7 +273,7 @@ export default function LP() {
           <h2>Criar uma organização</h2>
         </ButtonOptionRegister>
         <ButtonOptionRegister type="button" onClick={handleSelectRegister}>
-          <h2>Se juntar a uma organizaçãoo</h2>
+          <h2>Se juntar a uma organização</h2>
         </ButtonOptionRegister>
       </Modal>
     </>
