@@ -12,7 +12,7 @@ import ActivityService from '../../services/ActivityService';
 import StaticUserService from '../../services/StaticUserService';
 import { CardsActivities, Container, TitleMatter } from './style';
 import { ArrayActivity, ObjActivity } from '../../utils/types/typesActivity';
-import { TPeoples } from '../../utils/types/typesPeoples';
+import { TPeoplesScreen } from '../../utils/types/typesPeoples';
 import Arrow from '../../assets/images/arrowWhite.svg';
 
 type TDrowpDownActivities = {
@@ -70,21 +70,26 @@ export default function Home() {
       <Container>
         {veirifyUserAdmin && (
         <Fragment key="adminView">
-          {(responseOfBack as TPeoples[])?.map((pessoas) => (
-            <CardsActivities key={pessoas.id}>
-              <CardPeople
-                key={pessoas.name}
-                name={pessoas.name}
-                code={pessoas.code}
-                classroom={pessoas.classroom}
-                type={pessoas.type}
-              />
-            </CardsActivities>
+          {(responseOfBack as TPeoplesScreen[])?.map((screen) => (
+            <Fragment key={screen.type}>
+              <TitleMatter>{screen.type === 'student' ? 'Estudantes' : 'Professores'}</TitleMatter>
+              {screen.peoples.map((pessoas) => (
+                <CardsActivities key={pessoas.id}>
+                  <CardPeople
+                    key={pessoas.name}
+                    name={pessoas.name}
+                    code={pessoas.code}
+                    classroom={pessoas.classroom}
+                    type={pessoas.type}
+                  />
+                </CardsActivities>
+              ))}
+            </Fragment>
           ))}
         </Fragment>
         )}
         {verifyUserTeacher
-        && (responseOfBack as TPeoples[])?.length >= 1
+        && (responseOfBack as ArrayActivity[])?.length >= 1
           ? <TitleMatter>Verifique as respostas nas atividades!</TitleMatter>
           : (verifyUserTeacher && <TitleMatter>Crie alguma atividade!</TitleMatter>)}
         {verificationUserTypeStudentOrTeacher

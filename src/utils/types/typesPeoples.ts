@@ -13,3 +13,8 @@ export type TPeoplesNews = {
   cpf?: string | null;
   email: string;
 }
+
+export type TPeoplesScreen = {
+  type: 'student' | 'teacher';
+  peoples: TPeoples[];
+}

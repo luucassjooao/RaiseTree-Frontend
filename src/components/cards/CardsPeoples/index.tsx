@@ -10,7 +10,12 @@ export default function CardPeople({
         Nome:
         {` ${name}`}
       </h4>
-      <h4>{type === 'student' ? `CPF: ${code}` : `Codigo: ${code}`}</h4>
+      {type === 'student' && (
+        <h4>
+          CPF:
+          {code}
+        </h4>
+      )}
       <h4>{type === 'student' ? 'Sala: ' : 'Salas: '}</h4>
       {classroom.map((sala) => (
         <Details key={Math.random()}>{sala.split(' | ')[1]}</Details>

@@ -1,4 +1,4 @@
-import { TPeoplesNews } from '../utils/types/typesPeoples';
+import { TPeoplesNews, TPeoplesScreen } from '../utils/types/typesPeoples';
 import HttpClient from './utils/HttpClient';
 
 class StaticUser {
@@ -38,7 +38,9 @@ class StaticUser {
     });
   }
 
-  public async findAllPeoplesStaticInOrganization(organizationId: string): Promise<TPeoplesNews[]> {
+  public async findAllPeoplesStaticInOrganization(
+    organizationId: string,
+  ): Promise<TPeoplesScreen[]> {
     const getPeoples = this.httpClient.get(`/findallpeoplesstaticUser/${organizationId}`, {
       headers: {
         authorization: localStorage.getItem('@Login:Token') || '',
