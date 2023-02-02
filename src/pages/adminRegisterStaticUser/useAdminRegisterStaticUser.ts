@@ -218,7 +218,12 @@ export default function useAdminRegisterStaticUser() {
     try {
       await StaticUserService.createPeoplesOfSheet(spreadSheetUrl, type);
 
-      toast.success('Pessoas adicinodas com sucesso!');
+      const messageStudenst = 'Estudantes adicionados com sucesso!';
+      const messageTeacher = 'Professores adicionados com sucesso! Peça para eles verificarem o email!';
+
+      toast.success(type === 'student' ? messageStudenst : messageTeacher, {
+        autoClose: 10000,
+      });
       navigate('/home');
     } catch (error: any) {
       toast.error(error.body.message);
