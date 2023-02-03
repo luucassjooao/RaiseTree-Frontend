@@ -1,27 +1,24 @@
 /* eslint-disable no-underscore-dangle */
-import { useEffect, useState } from 'react';
+import { useQuery } from 'react-query';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import CardHome from '../../components/cards/CardsHome';
+import Loader from '../../components/Loader';
 import DraftService from '../../services/DraftService';
 import { TDraft } from '../../utils/types/typesDraft';
 import { CardsActivities } from './styled';
 
 export default function ListDraft() {
-  const [drafts, setDrafts] = useState<TDraft[]>([]);
-
-  async function getAllDraftsOfUser() {
-    const getDrafts = await DraftService.getAllDraftsOfUser();
-
-    setDrafts(getDrafts.findDrafts);
-  }
-
-  useEffect(() => {
-    getAllDraftsOfUser();
-  }, []);
+  const { data, isLoading } = useQuery('drafts', async () => DraftService.getAllDraftsOfUser(), {
+    onError() {
+      toast.error('Ouve um error ao buscar seus rascunhos!');
+    },
+  });
 
   return (
     <>
-      {drafts.map((draft) => (
+      <Loader isLoading={isLoading} theme="blur" />
+      {data?.map((draft: TDraft) => (
         <CardsActivities key={Math.random()}>
           <Link to={`/createActivityDraft/${draft.id}`} style={{ textDecoration: 'none' }}>
             <CardHome

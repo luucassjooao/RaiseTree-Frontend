@@ -1,3 +1,4 @@
+import { TDraft } from '../utils/types/typesDraft';
 import HttpClient from './utils/HttpClient';
 
 class DraftService {
@@ -22,7 +23,7 @@ class DraftService {
     });
   }
 
-  public async getAllDraftsOfUser() {
+  public async getAllDraftsOfUser(): Promise<TDraft[]> {
     return this.httpClient.get('/findAllDraftsOfUser', {
       headers: {
         authorization: localStorage.getItem('@Login:Token') || '',
