@@ -45,7 +45,12 @@ export default function CalendarDays({ data, ChangeCurrentDay, pickingDates }: T
   });
 
   const findDay = useCallback(
-    (year: number, month: number, day: number) => formatDates.find((i) => i === `${day}/${month}/${year}`),
+    (year: number, month: number, day: number) => formatDates.find((i) => {
+      if (day < 10) {
+        return i === `0${day}/${month}/${year}`;
+      }
+      return i === `${day}/${month}/${year}`;
+    }),
     [],
   );
 
