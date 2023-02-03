@@ -8,6 +8,7 @@ export type IContext = {
   handleLogout: () => void;
   hopingActivatingAccount: boolean;
   ChangeHopingActivatingAccount(): void;
+  changeNumberOfDrafts(type: 'increse' | 'decrese'): void;
 }
 
 export type TAuthProvider = {

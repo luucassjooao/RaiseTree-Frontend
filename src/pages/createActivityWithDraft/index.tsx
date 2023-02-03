@@ -5,6 +5,7 @@ import { useMutation, useQueryClient } from 'react-query';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import ActivityForm from '../../components/ActivityForm';
+import { useAuth } from '../../hooks/useAuth';
 import useSafeAsyncAction from '../../hooks/useSafeAsyncAction';
 import ActivityService from '../../services/ActivityService';
 import DraftService from '../../services/DraftService';
@@ -13,6 +14,8 @@ import { ICreateActiviyByDraft, TActivity } from '../../utils/types/typesActivit
 import { TDraft } from '../../utils/types/typesDraft';
 
 export default function CreateActivityDraft() {
+  const { changeNumberOfDrafts } = useAuth();
+
   const isFirstRender = useRef(true);
 
   const [draft, setDraft] = useState<TDraft>();
@@ -34,6 +37,8 @@ export default function CreateActivityDraft() {
           draftRef.current?.setFieldsValues(draftLoad);
           setDraft(draft);
         });
+
+        changeNumberOfDrafts('decrese');
       } catch {
         safeAsyncAction(() => {
           navigate('/home');

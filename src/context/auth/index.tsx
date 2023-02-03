@@ -1,3 +1,5 @@
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable no-return-assign */
 import {
   createContext, useCallback, useEffect, useMemo, useState,
 } from 'react';
@@ -61,8 +63,24 @@ export function AuthProvider({ children }: TAuthProvider) {
     })();
   }, []);
 
+  function changeNumberOfDrafts(type: 'increse' | 'decrese') {
+    if (user === null) return null;
+    return setUser((prevState) => {
+      if (prevState === null) return null;
+      if (prevState?._count.drafts === undefined) return { ...prevState, _count: { drafts: 0 } };
+      if (type === 'increse' && prevState._count.drafts === 0) return { ...prevState, _count: { drafts: 1 } };
+      if (type === 'increse' && prevState._count.drafts > 0) return { ...prevState, _count: { drafts: user._count.drafts += 1 } };
+      return { ...prevState, _count: { drafts: user._count.drafts -= 1 } };
+    });
+  }
+
   const ValuesAuthContextProvider = useMemo(() => ({
-    user, signIn, handleLogout, hopingActivatingAccount, ChangeHopingActivatingAccount,
+    user,
+    signIn,
+    handleLogout,
+    hopingActivatingAccount,
+    ChangeHopingActivatingAccount,
+    changeNumberOfDrafts,
   }), [user, signIn, handleLogout]);
 
   return (
