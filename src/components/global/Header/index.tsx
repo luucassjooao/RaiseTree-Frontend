@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../hooks/useAuth';
 import Modal from '../../Modal';
 import {
-  Button, ContainerHeader, DivHeaderRight, DivOptionsDropDown,
+  Button, ContainerHeader, DivHeaderRight, DivOptionsDropDown, SpanLinks,
 } from './styles';
 
 import Logo from '../../../assets/images/logo.png';
@@ -81,41 +81,52 @@ export default function Header() {
 
   return (
     <>
+      <Modal
+        danger
+        visible={modalVisible}
+        isLoading={false}
+        title="Você quer escolher um rascunho ou criar uma atividade do zero?"
+        confirmLabel="Cancelar"
+        cancelLabel=""
+        onCancel={() => {}}
+        onConfirm={CloseModal}
+      >
+        <Button type="button" onClick={HandleCreateActivity}>
+          <h2>Fazer atividade do zero</h2>
+        </Button>
+        <Button type="button" onClick={HandleCreateActivityWithDraft}>
+          <h2>Usar rascunho</h2>
+        </Button>
+      </Modal>
       <ContainerHeader>
-
-        <Modal
-          danger
-          visible={modalVisible}
-          isLoading={false}
-          title="Você quer escolher um rascunho ou criar uma atividade do zero?"
-          confirmLabel="Cancelar"
-          cancelLabel=""
-          onCancel={() => {}}
-          onConfirm={CloseModal}
-        >
-          <Button type="button" onClick={HandleCreateActivity}>
-            <h2>Fazer atividade do zero</h2>
-          </Button>
-          <Button type="button" onClick={HandleCreateActivityWithDraft}>
-            <h2>Usar rascunho</h2>
-          </Button>
-        </Modal>
 
         <button type="button" onClick={GoHome}>
           <img src={Logo} alt="home" />
         </button>
 
-        {user?.type === 'teacher' && <button type="button" className="button-fixed-option" onClick={OpenModal}>Criar Atividade</button>}
+        {user?.type === 'teacher' && (
+        <button type="button" className="button-fixed-option" onClick={OpenModal}>
+          <SpanLinks>
+            Criar Atividade
+          </SpanLinks>
+        </button>
+        )}
 
         {user?.type !== undefined && literalsOptionsHeader[user.type].map((link) => (
           <DivHeaderRight key={link.path}>
             <Link to={link.path} style={{ textDecoration: 'none', color: '#000', fontSize: '24px' }}>
-              {link.label}
+              <SpanLinks>
+                {link.label}
+              </SpanLinks>
             </Link>
           </DivHeaderRight>
         ))}
 
-        <button type="button" className="button-fixed-option" onClick={() => handleLogout()}>Sair</button>
+        <button type="button" className="button-fixed-option" onClick={() => handleLogout()}>
+          <SpanLinks>
+            Sair
+          </SpanLinks>
+        </button>
 
         <div className="options-phone">
           <button type="button" onClick={handleDropDownOpions}>
