@@ -5,13 +5,17 @@ export type TFrequency = {
   subjectName: string;
 }
 
+export type TPoints = {
+  points: number;
+  subjectName: string;
+}
+
 export type TStudents = {
   id: string;
-  current_points: string;
   classroom: string;
   user: TUserForOtherTypes;
   userId?: string;
-  points?: number[];
+  points?: TPoints[];
   frequency: TFrequency[];
   _count?: {
     reply_activities: number;

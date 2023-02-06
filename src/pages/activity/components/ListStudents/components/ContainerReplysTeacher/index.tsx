@@ -6,6 +6,7 @@ import { ButtonBackAllActivity, ContainerAnswer, ContainerFooterActivity } from 
 import InputAnswerTeacher from '../../../../../../components/Answer/InputTeacherAnswerReplyActiviyOfStudent';
 import { TTActivityScreen } from '../../../../../../utils/types/typesActivity';
 import { IAnswerTeacherContainerReply, TObjectAnswer } from '../../../../../../utils/types/typesAnswerActivity';
+import { ReturnPointsOfStudent } from '../../../../../../utils/funcs/ReturnPointsOfStudent';
 
 export default function ContainerReplyTeacher({
   id,
@@ -60,7 +61,7 @@ export default function ContainerReplyTeacher({
         &nbsp;&nbsp;
         -&nbsp;&nbsp;
         Pontos do aluno deste aluno atualmente:&nbsp;
-        {Student.current_points}
+        {ReturnPointsOfStudent(Student)}
       </span>
       <ContainerAnswer
         dangerouslySetInnerHTML={{

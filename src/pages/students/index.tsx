@@ -71,7 +71,7 @@ export default function Students() {
             <InputButton
               typeView="primary"
               type="button"
-              value={sala.split(' | ')[1]}
+              value={SplitNameSchool(sala)}
               key={sala}
               isSelected={classroomSelected === sala}
               onClick={() => ChangeClassroomSelected(sala)}
@@ -112,7 +112,7 @@ export default function Students() {
           <Button
             isLoading={false}
             size={65}
-            style={{ height: '40px', marginBottom: '8px' }}
+            style={{ height: '40px', marginBottom: '8px', marginTop: '60px' }}
             yellowBackground={false}
             type="button"
             onClick={() => handleModalInfosStudentVisible('')}

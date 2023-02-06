@@ -76,7 +76,11 @@ export default function useActivity() {
         answer,
       };
 
-      await ActivityService.answerActivity(answered.answer, id as string);
+      await ActivityService.answerActivity(
+        answered.answer,
+        id as string,
+        data?.Teacher.subject.name as string,
+      );
 
       toast.success('Resposta Enviada!');
 

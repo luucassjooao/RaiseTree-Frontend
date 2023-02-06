@@ -109,7 +109,7 @@ font-weight: 700;
 transition: all 0.3s;
 
 &:hover {
-  background: ${({ theme }) => theme.colors.blue.main};
+  background: ${({ theme }) => theme.colors.button.hover};
   color: ${({ theme }) => theme.colors.textColorWhite};
   padding: 8px;
   border-radius: 45px;

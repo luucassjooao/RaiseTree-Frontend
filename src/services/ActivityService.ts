@@ -47,10 +47,10 @@ class ActivityService {
     });
   }
 
-  public async answerActivity(answer: string, idActivity: string) {
+  public async answerActivity(answer: string, idActivity: string, subjectName: string) {
     return this.httpClient.post(`/registerAnswer/${idActivity}`, {
       body: {
-        answer,
+        answer, subjectName,
       },
       headers: {
         authorization: localStorage.getItem('@Login:Token') || '',

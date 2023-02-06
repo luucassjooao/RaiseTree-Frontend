@@ -4,6 +4,8 @@ import SideBar from '../../../../components/SideBar';
 import InputAnswerTeacher from '../../../../components/Answer/InputTeacherAnswerReplyActiviyOfStudent';
 import { Container } from './styles';
 import { IAnswerTeacherModal } from '../../../../utils/types/typesAnswerActivity';
+import { ReturnPointsOfStudent } from '../../../../utils/funcs/ReturnPointsOfStudent';
+import { SplitNameSchool } from '../../../../utils/funcs/SplitNameSchool';
 
 export default function SideBarListStudents({
   id,
@@ -35,7 +37,7 @@ export default function SideBarListStudents({
           </h2>
           <h2>
             Sala:&nbsp;
-            {Student?.classroom.split(' | ')[1]}
+            {SplitNameSchool(Student?.classroom)}
           </h2>
           <h2>
             Atividade entregue em:&nbsp;
@@ -43,7 +45,7 @@ export default function SideBarListStudents({
           </h2>
           <h2>
             Pontos deste aluno atualmente:&nbsp;
-            {Student?.current_points}
+            {ReturnPointsOfStudent(Student)}
           </h2>
           <div
             className="divAnswer"

@@ -1,5 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-unused-vars */
+import { ReturnPointsOfStudent } from '../../../../utils/funcs/ReturnPointsOfStudent';
 import { TStudents } from '../../../../utils/types/typesStudent';
 import { ContainerTable, TDCountActivities } from './styled';
 
@@ -30,7 +31,7 @@ export default function ViewInfosStudents({
         {data?.map((infos) => (
           <tr key={infos.id}>
             <td>{infos.user.name}</td>
-            <td>{infos.current_points}</td>
+            <td>{ReturnPointsOfStudent(infos)}</td>
             <td
               role="gridcell"
               className="watch-frequency"
