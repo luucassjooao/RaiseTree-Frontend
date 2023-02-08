@@ -39,7 +39,7 @@ const ActivityForm = forwardRef<TOnSubmit, TActivityForm>(
     const [classrooms, setClassroom] = useState<TTClassroom[]>([]);
     const [activity, setActivity] = useState<string>('');
     const [dateTask, setDateTask] = useState<string>('');
-    const [typeActivity, setTypeActivity] = useState<string>('');
+    const [typeActivity, setTypeActivity] = useState<string>('Atividade');
     const [previousPoints, setPreviousPoints] = useState<any>(0);
 
     const [optionsClassroom, setOptionsClassroom] = useState<TTClassroom[]>([]);

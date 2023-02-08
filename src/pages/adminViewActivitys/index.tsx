@@ -22,7 +22,7 @@ export default function AdminViewActivity() {
 
   const [dropdownActivities, setDropDownActivities] = useState<TDrowpDownActivities[]>([]);
 
-  const { data, isLoading } = useQuery<ArrayActivity[]>('adminViewActivity', () => ActivityService.adminGetActivity(), {
+  const { data, isLoading } = useQuery<ArrayActivity[]>('adminViewActivity', () => ActivityService.getHomeActivities(), {
     onError() {
       toast.error('Ouve um erro ao buscar as atividades!');
     },
