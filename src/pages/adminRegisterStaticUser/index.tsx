@@ -134,9 +134,9 @@ export default function AdminRegisterStaticUser() {
             size={250}
             isLoading={false}
             style={{ margin: '8px 0', justifySelf: 'center' }}
-            onClick={() => CopyText('ACESSO PLANILHA RES-TREE')}
+            onClick={() => CopyText('ACESSO PLANILHA RAISE-TREE')}
           >
-            ACESSO PLANILHA RES-TREE
+            ACESSO PLANILHA RAISE-TREE
           </Button>
           <p>
             Segundo, precisamos ter o acesso a está planilha! Copie o email abaixo e deixe-o como

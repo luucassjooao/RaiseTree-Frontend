@@ -14,7 +14,7 @@ class StaticUser {
     type: string,
     code?: string,
   ) {
-    return this.httpClient.post('/newStaticUser', {
+    return this.httpClient.post('/createOneStaticUser', {
       body: {
         name,
         classroom,
@@ -38,10 +38,8 @@ class StaticUser {
     });
   }
 
-  public async findAllPeoplesStaticInOrganization(
-    organizationId: string,
-  ): Promise<TPeoplesScreen[]> {
-    const getPeoples = this.httpClient.get(`/findallpeoplesstaticUser/${organizationId}`, {
+  public async findAllPeoplesStaticInOrganization(): Promise<TPeoplesScreen[]> {
+    const getPeoples = this.httpClient.get('/findallpeoplesstaticUser', {
       headers: {
         authorization: localStorage.getItem('@Login:Token') || '',
       },

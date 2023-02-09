@@ -32,7 +32,7 @@ export default function Home() {
 
   const { data, isLoading } = useQuery('home', async () => (verificationUserTypeStudentOrTeacher
     ? ActivityService.getHomeActivities()
-    : StaticUserService.findAllPeoplesStaticInOrganization(user?.organizationId as string)), {
+    : StaticUserService.findAllPeoplesStaticInOrganization()), {
     onError() {
       const messageErrorHomeActivity = 'Houve um error ao buscar as atividades. Fique tranquilo, já iremos consertar este problema!';
       const messageErrorHomePeoples = 'Houve um error ao buscar as pessoas da sua organização. Fique tranquilo, já iremos consertar este problema!';
