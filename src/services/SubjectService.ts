@@ -8,7 +8,7 @@ class SubjectService {
   }
 
   public async findAll() {
-    return this.httpClient.get('/findAllMatters', {
+    return this.httpClient.get('/subject', {
       headers: {
         authorization: localStorage.getItem('@Login:Token') || '',
       },
