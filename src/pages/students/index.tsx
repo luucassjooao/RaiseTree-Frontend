@@ -125,7 +125,7 @@ export default function Students() {
 
         <DivSideBarActivity>
           {getActivityOfStudentAnswer.map((infos) => (
-            <Link to={`/activity/${infos.Activity.id}?ai=${infos.id}`} key={infos.Activity.id} style={{ textDecoration: 'none' }}>
+            <Link to={`/activity/${infos.Activity.id}?ai=${infos.id}`} key={infos.Activity.id} style={{ textDecoration: 'none', marginBottom: '8px' }}>
               <CardHome
                 dateExpiration={infos.Activity.dateExpiration as Date}
                 description={infos.Activity.description}
