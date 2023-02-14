@@ -62,7 +62,7 @@ export default function Students() {
             isSelected={typeView === 'addFrequency'}
             typeView="secondary"
             type="button"
-            value="Anotar Frequencia"
+            value="Anotar frequência"
             onClick={() => setTypeView('addFrequency')}
           />
         </div>
@@ -143,7 +143,7 @@ export default function Students() {
         danger
         visible={isModalConfirmFrequency}
         isLoading={isLoadingSubmitFrequencyStudents}
-        title="Você quer adicionar frequencia para esses alunos?"
+        title="Você quer adicionar frequência para esses alunos?"
         confirmLabel="Confirmar"
         cancelLabel="Cancelar"
         onCancel={handleChangeVisibleModalConfirmFrequency}

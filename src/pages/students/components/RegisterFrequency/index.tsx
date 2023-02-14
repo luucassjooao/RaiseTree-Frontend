@@ -28,7 +28,7 @@ export default function RegisterFrequency({
         <thead>
           <tr>
             <th>Nome</th>
-            <th>Frequencia</th>
+            <th>frequência</th>
           </tr>
         </thead>
     )}
@@ -56,7 +56,7 @@ export default function RegisterFrequency({
           onClick={handleChangeVisibleModalConfirmFrequency}
           disabled={frequencyStudents.length <= 0}
         >
-          Confirmar Frequencia
+          Confirmar frequência
         </Button>
       </div>
   )}

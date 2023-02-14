@@ -22,7 +22,7 @@ export default function ViewInfosStudents({
         <tr>
           <th>Nome</th>
           <th>Pontos</th>
-          <th>Frequencia</th>
+          <th>frequência</th>
           <th>Atividades Entregues</th>
         </tr>
       </thead>
@@ -37,7 +37,7 @@ export default function ViewInfosStudents({
               className="watch-frequency"
               onClick={() => handleVisibleCalendar(infos)}
             >
-              Ver Frequencia
+              Ver frequência
             </td>
             <TDCountActivities
               role="gridcell"

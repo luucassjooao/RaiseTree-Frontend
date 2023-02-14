@@ -108,10 +108,10 @@ export default function useStudent() {
     try {
       setIsLoadingSubmitFrequencyStudents(true);
       StudentService.addFrequencyStudents(frequencyStudents);
-      toast.success('Estamos anotando as frequencias!');
+      toast.success('Estamos anotando as frequências!');
       setFrequencyStudents([]);
     } catch {
-      toast.error('Houve um error ao registrar a frequencia dos alunos!');
+      toast.error('Houve um error ao registrar a frequência dos alunos!');
     } finally {
       setIsLoadingSubmitFrequencyStudents(false);
       setIsModalConfirmFrequency(false);

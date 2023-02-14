@@ -183,7 +183,7 @@ export default function LP() {
               querem ganhar tempo na rotina através da tecnologia
             </h1>
             <h1 className="lastH1">
-              Você pode usar o RT para gerenciar atividades de sala, frequencia,
+              Você pode usar o RT para gerenciar atividades de sala, frequência,
               ter o controle de respostas e nota dos alunos.
             </h1>
           </div>
