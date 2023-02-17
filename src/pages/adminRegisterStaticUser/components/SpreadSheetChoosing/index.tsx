@@ -87,7 +87,7 @@ export default function SpreadSheetChoosing({
         <button type="button" onClick={() => CopyText('Sala')} className="button-copy-classroom">Sala</button>
         <br />
         <span>
-          (Para registrar um professor com todas as suas turmas, coloque uma VIRGULA
+          (Para registrar um professor(a) com todas as suas turmas, coloque uma VIRGULA
           separando cada sala de aula! Não pode haver espaços antes e nem depois da VIRGULA!)
         </span>
         <br />

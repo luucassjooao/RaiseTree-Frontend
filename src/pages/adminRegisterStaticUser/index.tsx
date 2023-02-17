@@ -273,6 +273,8 @@ export default function AdminRegisterStaticUser() {
             isAddMorePeopleTeacher={isAddMorePeopleTeacher}
             handleOnSubmitOnePerson={handleOnSubmitOnePerson}
             isSubmitting={isSubmitting}
+            email={email}
+            handleEmailChange={handleEmailChange}
           />
         )}
       </ContainerWrapper>

@@ -13,6 +13,7 @@ class StaticUser {
     classroom: string[],
     type: string,
     code?: string,
+    email?: string,
   ) {
     return this.httpClient.post('/createOneStaticUser', {
       body: {
@@ -20,6 +21,7 @@ class StaticUser {
         classroom,
         type,
         code,
+        email,
       },
       headers: {
         authorization: localStorage.getItem('@Login:Token') || '',

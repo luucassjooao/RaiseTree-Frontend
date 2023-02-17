@@ -29,6 +29,8 @@ type TOnePersonChoosing = {
   isAddMorePeopleTeacher: boolean | string;
   handleOnSubmitOnePerson(event: FormEvent): void;
   isSubmitting: boolean;
+  email: string;
+  handleEmailChange(event: FormEvent): void;
 }
 
 export default function OnePersonChoosing({
@@ -49,6 +51,8 @@ export default function OnePersonChoosing({
   isAddMorePeopleTeacher,
   handleOnSubmitOnePerson,
   isSubmitting,
+  email,
+  handleEmailChange,
 }: TOnePersonChoosing) {
   return (
     <>
@@ -129,6 +133,15 @@ export default function OnePersonChoosing({
             value={name}
             onChange={handleChangeName}
             placeholder="Nome"
+          />
+        </FormGroup>
+        <FormGroup error={getErrorMessageByFieldName({ fieldName: 'email' })}>
+          <Input
+            type="email"
+            size={350}
+            value={email}
+            onChange={handleEmailChange}
+            placeholder="Endereço de email"
           />
         </FormGroup>
         <MultiSelect

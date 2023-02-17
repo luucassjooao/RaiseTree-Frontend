@@ -166,7 +166,7 @@ export default function useAdminRegisterStaticUser() {
 
       handleCloseCreatePeoplesModal();
 
-      toast.success('Adicionados!');
+      toast.success('Adicionados! Peça aos professores que verifiquem seus emails!');
     } catch {
       toast.error('Parece que ouve algum error!');
     } finally {
@@ -195,9 +195,11 @@ export default function useAdminRegisterStaticUser() {
           name,
           arrayClassroom,
           type,
+          '',
+          email,
         );
 
-        toast.success(`${name} foi adicionado com sucesso!`);
+        toast.success(`${name} foi adicionado com sucesso! Peça ao professor(a) que veja seu email!`);
       }
     } catch (error: any) {
       toast.error(error.body.message);
