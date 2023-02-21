@@ -21,6 +21,12 @@ export default function CardPeople({
         <Details key={Math.random()}>{sala.split(' | ')[1]}</Details>
       ))}
       <p>{type === 'student' ? 'Estudante' : 'Professor' }</p>
+      {type === 'teacher' && (
+        <p>
+          Código:
+          {` ${code}`}
+        </p>
+      )}
     </ContainerCards>
   );
 }

@@ -140,6 +140,7 @@ export default function useAdminRegisterStaticUser() {
 
     setName('');
     setCpf('');
+    setEmail('');
     setClassroomStudent('');
     setClassroomTeacher([]);
   }
@@ -221,7 +222,7 @@ export default function useAdminRegisterStaticUser() {
       await StaticUserService.createPeoplesOfSheet(spreadSheetUrl, type);
 
       const messageStudenst = 'Estudantes adicionados com sucesso!';
-      const messageTeacher = 'Professores adicionados com sucesso! Peça para eles verificarem o email!';
+      const messageTeacher = 'Professores adicionados com sucesso! Peça aos professores que verifiquem seus emails!';
 
       toast.success(type === 'student' ? messageStudenst : messageTeacher, {
         autoClose: 10000,
