@@ -1,14 +1,26 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useQuery } from 'react-query';
 import { useAuth } from '../../../hooks/useAuth';
 import Modal from '../../Modal';
 import {
-  Button, ContainerHeader, DivHeaderRight, DivOptionsDropDown, SpanLinks,
+  Button,
+  ButtonNotify,
+  ContainerHeader,
+  ContainerNotify,
+  DivHeaderRight,
+  DivNotify,
+  DivOptionsDropDown,
+  SpanLinks,
 } from './styles';
 
 import Logo from '../../../assets/images/logo.png';
 import MenuDropDown from '../../../assets/images/menu.png';
+import Notify from '../../../assets/images/notify.svg';
 import Loader from '../../Loader';
+import SideBar from '../../SideBar';
+import useWindowsSize from '../../../hooks/useWindowSize';
+import NotifyService from '../../../services/NotifyService';
 
 type TReturn = {
   [x: string]: {
@@ -34,16 +46,28 @@ const literalsOptionsHeader: TReturn = {
 
 export default function Header() {
   const { user, handleLogout } = useAuth();
+  const { screenSize } = useWindowsSize();
 
-  const [modalVisible, setModalVisible] = useState(false);
-
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [dropDownOptions, setDropDownOptions] = useState<boolean>(false);
+  const [openSideNotify, setOpenSideNotify] = useState<boolean>(false);
+
+  const [lengthNotifications, setLenghtNotifications] = useState<number>(0);
 
   const navigate = useNavigate();
+
+  const { data, isLoading } = useQuery('AllNotifications', async () => NotifyService.getAllNotifications());
 
   useEffect(() => {
     if (user?.type === undefined) <Loader isLoading />;
   }, [user?.type]);
+
+  useEffect(() => {
+    (async () => {
+      const countLengthNotifications = await NotifyService.countNotifications();
+      setLenghtNotifications(countLengthNotifications);
+    })();
+  }, []);
 
   function OpenModal() {
     // eslint-disable-next-line no-underscore-dangle
@@ -79,6 +103,12 @@ export default function Header() {
     navigate(path);
   }
 
+  function handleOpenNotifications() {
+    setOpenSideNotify((prevState) => prevState !== true);
+  }
+
+  const sizeSideBar = screenSize.dynamicWidth < 500 ? screenSize.dynamicWidth : 500;
+
   return (
     <>
       <Modal
@@ -98,8 +128,29 @@ export default function Header() {
           <h2>Usar rascunho</h2>
         </Button>
       </Modal>
-      <ContainerHeader>
 
+      <SideBar
+        colorBackground="LightPurple"
+        side="right"
+        size={sizeSideBar}
+        visible={openSideNotify}
+        isLoading={isLoading}
+      >
+        <ContainerNotify>
+          {data?.map(({
+            title, description, id, createdAt,
+          }) => (
+            <DivNotify key={id} role="button">
+              <h3>{title}</h3>
+              <p>{description}</p>
+              <span>{new Date(createdAt).toLocaleDateString('pt-br')}</span>
+              <hr />
+            </DivNotify>
+          ))}
+        </ContainerNotify>
+      </SideBar>
+
+      <ContainerHeader>
         <button type="button" onClick={GoHome}>
           <img src={Logo} alt="home" />
         </button>
@@ -121,6 +172,11 @@ export default function Header() {
             </Link>
           </DivHeaderRight>
         ))}
+
+        <ButtonNotify type="button" onClick={handleOpenNotifications}>
+          {lengthNotifications !== 0 && <small>{lengthNotifications}</small>}
+          <img src={Notify} alt="notify" />
+        </ButtonNotify>
 
         <button type="button" className="button-fixed-option" onClick={() => handleLogout()}>
           <SpanLinks>

@@ -52,4 +52,5 @@ export const Container = styled.div<PropsSideBar>`
   height: 100vh;
   color: ${({ theme }) => theme.colors.textColorWhite};
   top: 0;
+  overflow: auto;
 `;

@@ -211,6 +211,7 @@ export default function useAdminRegisterStaticUser() {
       setCpf('');
       setClassroomStudent('');
       setClassroomTeacher([]);
+      setEmail('');
     }
   }
 

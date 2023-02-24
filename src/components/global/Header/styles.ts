@@ -115,3 +115,47 @@ transition: all 0.3s;
   border-radius: 45px;
 }
 `;
+
+export const ButtonNotify = styled.button`
+  transition: all 0.3s;
+
+  small {
+    background: red;
+    padding: 6px;
+    border-radius: 16px;
+    position: absolute;
+    color: #fff;
+    transform: translateX(26px);
+  }
+
+  img {
+    width: 40px;
+    height: 40px;
+  }
+
+  &:hover {
+    transform: scale(1.2);
+  }
+`;
+
+export const ContainerNotify = styled.div`
+  margin-top: 60px;
+`;
+
+export const DivNotify = styled.div`
+  text-align: center;
+  transition: all 0.3s;
+
+  p, h3, span {
+    padding: 4px 16px;
+  }
+
+  p, span {
+    color: rgb(250, 250, 250)
+  }
+
+  &:hover {
+    background: ${({ theme }) => theme.colors.purples.gray};
+  }
+
+`;

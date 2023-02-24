@@ -54,6 +54,8 @@ export default function OnePersonChoosing({
   email,
   handleEmailChange,
 }: TOnePersonChoosing) {
+  console.log(optionsClassroom);
+  console.log(classroomTeacher);
   return (
     <>
       <DivButtons>
