@@ -3,4 +3,5 @@ export type TNotify = {
   title: string;
   description: string;
   createdAt: string;
+  read: boolean;
 }

@@ -56,7 +56,7 @@ export default function Header() {
 
   const navigate = useNavigate();
 
-  const { data, isLoading } = useQuery('AllNotifications', async () => NotifyService.getAllNotifications());
+  const { data: dataAllNotifications, isLoading, refetch } = useQuery('AllNotifications', async () => NotifyService.getAllNotifications());
 
   useEffect(() => {
     if (user?.type === undefined) <Loader isLoading />;
@@ -67,6 +67,8 @@ export default function Header() {
       const countLengthNotifications = await NotifyService.countNotifications();
       setLenghtNotifications(countLengthNotifications);
     })();
+
+    return () => setLenghtNotifications(0);
   }, []);
 
   function OpenModal() {
@@ -97,14 +99,27 @@ export default function Header() {
   function handleDropDownOpions() {
     setDropDownOptions((prevState) => prevState !== true);
   }
-
   function handleClickOnOptions(path: string) {
     handleDropDownOpions();
     navigate(path);
   }
 
-  function handleOpenNotifications() {
+  async function handleOpenNotifications() {
     setOpenSideNotify((prevState) => prevState !== true);
+    setLenghtNotifications(0);
+
+    if (lengthNotifications !== 0) {
+      return;
+    }
+    if (typeof dataAllNotifications === 'undefined') return;
+    const findAllNotificationsWithNotRead = dataAllNotifications.filter(
+      (notification) => !notification.read,
+    );
+
+    if (findAllNotificationsWithNotRead.length > 0) {
+      await NotifyService.markAllNotificationsAsRead(findAllNotificationsWithNotRead);
+    }
+    refetch();
   }
 
   const sizeSideBar = screenSize.dynamicWidth < 500 ? screenSize.dynamicWidth : 500;
@@ -137,7 +152,7 @@ export default function Header() {
         isLoading={isLoading}
       >
         <ContainerNotify>
-          {data?.map(({
+          {dataAllNotifications?.map(({
             title, description, id, createdAt,
           }) => (
             <DivNotify key={id} role="button">

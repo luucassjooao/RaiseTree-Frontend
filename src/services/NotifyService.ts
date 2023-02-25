@@ -23,6 +23,17 @@ class NotifyService {
       },
     });
   }
+
+  public async markAllNotificationsAsRead(notifications: TNotify[]) {
+    return this.httpClient.patch('/markAllNotificationAsRead', {
+      body: {
+        notifications,
+      },
+      headers: {
+        authorization: localStorage.getItem('@Login:Token') || '',
+      },
+    });
+  }
 }
 
 export default new NotifyService();
